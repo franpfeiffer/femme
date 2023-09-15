@@ -10,12 +10,165 @@ html {
 }
 
 body {
-  background-color:  #fff;
+  background-color:  #d9d7d7;
   color: #000;
 }
 
-.logoFemme {
-  width: 50px;
-  height: 50px;
-} 
+/* --------------------------- INDEX --------------------------- */
 
+
+/* navegation bar  */
+
+.logoFemme {
+	height: 63px;
+}
+
+.nav {
+	position: sticky;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 60px;
+	top: 0;
+}
+
+.subnav {
+	position: sticky;
+	bottom: 0;
+	top: 60px;
+  background: #fff;
+	border-bottom: 1px solid #222;
+	&__container {
+		align-items: baseline;
+		display: flex;
+		margin: 0 60px;
+		padding: 15px 0;
+	}
+	&__title {
+		font-size: 1.25em;
+	}
+	&__list {
+		margin: 0 15px;
+	}
+	&__item {
+		display: inline-block;
+		margin: 0 8px;
+		padding: 5px;
+	}
+}
+
+
+.nav {
+	background: #ffb4c6;
+	&__title {
+		margin: 0px 30px;
+	}
+	&__item {
+		display: inline-block;
+		margin: 0px 30px;
+	}
+}
+
+.nav__item {
+	display: inline-block;
+	margin: 0px 40px 0 0; 
+	padding: 5px;
+	color: #fff; 
+}
+
+.nav__search {
+	display: flex;
+	align-items: center;
+	margin: auto; 
+  }
+  
+  .nav__search input[type="text"] {
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin-right: 5px;
+  }
+  
+  .nav__search button {
+	background-color: #42A5F5;
+	color: #fff;
+	border: none;
+	border-radius: 3px;
+	padding: 5px 10px;
+	cursor: pointer;
+  }
+
+.banner {
+	background-color: #777777;
+	color: #000;
+	height: 250px;
+	text-align: center;
+	justify-content: center;
+}
+
+.banner p {
+	padding: 0;
+	margin: 0;
+}
+  
+/* Productos  */
+
+.tituloProductos {
+	font-size: 35px;
+	text-align: center;
+}
+
+.productos {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+	padding-bottom: 70px;
+	text-align: center;
+}
+
+.line{
+	border-bottom: 1px solid #00f;
+	margin: 0 auto;
+	width: 50%;
+}
+
+/* Data  */
+
+.dataContainer {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	margin: 100px 0 250px 0;
+	text-align: center;
+	font-size: 12px;
+}
+
+
+.data {
+	padding: 0;
+	margin: 0;
+}
+
+.data h3{
+	padding: 0;
+	margin: 5px;
+}
+
+.data p {
+	padding: 0;
+	margin: 5px;
+}
+  
+
+.fa-solid {
+	font-size: 22px;
+}
+   
+
+/* Footer */
+
+.footer {
+	background-color: #ff84e6;
+	display: grid;
+	justify-content: center;
+	height: 17vh;
+}
