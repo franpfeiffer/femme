@@ -12,7 +12,7 @@ export const Navbar = () => {
           <button>Buscar</button>
       </div>
       <ul className="nav__list">
-        <li className="nav__item"><Link to={'/home'}>Home</Link></li>
+        <li className="nav__item"><Link to={'/'}>Home</Link></li>
         <li className="nav__item"><Link to={'/productos'}>Productos</Link></li>
         <li className="nav__item">Carrito</li>
       </ul>
