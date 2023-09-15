@@ -172,3 +172,114 @@ body {
 	justify-content: center;
 	height: 17vh;
 }
+
+
+/* --------------------------- PRODUCTOS --------------------------- */
+
+/* filtros */
+
+.containerProductos {
+	display: flex;
+  }
+  
+  .filters {
+	flex: 0 0 200px;
+	background-color: #f0f0f0;
+	padding: 50px;
+  }
+  
+  .filters h2 {
+	font-weight: bold;
+	margin-top: 0;
+  }
+  
+  .filters ul {
+	list-style: none;
+	padding: 0;
+  }
+  
+  .filters li {
+	margin-bottom: 10px;
+	font-size: 13px;
+  }
+
+  .vermasBoton {
+	background-color: #b560b2;
+	color: white;
+	border: none;
+	padding: 10px 10px;
+	font-size: 13px;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	cursor: pointer;
+  }
+  
+  .vermasBoton:hover {
+	background-color: #e283e3;
+  }
+
+  .price-filter {
+	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	margin-bottom: 20px;
+  }
+    
+  .price-filter input {
+	width: 80px;
+	padding: 5px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+  }
+
+  .apply-button {
+	background-color: #b560b2;
+	color: white;
+	border: none;
+	padding: 5px 17px;
+	font-size: 15px;
+	border-radius: 5px;
+	cursor: pointer;
+  }
+  
+  .apply-button:hover {
+	background-color: #e283e3;
+  }
+
+/* main */
+  
+  .main-content {
+	flex: 1;
+	padding: 20px 200px;
+  }
+  
+  .grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 20px;
+  }
+  
+  .product-square {
+	background-color: #f0f0f0;
+	text-align: center;
+	padding: 20px;
+	border-radius: 5px;
+  }
+  
+  .product-square img {
+	width: 100%;
+	height: auto;
+	margin-bottom: 10px;
+  }
+  
+  .product-info {
+	font-size: 16px;
+  }
+  
+  .product-info p {
+	margin: 0;
+  }
+
+  

@@ -1,10 +1,11 @@
 import './index.css';
 import './normalize.css';
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import { Navbar } from './NavBar/Navbar'
 import { Index } from './Index'
 import { Footer } from './Footer/Footer'
+import { Productos } from './Productos/Productos'
 
 
 function App() {
@@ -12,13 +13,11 @@ function App() {
     <>
       <div>
       <Navbar />
-      <Index />
+      <Routes>
+        <Route element={<Index />} path='/home'/>
+        <Route element={< Productos />} path='/productos'/>
+      </Routes>
       <Footer />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Index />} />
-        </Routes>
-      </Router>
     </div>
     </>
   )
