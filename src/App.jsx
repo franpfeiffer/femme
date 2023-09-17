@@ -1,25 +1,31 @@
 import './index.css';
 import './normalize.css';
 import React from 'react';
-import { BrowserRouter, Routes, Route} from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import { Navbar } from './NavBar/Navbar'
 import { Index } from './Index'
 import { Footer } from './Footer/Footer'
-import { Productos } from './Productos/Productos'
+import { Comprascreen } from './CompraScreen/Comprascreen';
+import { Carritoscreen } from './CarritoScreen/Carritoscreen';
+import { ProductosProvider } from './context/ProductosProvider';
+import { CarritoProvider } from './context/CarritoProvider';
+
 
 
 function App() {
   return (
-    <>
-      <div>
+    <ProductosProvider >
+      <CarritoProvider>
       <Navbar />
       <Routes>
-        <Route element={<Index />} path='/'/>
-        <Route element={< Productos />} path='/productos'/>
+        <Route element={< Index />} path='/'/>
+        <Route element={< Comprascreen />} path='/productos'/>
+        <Route element={< Carritoscreen />} path='/carrito'/>
+        <Route path='/*' element={<Navigate to='/'/>}/>
       </Routes>
       <Footer />
-    </div>
-    </>
+      </CarritoProvider>
+    </ProductosProvider>
   )
 }
 

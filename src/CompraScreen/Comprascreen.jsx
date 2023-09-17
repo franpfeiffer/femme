@@ -1,6 +1,21 @@
-import React, { useState } from 'react';
+import { useContext, useEffect, useState } from "react"
+import { Card } from '../Card/Card';
+import { ProductosContext } from "../context/ProductoContext";
+import { ProductosProvider } from "../context/ProductosProvider";
+import { CarritoContext } from "../context/CarritoContext";
 
-export const Productos = () =>  {
+export const Comprascreen = () => {
+
+    const { productos } = useContext( ProductosContext )
+
+    const { agregarCompra, eliminarCompra } = useContext(CarritoContext)
+
+    const handleAgregar = (compra) =>{
+      agregarCompra(compra)
+    }
+    const handleQuitar = (id) =>{
+      eliminarCompra(id)
+    }
 
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
@@ -14,19 +29,13 @@ export const Productos = () =>  {
     };
   
     const handlePriceFilter = () => {
-      // Perform filtering logic based on minPrice and maxPrice
       console.log('Filter products between', minPrice, 'and', maxPrice);
     };
 
-    const productos = [
-      { name: 'Product 1', imageUrl: 'mesi.jpg', label: 'nashe' },
-      { name: 'Product 2', imageUrl: 'mesi.jpg', label: 'nashe' },
-      { name: 'Product 3', imageUrl: 'mesi.jpg', label: 'nashe' },
-      // Agregar mas productos aca
-    ];
 
-    return (
-    <div className="containerProductos">
+    return(
+
+<div className="containerProductos">
       <aside className="filters">
         <h2>Categorias</h2>
         <ul>
@@ -88,17 +97,22 @@ export const Productos = () =>  {
           <button className='apply-button' onClick={handlePriceFilter}>Aplicar</button>
         </div>
       </aside>
-      <main className="main-content">
-        <div className="grid">
-          {Array.from({ length: 12 }).map((_, index) => (
-            <div key={index} className="product-square">
-              <img src={`mesi.jpg`} alt={`Product ${index + 1}`} />
-              <p>Product</p>
-              <p>$$$</p>
-            </div>
-          ))}
-        </div>
-      </main>
+      <div className="productos-container">
+      {productos.map(producto => (
+        <Card 
+        key={producto.id}
+        imagen={producto.image}
+        titulo={producto.title}
+        descripcion={producto.description}
+        precio={producto.price}
+        handleAgregar={() => handleAgregar(producto)}
+        handleQuitar={() => handleQuitar(producto.id)}
+        >
+
+        </Card>
+    ))}
     </div>
-  );
+</div>
+
+    )
 }

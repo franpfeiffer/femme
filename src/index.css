@@ -282,4 +282,126 @@ body {
 	margin: 0;
   }
 
+/* --------------------------- DETALLES DE PRODUCTO --------------------------- */
+
+/* ProductPage.css */
+.product-page {
+	font-family: Arial, sans-serif;
+  }
   
+  .header {
+	background-color: purple;
+	padding: 10px;
+  }
+  
+  .logo {
+	max-width: 100px;
+  }
+  
+  .main2 {
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
+  }
+  
+  .product {
+	flex: 1;
+	background-color: #f2f2f2;
+	padding: 20px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	text-align: center;
+  }
+  
+  .add-to-cart {
+	background-color: purple;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-top: 10px;
+  }
+  
+  .description {
+	margin-top: 20px;
+  }
+  
+  .related-products {
+	flex: 1;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+  }
+  
+  .related-product {
+	width: 100px;
+	height: 100px;
+	background-color: green;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 5px;
+  }
+  
+  .white-x {
+	color: white;
+  }
+
+  
+/* --------------------------- CARRITO --------------------------- */
+
+  
+  .main3 {
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+  }
+  
+  table {
+	width: 80%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+  }
+  
+  table, th, td {
+	border: 1px solid #ddd;
+  }
+  
+  th, td {
+	padding: 8px;
+	text-align: left;
+  }
+  
+  .pay-button {
+	background-color: blue;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	cursor: pointer;
+	font-size: 18px;
+  }
+  
+  .user-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 20px;
+  }
+  
+  .total-box {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+	width: 80%;
+  }
+  
+  .green-box {
+	background-color: green;
+	color: white;
+	padding: 10px;
+	border-radius: 5px;
+	font-weight: bold;
+  }
+

@@ -1,6 +1,14 @@
 import { Link } from "react-router-dom";
+import { Badge } from "@mui/material";
+import { ShoppingCart } from "@mui/icons-material";
+import { useContext } from "react";
+import { CarritoContext } from "../context/CarritoContext";
+
+
 
 export const Navbar = () => {
+
+  const { listaCompras } = useContext(CarritoContext)
   return (
     <div className="navContainer">
       <nav className="nav">
@@ -14,7 +22,9 @@ export const Navbar = () => {
       <ul className="nav__list">
         <li className="nav__item"><Link to={'/'}>Home</Link></li>
         <li className="nav__item"><Link to={'/productos'}>Productos</Link></li>
-        <li className="nav__item">Carrito</li>
+        <li className="nav__item"><Link to={'/carrito'}><Badge badgeContent={listaCompras.length} color="secondary">
+                                                          <ShoppingCart color="action" />
+                                                        </Badge></Link></li>
       </ul>
     </nav>
     <div className="banner">
