@@ -1,6 +1,6 @@
 export const Navbar = () => {
   return (
-    <Navbar>
+    <>
       <div className="logoFemme">LOGO</div>
       <nav className="navBar">
         <ul>
@@ -9,7 +9,7 @@ export const Navbar = () => {
           <li><a href="#">Carrito</a></li>
         </ul>
       </nav>
-    </Navbar>
+    </>
   );
 };
 
