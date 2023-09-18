@@ -1,0 +1,78 @@
+/* Estilos para la tarjeta */
+.tarjeta {
+  display: flex;
+  flex-basis: calc(25% - 20px);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px;
+  background-color: #f0f0f0;
+  flex-direction: column; /* Cambia la dirección del contenido a columna */
+  align-items: flex-start; /* Alinea los elementos a la izquierda */
+  max-width: 300px; /* Ajusta el ancho máximo de la tarjeta */
+}
+
+.tarjeta-imagen-container {
+  text-align: center;
+}
+
+.tarjeta-imagen {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.tarjeta-contenido {
+  flex: 1;
+  display: flex;
+  flex-direction:column;
+  justify-content: space-between;
+  
+}
+
+.tarjeta-titulo {
+  margin: 5px;
+}
+
+.tarjeta-precio {
+  margin: 5px;
+  font-weight: bold;
+}
+
+.boton-agregar {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.boton-agregar:hover {
+  background-color: #45a049;
+}
+
+.boton-quitar {
+  background-color: #af4c4c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.boton-quitar:hover {
+  background-color: #a04545;
+}
+.boton-verMas{
+  background-color: rgb(66, 66, 250);
+  
+}
+  
+  /* Estilos para el carrito */
+  .carrito {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
