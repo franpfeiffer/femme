@@ -12,6 +12,7 @@ import { CarritoProvider } from './context/CarritoProvider';
 import { AdminLog } from './Admin/AdminLog';
 import { AdminPanel } from './Admin/AdminPanel';
 import { CreateProduct } from './Admin/CreateProduct';
+import { CrearStock } from './Admin/CrearStock';
 
 
 function App() {
@@ -31,13 +32,13 @@ function App() {
             <Route element={< AdminLog />} path='/Admin' />
             <Route element={< AdminPanel />} path='/adminPanel' />
             <Route element={< CreateProduct />} path='/create' />
-
+            <Route element={< CrearStock />} path='/create/:id' />
 
 
             <Route path='/*' element={<Navigate to='/' />} />
           </Routes>
 
-          <Footer />
+          {/* <Footer /> */}
         </CarritoProvider>
       </ProductosProvider>
 

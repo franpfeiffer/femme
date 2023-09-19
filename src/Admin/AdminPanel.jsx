@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 
 export const AdminPanel = () => {
     const [accesoPermitido, setAccesoPermitido] = useState(false);
@@ -36,7 +37,12 @@ export const AdminPanel = () => {
 
     return (
     
-    <div>AdminPanel {usuarioCookie}</div>
+    <div>AdminPanel {usuarioCookie}
+    
+    <Link to='/create'><button>CREAR PRODUCTO</button></Link>
+    
+    
+    </div>
     
     
     );
