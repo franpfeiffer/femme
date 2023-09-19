@@ -1,26 +1,30 @@
- import { useEffect, useState } from 'react'
-import { ProductosContext } from './ProductoContext'
-
+import { useEffect, useState } from 'react';
+import { ProductosContext } from './ProductoContext';
 
 export const ProductosProvider = ({ children }) => {
-
-    const [productos, setProductos] = useState([])
-
-    const fetchProductos = async () => {
-        const response = await fetch('https://fakestoreapi.com/products')
-        const data = await response.json()
-        console.log(data)
-        setProductos(data)
-    }
+    const [productos, setProductos] = useState([]);
 
     useEffect(() => {
-        fetchProductos()
+        const fetchProductos = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/productos', { method: 'GET' });
+                if (!response.ok) {
+                    throw new Error(`Fetch failed with status ${response.status}`);
+                }
+                const data = await response.json();
+                console.log(data);
+                setProductos(data);
+            } catch (error) {
+                console.error('Error fetching productos:', error);
+            }
+        };
 
-    }, [])
+        fetchProductos();
+    }, []);
 
     return (
-        <ProductosContext.Provider value={{productos}}>
+        <ProductosContext.Provider value={{ productos }}>
             {children}
         </ProductosContext.Provider>
-    )
-}
+    );
+};
