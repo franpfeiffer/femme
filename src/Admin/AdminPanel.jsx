@@ -34,5 +34,10 @@ export const AdminPanel = () => {
         return 'No autorizado';
     }
 
-    return <div>AdminPanel {usuarioCookie}</div>;
+    return (
+    
+    <div>AdminPanel {usuarioCookie}</div>
+    
+    
+    );
 };

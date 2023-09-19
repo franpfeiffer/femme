@@ -102,9 +102,9 @@ export const Comprascreen = () => {
         <Card 
         key={producto.id}
         imagen={producto.image}
-        titulo={producto.title}
-        descripcion={producto.description}
-        precio={producto.price}
+        titulo={producto.nombre}
+        descripcion={producto.descripcion}
+        precio={producto.precio}
         handleAgregar={() => handleAgregar(producto)}
         handleQuitar={() => handleQuitar(producto.id)}
         >
