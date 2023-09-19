@@ -20,8 +20,6 @@ export const AdminPanel = () => {
 
         if (response.status === 200) {
             const data = await response.json();
-            
-
             data.forEach(usuario => {
                 if (usuario.usuario === usuarioCookie) {
                     setAccesoPermitido(true)
