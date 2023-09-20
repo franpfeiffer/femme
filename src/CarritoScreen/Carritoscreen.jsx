@@ -1,23 +1,20 @@
 import { useContext } from 'react';
-import { CarritoContext } from "../context/CarritoContext"
-
+import { CarritoContext } from "../context/CarritoContext";
 
 export const Carritoscreen = () => {
-
     const { listaCompras, aumentarCantidad, disminuirCantidad, eliminarCompra } = useContext(CarritoContext)
 
     const calcularTotal = () => {
-        return listaCompras.reduce((total, item) => total + item.price * item.cantidad, 0 ).toFixed(2)
+        return listaCompras.reduce((total, item) => total + item.precio * item.cantidad, 0 ).toFixed(2)
     }
 
     const handleImpresion = () => {
-
         print()
     }
 
     return (
         <>
-            <table class="table">
+            <table className="custom-table">
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
@@ -27,49 +24,47 @@ export const Carritoscreen = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                        listaCompras.map(item => (
-                            <tr key={item.id}>
-                                <th>{item.title}</th>
-                                <td>{item.price}</td>
-                                <td>
-                                    <button 
-                                    className="btn btn-ouline-primary" 
-                                    onClick={ () => disminuirCantidad(item.id)}
-                                    >-</button>
-                                    <button className="btn btn-primary">{item.cantidad}</button>
-                                    <button 
-                                    className="btn btn-ouline-primary" 
-                                    onClick={ () => aumentarCantidad(item.id)}
-                                    >+</button>
-                                </td>
-                                <td><button
+                    {listaCompras.map(item => (
+                        <tr key={item.id}>
+                            <td>{item.nombre}</td>
+                            <td>${item.precio}</td>
+                            <td>
+                                <button 
+                                    className="btn btn-quantity"
+                                    onClick={() => disminuirCantidad(item.id)}
+                                >-</button>
+                                <span className="quantity">{item.cantidad}</span>
+                                <button 
+                                    className="btn btn-quantity"
+                                    onClick={() => aumentarCantidad(item.id)}
+                                >+</button>
+                            </td>
+                            <td>
+                                <button
                                     type="button"
-                                    className="btn btn-danger"
-                                    onClick={()=>eliminarCompra(item.id)}
-                                >Eliminar
-                                </button>
-                                </td>
-                            </tr>
-                        ))
-                    }
+                                    className="btn btn-delete"
+                                    onClick={() => eliminarCompra(item.id)}
+                                >Eliminar</button>
+                            </td>
+                        </tr>
+                    ))}
 
-                    <th><b>TOTAL: </b></th>
-                    <td></td>
-                    <td></td>
-                    <td>${calcularTotal()}</td>
-
+                    <tr>
+                        <th colSpan="3">TOTAL:</th>
+                        <td className="total-amount">${calcularTotal()}</td>
+                    </tr>
                 </tbody>
             </table>
 
             <div className="d-grid gap-2">
                 <button 
-                className="btn btn-primary"
-                onClick={handleImpresion}
-                disabled={listaCompras<1}
-
-                >COMPRAR</button>
+                    className={`btn btn-buy ${listaCompras.length < 1 ? 'disabled' : ''}`}
+                    onClick={handleImpresion}
+                    disabled={listaCompras.length < 1}
+                >
+                    COMPRAR
+                </button>
             </div>
         </>
-    )
-}
+    );
+};
