@@ -1,35 +1,8 @@
-import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
+import useAuthorization from './HooksAdmin/useAuthorization';
 
 export const AdminPanel = () => {
-    const [accesoPermitido, setAccesoPermitido] = useState(false);
-    const usuarioCookie = Cookies.get('usuario');
-    useEffect(() => {
-        if (usuarioCookie) {
-            fetchUser();
-        }
-    }, [usuarioCookie]);
-    const fetchUser = async () => {
-        const response = await fetch('http://localhost:3000/admin/listAdmin', {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                Authorization: `Bearer ${usuarioCookie}`,
-            },
-        });
-
-        if (response.status === 200) {
-            const data = await response.json();
-            data.forEach(usuario => {
-                if (usuario.usuario === usuarioCookie) {
-                    setAccesoPermitido(true)
-                }
-            });
-        } else {
-            setAccesoPermitido(false);
-        }
-    };
+    const accesoPermitido = useAuthorization();
 
     if (!accesoPermitido) {
         return 'No autorizado';
@@ -37,11 +10,11 @@ export const AdminPanel = () => {
 
     return (
     
-    <div>AdminPanel {usuarioCookie}
+    <div>AdminPanel
     
     <Link to='/create'><button>CREAR PRODUCTO</button></Link>
     
-    
+
     </div>
     
     

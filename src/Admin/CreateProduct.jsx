@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
-
+import useAuthorization from "./HooksAdmin/useAuthorization";
 
 export const CreateProduct = () => {
     const usuarioCookie = Cookies.get('usuario');
     const [categoria, setCategoria] = useState([]);
     const [marca, setMarca] = useState([]);
+    const accesoPermitido = useAuthorization();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nombre: "",
@@ -91,7 +92,9 @@ export const CreateProduct = () => {
         fetchCategoria();
     }, []);
 
-
+    if (!accesoPermitido) {
+        return 'acceso denegado';
+    }
 
     return (
         <form

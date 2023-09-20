@@ -3,40 +3,34 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from "react"
 import Cookies from 'js-cookie';
-import { useNavigate } from "react-router-dom";
-
+import useAuthorization from "./HooksAdmin/useAuthorization";
 
 export const CrearStock = () => {
     const usuarioCookie = Cookies.get('usuario');
     const location = useLocation();
+    const [stockEntries, setStockEntries] = useState([]);
     const id = location.pathname.split('/')[2];
-    const navigate = useNavigate();
-
+    const accesoPermitido = useAuthorization();
     const [formData, setFormData] = useState({
         coloreId: "",
         talleId: "",
         stock: "",
     });
     const handleInputChange = (e) => {
-        const { name, value, type, files } = e.target;
-    
-        if (type === "file") {
-            setFormData({ ...formData, [name]: files[0] });
-        } else {
-            // Convierte el valor a número entero antes de asignarlo
-            setFormData({ ...formData, [name]: Number(value) });
-        }
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
+
         try {
             const response = await fetch(`http://localhost:3000/productos/${id}/createStock`, {
                 method: "POST",
-                body: new FormData(e.target),
+                body: JSON.stringify(formData),
                 credentials: 'include',
                 headers: {
+                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${usuarioCookie}`,
                 },
             });
@@ -44,26 +38,24 @@ export const CrearStock = () => {
             if (!response.ok) {
                 throw new Error(`Error al enviar el formulario: ${response.status}`);
             }
-            console.log(formData);
 
             const responseData = await response.json();
-            console.log(responseData);
-
-            setProducto((prevProducto) => {
-                const updatedProducto = { ...prevProducto };
-                updatedProducto.prod_colores_talle.push(responseData);
-                return updatedProducto;
-            });
+            setStockEntries((prevEntries) => [...prevEntries, responseData]);
 
             setFormData({
                 coloreId: "",
                 talleId: "",
                 stock: "",
             });
+
         } catch (error) {
             console.error("Error al enviar el formulario:", error);
         }
     };
+
+
+
+
 
 
     const [talle, setTalle] = useState([])
@@ -77,7 +69,6 @@ export const CrearStock = () => {
                     throw new Error(`Fetch failed with status ${response.status}`);
                 }
                 const data = await response.json();
-                console.log(data);
                 setTalle(data);
             } catch (error) {
                 console.error('Error fetching componentes, marca:', error);
@@ -112,7 +103,6 @@ export const CrearStock = () => {
                     throw new Error(`Fetch failed with status ${response.status}`);
                 }
                 const data = await response.json();
-                console.log(producto);
                 setProducto(data);
 
             } catch (error) {
@@ -122,11 +112,9 @@ export const CrearStock = () => {
         fetchProducto();
     }, [id]);
 
-
-
-
-    console.log(formData.coloreId)
-
+    if (!accesoPermitido) {
+        return 'acceso denegado';
+    }
 
     return (
         <div>
@@ -135,6 +123,7 @@ export const CrearStock = () => {
                     name="coloreId"
                     value={formData.coloreId}
                     onChange={handleInputChange}
+
                 >
                     <option value="" disabled>Selecciona un color</option>
                     {color.map((item) => (
@@ -159,15 +148,15 @@ export const CrearStock = () => {
                     name="stock"
                     value={formData.stock}
                     onChange={handleInputChange}
-                    className="input-create-productos"
-                    placeholder="stock"
+                    className="input-create-stock"
+                    placeholder="Stock"
                 />
                 <button>Enviar</button>
             </form>
 
             <div>
-                {producto.prod_colores_talle ? (
-                    producto.prod_colores_talle.map((item) => (
+                {stockEntries.length > 0 ? (
+                    stockEntries.map((item) => (
                         <div key={item.id}>
                             <p>{item.coloreId}</p>
                             <p>{item.talleId}</p>
@@ -175,7 +164,7 @@ export const CrearStock = () => {
                         </div>
                     ))
                 ) : (
-                    <p>No hay datos disponibles</p>
+                    <p>No hay datos disponibles actuales</p>
                 )}
             </div>
         </div>
