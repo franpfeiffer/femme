@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import useAuthorization from './HooksAdmin/useAuthorization';
-
 export const AdminPanel = () => {
     const accesoPermitido = useAuthorization();
 
@@ -13,7 +12,7 @@ export const AdminPanel = () => {
     <div>AdminPanel
     
     <Link to='/create'><button>CREAR PRODUCTO</button></Link>
-    
+        
 
     </div>
     
