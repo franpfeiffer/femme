@@ -13,6 +13,7 @@ import { AdminLog } from './Admin/AdminLog';
 import { AdminPanel } from './Admin/AdminPanel';
 import { CreateProduct } from './Admin/CreateProduct';
 import { CrearStock } from './Admin/CrearStock';
+import { SearchPage } from './SearchFetch/SearchPage';
 
 
 function App() {
@@ -27,6 +28,9 @@ function App() {
             <Route element={< Index />} path='/' />
             <Route element={< Comprascreen />} path='/productos' />
             <Route element={< Carritoscreen />} path='/carrito' />
+            <Route element={< SearchPage />} path='/busqueda' />
+
+
 
 
             <Route element={< AdminLog />} path='/Admin' />

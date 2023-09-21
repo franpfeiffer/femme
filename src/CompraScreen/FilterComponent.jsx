@@ -35,17 +35,16 @@ const FiltrosComponent = ({ onFilterChange }) => {
 
     const handlePriceFilter = () => {
         console.log('Filter products between', minPrice, 'and', maxPrice);
-
-        onFilterChange({ minPrice, maxPrice });
     };
 
-    const handleForm = async (e) =>{
+    const handleForm = async (e) => {
         e.preventDefault();
-        try{
+        try {
             const response = await fetch(`http://localhost:3000/filtrado/filtros?categoria=${categoriaSeleccionada}&precio=${minPrice}-${maxPrice}&talles=${talleSeleccionado}&colores=${colorSeleccionado}`, { method: 'GET' });
             const data = await response.json();
             console.log(data);
-        }catch(err){
+            onFilterChange(data);
+        } catch (err) {
             console.log(err);
         }
     }
@@ -54,7 +53,7 @@ const FiltrosComponent = ({ onFilterChange }) => {
 
     return (
         <div className="filters">
-            <form  onSubmit={handleForm}>
+            <form onSubmit={handleForm}>
 
                 <h2>Filtros</h2>
                 <h2>Categorias</h2>
@@ -62,7 +61,7 @@ const FiltrosComponent = ({ onFilterChange }) => {
                 <h3>Talles</h3>
                 <TalleComponent onTalleChange={handleTalleChange} />
                 <h3>Colores</h3>
-                <ColoresComponent onColorChange={handleColorChange}/>
+                <ColoresComponent onColorChange={handleColorChange} />
                 <h3>Precios</h3>
                 <div className="price-filter">
                     <input

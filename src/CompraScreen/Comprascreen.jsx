@@ -7,9 +7,10 @@ import { CarritoContext } from "../context/CarritoContext";
 import FiltrosComponent from "./FilterComponent";
 export const Comprascreen = () => {
 
-  const { productos } = useContext(ProductosContext)
-
+  const { productos: productosOriginales } = useContext(ProductosContext);
   const { agregarCompra, eliminarCompra } = useContext(CarritoContext)
+  const [productosFiltrados, setProductosFiltrados] = useState([]);
+
 
   const handleAgregar = (compra) => {
     agregarCompra(compra)
@@ -18,37 +19,30 @@ export const Comprascreen = () => {
     eliminarCompra(id)
   }
 
-  const handlePriceFilter = () => {
-    console.log('Filter products between');
+  const handleFilterChange = (filteredData) => {
+    setProductosFiltrados(filteredData)
   };
 
 
   return (
-
     <div className="containerProductos">
-
       <aside className="filters">
-        
-          <FiltrosComponent onFilterChange={handlePriceFilter} />
-        
+        <FiltrosComponent onFilterChange={handleFilterChange} />
       </aside>
 
       <div className="productos-container">
-        {productos.map(producto => (
+        {(productosFiltrados.length > 0 ? productosFiltrados : productosOriginales).map((producto) => (
           <Card
             key={producto.id}
-            imagen={producto.image}
-            titulo={producto.nombre}
+            imagen={producto.imagene[0]?.url}
+            nombre={producto.nombre}
             descripcion={producto.descripcion}
             precio={producto.precio}
             handleAgregar={() => handleAgregar(producto)}
             handleQuitar={() => handleQuitar(producto.id)}
-          >
-
-          </Card>
+          />
         ))}
       </div>
     </div>
-
-  )
+  );
 }
