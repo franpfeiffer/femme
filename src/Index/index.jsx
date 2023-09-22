@@ -9,6 +9,9 @@ export const Index = () => {
   
     return (
       <div>
+        <div className="banner">
+        <p>Banner</p>
+      </div>
         <h3 className="tituloProductos">Productos Destacados</h3>
         <div className="productos">
           {productos.map((product, index) => (

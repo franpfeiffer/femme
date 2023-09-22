@@ -34,6 +34,7 @@ export const Comprascreen = () => {
         {(productosFiltrados.length > 0 ? productosFiltrados : productosOriginales).map((producto) => (
           <Card
             key={producto.id}
+            verMas={producto.id}
             imagen={producto.imagene[0]?.url}
             nombre={producto.nombre}
             descripcion={producto.descripcion}

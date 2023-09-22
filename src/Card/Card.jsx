@@ -31,7 +31,7 @@ export const Card = ({ imagen, nombre, precio, handleAgregar, handleQuitar, hand
                         Agregar Carrito
                     </button>
                 )}
-                <Link to={verMas}><button type='button' className="boton-agregar boton-verMas">Ver Mas</button></Link>
+                <Link to={`/${verMas}/detalles-del-producto`}><button type='button' className="boton-agregar boton-verMas">Ver Mas</button></Link>
             </div>
         </div>
 

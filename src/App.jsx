@@ -14,6 +14,7 @@ import { AdminPanel } from './Admin/AdminPanel';
 import { CreateProduct } from './Admin/CreateProduct';
 import { CrearStock } from './Admin/CrearStock';
 import { SearchPage } from './SearchFetch/SearchPage';
+import { DetalleProducto } from './DetalleProducto/DetalleProducto';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route element={< Comprascreen />} path='/productos' />
             <Route element={< Carritoscreen />} path='/carrito' />
             <Route element={< SearchPage />} path='/busqueda' />
+            <Route element={< DetalleProducto />} path='/:id/detalles-del-producto' />
 
 
 

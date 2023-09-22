@@ -77,26 +77,37 @@ body {
 }
 
 .nav__search {
+	display: inline-flex;
+	vertical-align: middle; /* Alinea verticalmente en el centro si es necesario */
+  }
+
+.form-busqueda{
 	display: flex;
-	align-items: center;
-	margin: auto; 
-  }
+}
   
-  .nav__search input[type="text"] {
-	padding: 5px;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	margin-right: 5px;
-  }
-  
-  .nav__search button {
+  .search-button {
+	display: inline-block;
+	margin-left: 5px; /* Agrega margen izquierdo para separar el botón del campo de búsqueda */
 	background-color: #42A5F5;
 	color: #fff;
 	border: none;
 	border-radius: 3px;
 	padding: 5px 10px;
 	cursor: pointer;
+	vertical-align: middle; /* Añade esta línea */
+	height: 30px;
+	margin: 0;
   }
+  
+  
+  .nav__search input[type="text"] {
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin-right: 5px;
+	vertical-align: middle; /* Añade esta línea */
+  }
+  
 
 .banner {
 	background-color: #777777;
@@ -353,80 +364,98 @@ body {
 
 /* Estilos generales para el contenedor del carrito */
 .custom-table {
-	width: auto;
-	height: 423px;
-	margin: 80px auto;
-	background: #FFFFFF;
-	box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
-	border-radius: 6px;
-   
-	display: flex;
-	flex-direction: column;
+	width: 100%;
+	margin: 20px auto;
+	background: #fff;
+	box-shadow: 0px 0px 10px rgba(195, 57, 57, 0.1);
+	border-radius: 8px;
+	overflow: hidden;
   }
   
-  /* Estilos para el encabezado de la tabla */
-  .custom-table th {
-	background-color: #686161;
-	color: #fff;
-	font-weight: bold;
-	padding: 12px;
-	text-align: left;
+  .custom-table table {
+	width: 100%;
+	border-collapse: collapse;
   }
   
-  /* Estilos para las filas de la tabla */
+  .custom-table th,
   .custom-table td {
-	padding: 10px;
-	border-bottom: 1px solid #ccc;
+	padding: 12px 20px;
+	text-align: center;
   }
   
-  /* Estilos para los botones de cantidad */
-  .btn-quantity {
-	background-color: #333;
+  .custom-table th {
+	background-color: #bb3468;
 	color: #fff;
-	border: none;
-	padding: 5px 10px;
-	margin: 0 10px;
-	cursor: pointer;
   }
   
-  /* Estilos para el botón de eliminar */
-  .btn-delete {
+  .custom-table tbody tr:nth-child(even) {
+	background-color: #f2f2f2;
+  }
+  
+  .custom-table .btn-quantity,
+  .custom-table .btn-delete {
 	background-color: #f00;
 	color: #fff;
 	border: none;
-	padding: 5px 10px;
+	border-radius: 5px;
+	padding: 6px 12px;
 	cursor: pointer;
+	transition: background-color 0.2s ease;
   }
   
-  /* Estilos para el botón de compra */
-  .btn-buy {
+  .custom-table .btn-quantity:hover,
+  .custom-table .btn-delete:hover {
+	background-color: #d00;
+  }
+  
+  .custom-table .btn-quantity {
+	margin-right: 5px;
+  }
+  
+  .custom-table .btn-delete {
+	margin-left: 5px;
+  }
+  
+  .custom-table .total-row {
+	background-color: #333;
+	color: #fff;
+  }
+  
+  .custom-table .total-amount {
+	font-weight: bold;
+  }
+  
+  .custom-table .btn-buy {
 	background-color: #007bff;
 	color: #fff;
 	border: none;
+	border-radius: 5px;
 	padding: 10px 20px;
 	cursor: pointer;
 	text-transform: uppercase;
 	font-weight: bold;
+	margin: 20px auto;
+	display: block;
+	width: 50%;
   }
   
-  /* Estilos para el botón de compra cuando está deshabilitado */
-  .btn-buy.disabled {
+  .custom-table .btn-buy.disabled {
 	background-color: #ccc;
 	cursor: not-allowed;
   }
   
-  /* Estilos para el total */
-  .total-amount {
-	font-weight: bold;
-  }
-  
-  /* Estilos para el contenedor del botón de compra */
   .d-grid {
-	margin-top: 20px;
+	text-align: center;
   }
   
-  /* Estilos adicionales según tu preferencia */
-  /* Por ejemplo, puedes ajustar el color de fondo del cuerpo de la tabla, el color de texto, los márgenes, etc. */
+  @media (max-width: 768px) {
+	.custom-table {
+	  margin: 20px;
+	}
+	.custom-table .btn-buy {
+	  width: 100%;
+	}
+  }
   
 
 /* --------------------------- Admin Login --------------------------- */
