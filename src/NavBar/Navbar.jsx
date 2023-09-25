@@ -34,9 +34,6 @@ export const Navbar = () => {
           </Badge></Link></li>
         </ul>
       </nav>
-      <div className="banner">
-        <p>Banner</p>
-      </div>
     </div>
   );
 }

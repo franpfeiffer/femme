@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import '../index.css';
 
 export const SearchComponent = ({ contenidoSearch }) => {
     const [search, setSearch] = useState([]);
@@ -38,9 +39,9 @@ export const SearchComponent = ({ contenidoSearch }) => {
 
     return (
         <div className="nav__search">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className='form-busqueda'>
                 <input type="text" value={formData.search} onChange={handleInputChange} name='search' />
-                <button>Buscar</button>
+                <button className="search-button">Buscar</button>
             </form>
         </div>
     )

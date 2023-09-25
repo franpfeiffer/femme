@@ -1,16 +1,16 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { CarritoContext } from "../context/CarritoContext";
 
 export const Carritoscreen = () => {
-    const { listaCompras, aumentarCantidad, disminuirCantidad, eliminarCompra } = useContext(CarritoContext)
+    const { listaCompras, aumentarCantidad, disminuirCantidad, eliminarCompra, sesionesActivas } = useContext(CarritoContext);
 
     const calcularTotal = () => {
         return listaCompras.reduce((total, item) => total + item.precio * item.cantidad, 0 ).toFixed(2)
-    }
+    };
 
     const handleImpresion = () => {
         print()
-    }
+    };
 
     return (
         <>
@@ -43,7 +43,9 @@ export const Carritoscreen = () => {
                                 <button
                                     type="button"
                                     className="btn btn-delete"
-                                    onClick={() => eliminarCompra(item.id)}
+                                    onClick={() => {
+                                        eliminarCompra(item.id);
+                                    }}
                                 >Eliminar</button>
                             </td>
                         </tr>
@@ -54,9 +56,7 @@ export const Carritoscreen = () => {
                         <td className="total-amount">${calcularTotal()}</td>
                     </tr>
                 </tbody>
-            </table>
-
-            <div className="d-grid gap-2">
+                <div className="d-grid gap-2">
                 <button 
                     className={`btn btn-buy ${listaCompras.length < 1 ? 'disabled' : ''}`}
                     onClick={handleImpresion}
@@ -65,6 +65,7 @@ export const Carritoscreen = () => {
                     COMPRAR
                 </button>
             </div>
+            </table>
         </>
     );
 };
