@@ -76,3 +76,11 @@
     flex-wrap: wrap;
     justify-content: space-between;
   }
+
+.productos-container{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-shrink: 1;
+}
