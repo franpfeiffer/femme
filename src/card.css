@@ -1,74 +1,71 @@
 /* Estilos para la tarjeta */
+/* Estilo para la tarjeta de productos */
 .tarjeta {
+  width: 300px;
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin: 16px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
   display: flex;
-  flex-basis: calc(25% - 20px);
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px;
-  margin: 10px;
-  background-color: #f0f0f0;
-  flex-direction: column; /* Cambia la dirección del contenido a columna */
-  align-items: flex-start; /* Alinea los elementos a la izquierda */
-  max-width: 300px; /* Ajusta el ancho máximo de la tarjeta */
-}
-
-.tarjeta-imagen-container {
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
+/* Estilo para la imagen */
+.tarjeta-imagen-container {
+  margin-bottom: 16px;
+}
+
 .tarjeta-imagen {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  max-height: 200px;
   object-fit: cover;
-  border-radius: 4px;
+  border: 1px solid #ddd;
 }
 
-.tarjeta-contenido {
-  flex: 1;
-  display: flex;
-  flex-direction:column;
-  justify-content: space-between;
-  
-}
-
+/* Estilo para el título */
 .tarjeta-titulo {
-  margin: 5px;
+  font-size: 1.25rem;
+  margin-bottom: 8px;
 }
 
+/* Estilo para el precio */
 .tarjeta-precio {
-  margin: 5px;
-  font-weight: bold;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 16px;
 }
 
-.boton-agregar {
-  background-color: #4caf50;
-  color: white;
+/* Estilo para los botones */
+.boton-quitar,
+.boton-agregar,
+.boton-verMas {
+  background-color: #007bff;
+  color: #fff;
   border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
+  padding: 8px 16px;
   cursor: pointer;
+  margin: 8px;
+  font-size: 1rem;
 }
 
-.boton-agregar:hover {
-  background-color: #45a049;
+.boton-quitar:hover,
+.boton-agregar:hover,
+.boton-verMas:hover {
+  background-color: #0056b3;
 }
 
-.boton-quitar {
-  background-color: #af4c4c;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
+/* Estilo para el botón "Ver Más" */
+.boton-verMas {
+  background-color: #28a745;
 }
 
-.boton-quitar:hover {
-  background-color: #a04545;
+.boton-verMas:hover {
+  background-color: #1e7e34;
 }
-.boton-verMas{
-  background-color: rgb(66, 66, 250);
-  
-}
+
   
   /* Estilos para el carrito */
   .carrito {
@@ -83,4 +80,18 @@
   flex-direction: row;
   justify-content: space-around;
   flex-shrink: 1;
+}
+
+.button-eliminar{
+	background-color: #d00;
+}
+.button-eliminar:hover{
+  background-color: rgba(221, 0, 0, 0.738);
+}
+.button-editar{
+  background-color: #ddff00;
+  color: #333;
+}
+.button-editar:hover{
+  background-color: #ddff00ad;
 }

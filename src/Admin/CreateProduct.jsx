@@ -101,84 +101,84 @@ export const CreateProduct = () => {
             onSubmit={handleSubmit}
             encType="multipart/form-data"
         >
-                            <input
-                                type="text"
-                                name="nombre"
-                                value={formData.nombre}
-                                onChange={handleInputChange}
+            <input
+                type="text"
+                name="nombre"
+                value={formData.nombre}
+                onChange={handleInputChange}
                 className="input-create-productos"
                 placeholder="nombre"
-                            />
+            />
 
-                            <input
-                                type="text"
-                                name="precio"
-                                value={formData.precio}
-                                onChange={handleInputChange}
+            <input
+                type="text"
+                name="precio"
+                value={formData.precio}
+                onChange={handleInputChange}
                 className="input-create-productos"
                 placeholder="precio"
-                            />
+            />
 
-                            <input
-                                type="text"
-                                name="descripcion"
-                                value={formData.descripcion}
-                                onChange={handleInputChange}
+            <input
+                type="text"
+                name="descripcion"
+                value={formData.descripcion}
+                onChange={handleInputChange}
                 className="input-create-productos"
                 placeholder="descripcion"
-                            />
+            />
 
-                            <select
-                                name="categoriaId"
-                                value={formData.categoriaId}
-                                onChange={handleInputChange}
-                            >
-                                {categoria.map((item) => (
-                                    <option value={item.id} key={item.id}>
-                                        {item.nombre}
-                                    </option>
-                                ))}
-                            </select>
+            <select
+                name="categoriaId"
+                value={formData.categoriaId}
+                onChange={handleInputChange}
+            >
+                {categoria.map((item) => (
+                    <option value={item.id} key={item.id}>
+                        {item.nombre}
+                    </option>
+                ))}
+            </select>
 
-                            <select
-                                name="marcaId"
-                                value={formData.marcaId}
-                                onChange={handleInputChange}
-                            >
-                                {marca.map((item) => (
-                                    <option value={item.id} key={item.id}>
-                                        {item.nombre}
-                                    </option>
-                                ))}
-                            </select>
+            <select
+                name="marcaId"
+                value={formData.marcaId}
+                onChange={handleInputChange}
+            >
+                {marca.map((item) => (
+                    <option value={item.id} key={item.id}>
+                        {item.nombre}
+                    </option>
+                ))}
+            </select>
 
-                            <input
-                                type="text"
-                                name="descuento"
-                                value={formData.descuento}
-                                onChange={handleInputChange}
+            <input
+                type="text"
+                name="descuento"
+                value={formData.descuento}
+                onChange={handleInputChange}
                 placeholder="descuento"
-                            />
+            />
 
-                            <select
-                                name="destacado"
-                                value={formData.destacado}
-                                onChange={handleInputChange}
-                            >
-                                <option value="false">false</option>
-                                <option value="true">true</option>
-                            </select>
+            <select
+                name="destacado"
+                value={formData.destacado}
+                onChange={handleInputChange}
+            >
+                <option value="false">false</option>
+                <option value="true">true</option>
+            </select>
 
-                            <input
-                                type="file"
-                                name="imagen1"
-                                onChange={handleInputChange}
-                            />
+            <input
+                type="file"
+                name="imagen1"
+                onChange={handleInputChange}
+            />
 
             <button type="submit" className="boton-enviar-create">
-                            Enviar
-                        </button>
-                    </form>
+                Enviar
+            </button>
+        </form>
     )
 
 }

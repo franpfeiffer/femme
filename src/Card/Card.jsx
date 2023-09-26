@@ -1,8 +1,11 @@
 import { useState } from "react"
 import '../card.css';
 import { Link } from "react-router-dom";
-export const Card = ({ imagen, nombre, precio, handleAgregar, handleQuitar, handleAumentar, handleDisminuir,verMas}) => {
-
+import useAuthorization from "../Admin/HooksAdmin/useAuthorization";
+import { DeleteButton } from "./Buttons/DeleteButton";
+import { EditButton } from "./Buttons/EditButton";
+export const Card = ({ imagen, nombre, precio, handleAgregar, handleQuitar, handleAumentar, handleDisminuir, verMas, botonEliminar, botonEditar}) => {
+    const accesoPermitido = useAuthorization();
     const [added, setAdded] = useState(false)
 
     const clickAgregar = () => {
@@ -17,7 +20,7 @@ export const Card = ({ imagen, nombre, precio, handleAgregar, handleQuitar, hand
     return (
         <div className="tarjeta">
             <div className="tarjeta-imagen-container">
-                <img src={ `http://localhost:3000/${imagen}`} alt={nombre} className="tarjeta-imagen" />
+                <img src={`http://localhost:3000/${imagen}`} alt={nombre} className="tarjeta-imagen" />
             </div>
             <div className="tarjeta-contenido">
                 <h3 className="tarjeta-titulo">{nombre}</h3>
@@ -31,6 +34,14 @@ export const Card = ({ imagen, nombre, precio, handleAgregar, handleQuitar, hand
                         Agregar Carrito
                     </button>
                 )}
+                {accesoPermitido ?
+                    (
+                        <DeleteButton id={botonEliminar}/>
+
+                    ) : null
+                }{accesoPermitido ?
+                    ( <EditButton id={botonEditar}/>) : null
+                }
                 <Link to={`/${verMas}/detalles-del-producto`}><button type='button' className="boton-agregar boton-verMas">Ver Mas</button></Link>
             </div>
         </div>

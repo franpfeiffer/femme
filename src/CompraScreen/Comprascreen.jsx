@@ -41,6 +41,8 @@ export const Comprascreen = () => {
             precio={producto.precio}
             handleAgregar={() => handleAgregar(producto)}
             handleQuitar={() => handleQuitar(producto.id)}
+            botonEliminar={producto.id}
+            botonEditar={producto.id}
           />
         ))}
       </div>
