@@ -1,41 +1,47 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect, useContext } from 'react';
+import { Card } from '../Card/Card';
+import { ProductosContext } from "../context/ProductoContext";
+import { CarritoContext } from "../context/CarritoContext";
 
 export const Index = () => {
-
+  const { productos: productosOriginales } = useContext(ProductosContext);
+  const { agregarCompra, eliminarCompra } = useContext(CarritoContext)
   const [productosDestacados, setProductosDestacados] = useState([]);
   const [productosOferta, setProductosOferta] = useState([]);
   const [productosUltimos, setProductosUltimos] = useState([]);
-
   useEffect(() => {
-    Promise.all([
-      fetch('http://localhost:3000/productos?destacado=true').then(response => {
+    const ultimosProductos = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/productos', { method: 'GET' });
         if (!response.ok) {
-          throw new Error('No se pudo obtener la respuesta de la API.');
+          throw new Error(`Fetch failed with status ${response.status}`);
         }
-        return response.json();
-      }),
-      fetch('http://localhost:3000/productos?descuento=true').then(response => {
-        if (!response.ok) {
-          throw new Error('No se pudo obtener la respuesta de la API.');
-        }
-        return response.json();
-      }),
-      fetch('http://localhost:3000/ultimos').then(response => {
-        if (!response.ok) {
-          throw new Error('No se pudo obtener la respuesta de la API.');
-        }
-        return response.json();
-      })
-    ])
-      .then(([destacadosData, ofertaData, ultimosData]) => {
-        setProductosDestacados(destacadosData);
-        setProductosOferta(ofertaData);
-        setProductosUltimos(ultimosData);
-      })
-      .catch(error => {
-        console.log('Error al fetchear la API:', error);
-      });
-  }, []);
+        const data = await response.json();
+        const ultimos3Productos = data
+          .sort((a, b) => b.id - a.id)
+          .slice(0, 3);
+        const productosConDescuento = data.filter((producto) => producto.descuento > 0);
+        const productosDestacados = data.filter((producto) => producto.destacado);
+        
+        setProductosOferta(productosConDescuento)
+        setProductosUltimos(ultimos3Productos);
+        setProductosDestacados(productosDestacados)
+      } catch (error) {
+        console.error('Error fetching componentes, categoria:', error);
+      }
+    }
+    ultimosProductos()
+  }, [])
+
+
+
+  const handleAgregar = (compra) => {
+    agregarCompra(compra)
+  }
+  const handleQuitar = (id) => {
+    eliminarCompra(id)
+  }
 
   return (
     <div>
@@ -45,31 +51,52 @@ export const Index = () => {
       <h3 className="tituloProductos">Productos Destacados</h3>
       <div className="productos">
         {productosDestacados.map((producto, index) => (
-          <div key={index}>
-            <img src={producto.imagene} alt={producto.nombre} />
-            <p>{producto.nombre}</p>
-            <p>{producto.label}</p>
-          </div>
-        ))}
-      </div>
-      <h3 className="tituloProductos">Nuevos Productos</h3>
-      <div className="productos">
-        {productosOferta.map((producto, index) => (
-          <div key={index}>
-            <img src={producto.imageUrl} alt={producto.name} />
-            <p>{producto.name}</p>
-            <p>{producto.label}</p>
-          </div>
+          <Card
+            key={producto.id}
+            verMas={producto.id}
+            imagen={producto.imagene[0]?.url}
+            nombre={producto.nombre}
+            descripcion={producto.descripcion}
+            precio={producto.precio}
+            handleAgregar={() => handleAgregar(producto)}
+            handleQuitar={() => handleQuitar(producto.id)}
+            botonEliminar={producto.id}
+            botonEditar={producto.id}
+          />
         ))}
       </div>
       <h3 className="tituloProductos">OFERTAS</h3>
       <div className="productos">
+        {productosOferta.map((producto, index) => (
+          <Card
+            key={producto.id}
+            verMas={producto.id}
+            imagen={producto.imagene[0]?.url}
+            nombre={producto.nombre}
+            descripcion={producto.descripcion}
+            precio={producto.precio}
+            handleAgregar={() => handleAgregar(producto)}
+            handleQuitar={() => handleQuitar(producto.id)}
+            botonEliminar={producto.id}
+            botonEditar={producto.id}
+          />
+        ))}
+      </div>
+      <h3 className="tituloProductos">NUEVOS INGRESOS</h3>
+      <div className="productos">
         {productosUltimos.map((producto, index) => (
-          <div key={index}>
-            <img src={producto.imageUrl} alt={producto.name} />
-            <p>{producto.name}</p>
-            <p>{producto.label}</p>
-          </div>
+          <Card
+            key={producto.id}
+            verMas={producto.id}
+            imagen={producto.imagene[0]?.url}
+            nombre={producto.nombre}
+            descripcion={producto.descripcion}
+            precio={producto.precio}
+            handleAgregar={() => handleAgregar(producto)}
+            handleQuitar={() => handleQuitar(producto.id)}
+            botonEliminar={producto.id}
+            botonEditar={producto.id}
+          />
         ))}
       </div>
       <div className="line"></div>

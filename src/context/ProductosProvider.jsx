@@ -12,7 +12,6 @@ export const ProductosProvider = ({ children }) => {
                     throw new Error(`Fetch failed with status ${response.status}`);
                 }
                 const data = await response.json();
-                console.log(data);
                 setProductos(data);
             } catch (error) {
                 console.error('Error fetching productos:', error);
