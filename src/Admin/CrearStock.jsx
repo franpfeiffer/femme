@@ -137,6 +137,7 @@ export const CrearStock = () => {
                     value={formData.talleId}
                     onChange={handleInputChange}
                 >
+                    <option value="" disabled>Selecciona un color</option>
                     {talle.map((item) => (
                         <option value={item.id} key={item.id}>
                             {item.nombre}
