@@ -29,18 +29,18 @@ const TalleComponent = ({ onTalleChange }) => {
 
     return (
         <ul>
-            {talle.map((item) => (
+            {talle.length > 0 && talle.map((item) => (
                 <li key={item.id}>
                     <input
                         type="checkbox"
                         name="talles"
                         value={item.id}
-                        onChange={handleTalleChange} // Llama a la función de manejo de cambio cuando se selecciona un talle
+                        onChange={handleTalleChange}
                     /> {item.nombre}
                 </li>
             ))}
         </ul>
-    );
+    );    
 };
 
 export default TalleComponent;

@@ -29,18 +29,18 @@ const CategoriaComponent = ({ onCategoriaChange }) => {
 
     return (
         <ul>
-            {categoria.map((item) => (
+            {categoria.length > 0 && categoria.map((item) => (
                 <li key={item.id}>
                     <input
                         type="checkbox"
                         name="categoria"
                         value={item.id}
-                        onChange={handleCategoriaChange} // Llama a la función de manejo de cambio cuando se selecciona una categoría
+                        onChange={handleCategoriaChange}
                     /> {item.nombre}
                 </li>
             ))}
         </ul>
-    );
+    );    
 };
 
 export default CategoriaComponent;

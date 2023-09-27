@@ -29,13 +29,13 @@ const ColoresComponent = ({ onColorChange }) => {
 
     return (
         <ul>
-            {Colores.map((item) => (
+            {Colores.length > 0 && Colores.map((item) => (
                 <li key={item.id}>
                     <input
                         type="checkbox"
                         name="colores"
                         value={item.id}
-                        onChange={handleColorChange} // Llama a la función de manejo de cambio cuando se selecciona un color
+                        onChange={handleColorChange}
                     /> {item.nombre}
                 </li>
             ))}
