@@ -6,6 +6,8 @@ import { CarritoContext } from "../context/CarritoContext";
 import useAuthorization from "../Admin/HooksAdmin/useAuthorization";
 import { SearchComponent } from "../SearchFetch/SearchComponent";
 
+
+
 export const Navbar = () => {
   const accesoPermitido = useAuthorization();
   const { listaCompras } = useContext(CarritoContext)

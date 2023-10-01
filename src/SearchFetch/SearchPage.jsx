@@ -13,10 +13,12 @@ export const SearchPage = () => {
   const handleQuitar = (id) => {
     eliminarCompra(id)
   }
+
   return (
     <div>
-      <h2>Resultados de la búsqueda:</h2>
-      <ul>
+      <h2 className="search-title">Resultados de la búsqueda: </h2>
+      <div className="search-page">
+      <ul className='cards-busqueda'>
         {resultados.map((resultado) => (
           <Card
             key={resultado.id}
@@ -24,11 +26,14 @@ export const SearchPage = () => {
             nombre={resultado.nombre}
             descripcion={resultado.descripcion}
             precio={resultado.precio}
+            botonEliminar={resultado.id}
+            botonEditar={resultado.id}
             handleAgregar={() => handleAgregar(resultado)}
             handleQuitar={() => handleQuitar(resultado.id)}
           />
         ))}
       </ul>
+      </div>
     </div>
   );
 }
