@@ -10,6 +10,7 @@ export const Index = () => {
   const [productosDestacados, setProductosDestacados] = useState([]);
   const [productosOferta, setProductosOferta] = useState([]);
   const [productosUltimos, setProductosUltimos] = useState([]);
+  
   useEffect(() => {
     const ultimosProductos = async () => {
       try {
@@ -34,11 +35,10 @@ export const Index = () => {
     ultimosProductos()
   }, [])
 
-
-
   const handleAgregar = (compra) => {
     agregarCompra(compra)
   }
+  
   const handleQuitar = (id) => {
     eliminarCompra(id)
   }
@@ -48,9 +48,10 @@ export const Index = () => {
       <div className="banner">
         <p>Banner</p>
       </div>
+      
       <h3 className="tituloProductos">Productos Destacados</h3>
       <div className="productos">
-        {productosDestacados.map((producto, index) => (
+        {productosDestacados.slice(0, 3).map((producto, index) => (
           <Card
             key={producto.id}
             verMas={producto.id}
@@ -65,9 +66,10 @@ export const Index = () => {
           />
         ))}
       </div>
+      
       <h3 className="tituloProductos">OFERTAS</h3>
       <div className="productos">
-        {productosOferta.map((producto, index) => (
+        {productosOferta.slice(0, 3).map((producto, index) => (
           <Card
             key={producto.id}
             verMas={producto.id}
@@ -82,9 +84,10 @@ export const Index = () => {
           />
         ))}
       </div>
+      
       <h3 className="tituloProductos">NUEVOS INGRESOS</h3>
       <div className="productos">
-        {productosUltimos.map((producto, index) => (
+        {productosUltimos.slice(0, 3).map((producto, index) => (
           <Card
             key={producto.id}
             verMas={producto.id}
@@ -99,7 +102,9 @@ export const Index = () => {
           />
         ))}
       </div>
+      
       <div className="line"></div>
+      
       <div className="dataContainer">
         <div className="data">
           <i className="fa-solid fa-truck"></i>
