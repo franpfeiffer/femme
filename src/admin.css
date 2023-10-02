@@ -21,3 +21,71 @@
   .product-table tbody tr:hover {
     background-color: #ddd;
   }
+  .minimal-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  .minimal-input,
+  .minimal-select,
+  .minimal-file-input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.2s;
+  }
+  
+  .minimal-input:focus,
+  .minimal-select:focus,
+  .minimal-file-input:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .minimal-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .minimal-button:hover {
+    background-color: #0056b3;
+  }
+  .custom-file-upload {
+    display: inline-block;
+    position: relative;
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  
+  .custom-file-upload input[type="file"] {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .custom-file-upload span {
+    z-index: 1;
+  }
+  
+  .custom-file-upload:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  

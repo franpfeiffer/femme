@@ -20,7 +20,7 @@ import { CreateCat } from './Admin/CreateCat';
 import { CreateMarca } from './Admin/CreateMarca';
 import { CreateTalles } from './Admin/CreateTalles';
 import { CreateColores } from './Admin/CreateColores';
-
+import { EditStock } from './Admin/EditStock';
 function App() {
   return (
 
@@ -46,6 +46,7 @@ function App() {
             <Route element={< CreateMarca />} path='/crearmarca' />
             <Route element={< CreateTalles />} path='/creartalles' />
             <Route element={< CreateColores />} path='/crearcolores' />
+            <Route element={< EditStock />} path='/editStock' />
 
 
 

@@ -22,163 +22,181 @@ export const CreateProduct = () => {
 
     const handleInputChange = (e) => {
         const { name, value, type, files } = e.target;
-
+        const fileNamesContainer = document.getElementById("file-names-container");
         if (type === "file") {
             setFormData({ ...formData, [name]: files[0] });
         } else {
             setFormData({ ...formData, [name]: value });
         }
+        if (name === "imagenes" && files.length > 0) {
+            fileNamesContainer.innerHTML = "";
+            Array.from(files).forEach((file) => {
+                const fileNameElement = document.createElement("p");
+                fileNameElement.className = "file-name";
+                fileNameElement.textContent = file.name;
+                fileNamesContainer.appendChild(fileNameElement);
+            })}
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+        const handleSubmit = async (e) => {
+            e.preventDefault();
 
-        try {
-            const response = await fetch("http://localhost:3000/productos/create", {
-                method: "POST",
-                body: new FormData(e.target),
-                credentials: 'include',
-                headers: {
-                    Authorization: `Bearer ${usuarioCookie}`,
-                },
-            });
+            try {
+                const response = await fetch("http://localhost:3000/productos/create", {
+                    method: "POST",
+                    body: new FormData(e.target),
+                    credentials: 'include',
+                    headers: {
+                        Authorization: `Bearer ${usuarioCookie}`,
+                    },
+                });
 
-            if (!response.ok) {
-                throw new Error(`Error al enviar el formulario: ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`Error al enviar el formulario: ${response.status}`);
+                }
+
+                const responseData = await response.json();
+                if (responseData) {
+                    navigate(`/create/${responseData}`);
+                }
+            } catch (error) {
+                console.error("Error al enviar el formulario:", error);
             }
+        };
 
-            const responseData = await response.json();
-            if (responseData) {
-                navigate(`/create/${responseData}`);
-            }
-        } catch (error) {
-            console.error("Error al enviar el formulario:", error);
+        useEffect(() => {
+            const fetchMarca = async () => {
+                try {
+                    const response = await fetch('http://localhost:3000/componentes/marca', { method: 'GET' });
+                    if (!response.ok) {
+                        throw new Error(`Fetch failed with status ${response.status}`);
+                    }
+                    const data = await response.json();
+                    console.log(data);
+                    setMarca(data);
+                } catch (error) {
+                    console.error('Error fetching componentes, marca:', error);
+                }
+            };
+
+            fetchMarca();
+        }, []);
+
+        useEffect(() => {
+            const fetchCategoria = async () => {
+                try {
+                    const response = await fetch('http://localhost:3000/componentes/categoria', { method: 'GET' });
+                    if (!response.ok) {
+                        throw new Error(`Fetch failed with status ${response.status}`);
+                    }
+                    const data = await response.json();
+                    console.log(data);
+                    setCategoria(data);
+                } catch (error) {
+                    console.error('Error fetching componentes, categoria:', error);
+                }
+            };
+
+            fetchCategoria();
+        }, []);
+
+        if (!accesoPermitido) {
+            return 'acceso denegado';
         }
-    };
 
-    useEffect(() => {
-        const fetchMarca = async () => {
-            try {
-                const response = await fetch('http://localhost:3000/componentes/marca', { method: 'GET' });
-                if (!response.ok) {
-                    throw new Error(`Fetch failed with status ${response.status}`);
-                }
-                const data = await response.json();
-                console.log(data);
-                setMarca(data);
-            } catch (error) {
-                console.error('Error fetching componentes, marca:', error);
-            }
-        };
+        return (
+            <form
+                onSubmit={handleSubmit}
+                encType="multipart/form-data"
+                className="minimal-form"
+            >
+                <input
+                    type="text"
+                    name="nombre"
+                    value={formData.nombre}
+                    onChange={handleInputChange}
+                    className="minimal-input"
+                    placeholder="nombre"
+                />
 
-        fetchMarca();
-    }, []);
+                <input
+                    type="text"
+                    name="precio"
+                    value={formData.precio}
+                    onChange={handleInputChange}
+                    className="minimal-input"
+                    placeholder="precio"
+                />
 
-    useEffect(() => {
-        const fetchCategoria = async () => {
-            try {
-                const response = await fetch('http://localhost:3000/componentes/categoria', { method: 'GET' });
-                if (!response.ok) {
-                    throw new Error(`Fetch failed with status ${response.status}`);
-                }
-                const data = await response.json();
-                console.log(data);
-                setCategoria(data);
-            } catch (error) {
-                console.error('Error fetching componentes, categoria:', error);
-            }
-        };
+                <input
+                    type="text"
+                    name="descripcion"
+                    value={formData.descripcion}
+                    onChange={handleInputChange}
+                    className="minimal-input"
+                    placeholder="descripcion"
+                />
 
-        fetchCategoria();
-    }, []);
+                <select
+                    name="categoriaId"
+                    value={formData.categoriaId}
+                    onChange={handleInputChange}
+                    className="minimal-select"
+                >
+                    {categoria.map((item) => (
+                        <option value={item.id} key={item.id}>
+                            {item.nombre}
+                        </option>
+                    ))}
+                </select>
 
-    if (!accesoPermitido) {
-        return 'acceso denegado';
+                <select
+                    name="marcaId"
+                    value={formData.marcaId}
+                    onChange={handleInputChange}
+                    className="minimal-select"
+                >
+                    {marca.map((item) => (
+                        <option value={item.id} key={item.id}>
+                            {item.nombre}
+                        </option>
+                    ))}
+                </select>
+
+                <input
+                    type="text"
+                    name="descuento"
+                    value={formData.descuento}
+                    onChange={handleInputChange}
+                    placeholder="descuento"
+                    className="minimal-input"
+                />
+
+                <select
+                    name="destacado"
+                    value={formData.destacado}
+                    onChange={handleInputChange}
+                    className="minimal-select"
+                >
+                    <option value="false">false</option>
+                    <option value="true">true</option>
+                </select>
+                <label className="custom-file-upload">
+                    <input
+                        type="file"
+                        name="imagenes"
+                        onChange={handleInputChange}
+                        multiple
+                        className="input-file-hidden"
+                    />
+                    <span>Seleccionar archivos</span>
+                    <div id="file-names-container" className="file-names-container"></div>
+                </label>
+
+                <button type="submit" className="minimal-button">
+                    Enviar
+                </button>
+            </form>
+        )
+
     }
-
-    return (
-        <form
-            onSubmit={handleSubmit}
-            encType="multipart/form-data"
-        >
-            <input
-                type="text"
-                name="nombre"
-                value={formData.nombre}
-                onChange={handleInputChange}
-                className="input-create-productos"
-                placeholder="nombre"
-            />
-
-            <input
-                type="text"
-                name="precio"
-                value={formData.precio}
-                onChange={handleInputChange}
-                className="input-create-productos"
-                placeholder="precio"
-            />
-
-            <input
-                type="text"
-                name="descripcion"
-                value={formData.descripcion}
-                onChange={handleInputChange}
-                className="input-create-productos"
-                placeholder="descripcion"
-            />
-
-            <select
-                name="categoriaId"
-                value={formData.categoriaId}
-                onChange={handleInputChange}
-            >
-                {categoria.map((item) => (
-                    <option value={item.id} key={item.id}>
-                        {item.nombre}
-                    </option>
-                ))}
-            </select>
-
-            <select
-                name="marcaId"
-                value={formData.marcaId}
-                onChange={handleInputChange}
-            >
-                {marca.map((item) => (
-                    <option value={item.id} key={item.id}>
-                        {item.nombre}
-                    </option>
-                ))}
-            </select>
-
-            <input
-                type="text"
-                name="descuento"
-                value={formData.descuento}
-                onChange={handleInputChange}
-                placeholder="descuento"
-            />
-
-            <select
-                name="destacado"
-                value={formData.destacado}
-                onChange={handleInputChange}
-            >
-                <option value="false">false</option>
-                <option value="true">true</option>
-            </select>
-
-            <input
-                type="file"
-                name="imagen1"
-                onChange={handleInputChange}
-            />
-
-            <button type="submit" className="boton-enviar-create">
-                Enviar
-            </button>
-        </form>
-    )
-
-}

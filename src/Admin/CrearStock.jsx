@@ -15,6 +15,7 @@ export const CrearStock = () => {
         coloreId: "",
         talleId: "",
         stock: "",
+        adminUserId: ""
     });
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -60,7 +61,29 @@ export const CrearStock = () => {
 
     const [talle, setTalle] = useState([])
     const [color, setColor] = useState([])
+    const [admin, setAdmin] = useState([])
+    useEffect(() => {
+        const fetchAdmin = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/admin/listAdmin', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        Authorization: `Bearer ${usuarioCookie}`,
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error(`Fetch failed with status ${response.status}`);
+                }
+                const data = await response.json();
+                setAdmin(data)
+            } catch (error) {
+                console.error('Error fetching componentes, marca:', error);
+            }
+        };
 
+        fetchAdmin();
+    }, []);
     useEffect(() => {
         const fetchTalle = async () => {
             try {
@@ -141,6 +164,18 @@ export const CrearStock = () => {
                     {talle.map((item) => (
                         <option value={item.id} key={item.id}>
                             {item.nombre}
+                        </option>
+                    ))}
+                </select>
+                <select
+                    name="adminUserId"
+                    value={formData.adminUserId}
+                    onChange={handleInputChange}
+                >
+                    <option value="" disabled>Selecciona una sucursal</option>
+                    {admin.map((item) => (
+                        <option value={item.id} key={item.id}>
+                            {item.sucursal}
                         </option>
                     ))}
                 </select>
