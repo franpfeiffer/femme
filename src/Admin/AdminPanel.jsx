@@ -76,6 +76,9 @@ export const AdminPanel = () => {
             <Link to="/creartalles">
                 <button className="boton-agregar">CREAR TALLES</button>
             </Link>
+            <Link to="/editStock">
+                <button className="boton-agregar">Editar Stock</button>
+            </Link>
             <button className="boton-agregar" onClick={handleButtonTrue}>
                 {showOnlyWithStock ?
                     'todos los productos' :

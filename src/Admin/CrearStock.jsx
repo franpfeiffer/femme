@@ -81,10 +81,6 @@ export const CrearStock = () => {
                 console.error('Error fetching componentes, marca:', error);
             }
         };
-
-        fetchAdmin();
-    }, []);
-    useEffect(() => {
         const fetchTalle = async () => {
             try {
                 const response = await fetch('http://localhost:3000/componentes/talle', { method: 'GET' });
@@ -92,15 +88,12 @@ export const CrearStock = () => {
                     throw new Error(`Fetch failed with status ${response.status}`);
                 }
                 const data = await response.json();
+                console.log(data);
                 setTalle(data);
             } catch (error) {
                 console.error('Error fetching componentes, marca:', error);
             }
         };
-
-        fetchTalle();
-    }, []);
-    useEffect(() => {
         const fetchColor = async () => {
             try {
                 const response = await fetch('http://localhost:3000/componentes/colores', { method: 'GET' });
@@ -114,8 +107,13 @@ export const CrearStock = () => {
                 console.error('Error fetching componentes, marca:', error);
             }
         };
-        fetchColor();
+        Promise.all([fetchColor(), fetchTalle(), fetchAdmin()])
+            .then(() => {
+                
+            })
     }, []);
+
+
 
     const [producto, setProducto] = useState([])
     useEffect(() => {
@@ -134,6 +132,7 @@ export const CrearStock = () => {
         };
         fetchProducto();
     }, [id]);
+
 
     if (!accesoPermitido) {
         return 'acceso denegado';
@@ -194,9 +193,9 @@ export const CrearStock = () => {
                 {stockEntries.length > 0 ? (
                     stockEntries.map((item) => (
                         <div key={item.id}>
-                            <p>{item.coloreId}</p>
-                            <p>{item.talleId}</p>
-                            <p>{item.stock}</p>
+                            <p>Color: {color.find(color => color.id == item.coloreId)?.nombre}</p>
+                            <p>Talle: {talle.find(talle => talle.id == item.talleId)?.nombre}</p>
+                            <p>Stock: {item.stock}</p>
                         </div>
                     ))
                 ) : (

@@ -1,57 +1,44 @@
 import React, { useState, useEffect } from "react";
 import useAuthorization from './HooksAdmin/useAuthorization';
 import Cookies from 'js-cookie';
+import { Link } from "react-router-dom";
 
 export const EditStock = () => {
     const accesoPermitido = useAuthorization();
-    const [productos, setProductos] = useState([]);
-    const [manageStock, setManageStock] = useState([]);
+    const [stockData, setStockData] = useState([]);
+    const [productosData, setProductosData] = useState([]);
     const usuarioCookie = Cookies.get('usuario');
-    const [admins, setAdmins] = useState([]);
+    const [datosCargados, setDatosCargados] = useState(false);
 
     useEffect(() => {
-        const fetchProds = async () => {
+        const fetchData = async () => {
             try {
-                const responseProductos = await fetch('http://localhost:3000/productos/', { method: 'GET' });
-                if (!responseProductos.ok) {
-                    throw new Error(`Fetch productos failed with status ${responseProductos.status}`);
-                }
-                const dataProductos = await responseProductos.json();
-                console.log(dataProductos);
-                dataProductos.forEach(item => {
-                    console.log(item.prod_colores_talle);
-                    setManageStock(item.prod_colores_talle);
-                });
-                setProductos(dataProductos);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchProds();
-    }, []);
-
-    useEffect(() => {
-        const fetchAdmins = async () => {
-            try {
-                const response = await fetch('http://localhost:3000/admin/listAdmin', {
+                const responseStock = await fetch('http://localhost:3000/filtrado/stocks', {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${usuarioCookie}`,
                     },
                 });
-                if (!response.ok) {
-                    throw new Error(`Fetch failed with status ${response.status}`);
+                if (!responseStock.ok) {
+                    throw new Error(`Fetch stock failed with status ${responseStock.status}`);
                 }
-                const data = await response.json();
-                console.log(data);
-                setAdmins(data);
+                const stock = await responseStock.json();
+                setStockData(stock.stock);
+                setProductosData(stock.producto);
             } catch (error) {
-                console.error('Error fetching admins:', error);
+                console.error('Error fetching stock data:', error);
             }
         };
 
-        fetchAdmins();
+        fetchData()
+            .then(() => {
+                // Todos los datos están cargados
+                setDatosCargados(true);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
     }, [usuarioCookie]);
 
     if (!accesoPermitido) {
@@ -62,10 +49,10 @@ export const EditStock = () => {
     const stockPorProductoYSucursal = {};
 
     // Inicializar las columnas de sucursal
-    const columnasSucursal = [...new Set(admins.map(admin => admin.sucursal))];
+    const columnasSucursal = [...new Set(stockData.map(item => item.admin_user.sucursal))];
 
     // Inicializar el objeto con ceros
-    productos.forEach(producto => {
+    productosData.forEach(producto => {
         stockPorProductoYSucursal[producto.id] = {};
         columnasSucursal.forEach(sucursal => {
             stockPorProductoYSucursal[producto.id][sucursal] = 0;
@@ -73,19 +60,16 @@ export const EditStock = () => {
     });
 
     // Llenar el objeto con el stock real
-    manageStock.forEach(item => {
-        const { adminUserId, productoId, stock } = item;
-        const admin = admins.find(admin => admin.id === adminUserId);
-        if (admin) {
-            const sucursalNombre = admin.sucursal;
-            stockPorProductoYSucursal[productoId][sucursalNombre] += stock;
-        }
+    stockData.forEach(item => {
+        const { producto, admin_user, stock } = item;
+        const sucursalNombre = admin_user.sucursal;
+        stockPorProductoYSucursal[producto.id][sucursalNombre] += stock;
     });
 
     return (
         <div>
             <h2>Stock de Productos por Sucursal</h2>
-            <table>
+            <table className="product-table">
                 <thead>
                     <tr>
                         <th>Producto</th>
@@ -95,7 +79,7 @@ export const EditStock = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {productos.map(producto => (
+                    {productosData.map(producto => (
                         <tr key={producto.id}>
                             <td>{producto.nombre}</td>
                             {columnasSucursal.map(sucursal => (
@@ -103,6 +87,9 @@ export const EditStock = () => {
                                     {stockPorProductoYSucursal[producto.id][sucursal]}
                                 </td>
                             ))}
+                            <td>
+                                <Link to={`/create/${producto.id}/`}><p>+</p></Link>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
