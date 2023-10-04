@@ -21,6 +21,9 @@ import { CreateMarca } from './Admin/CreateMarca';
 import { CreateTalles } from './Admin/CreateTalles';
 import { CreateColores } from './Admin/CreateColores';
 import { EditStock } from './Admin/EditStock';
+import { FacturacionPage } from './Admin/Facturacion/FacturacionPage';
+import { CompradorAdd } from './Admin/Facturacion/CompradorAdd';
+import { FacturacionManual } from './Admin/Facturacion/FacturacionManual';
 function App() {
   return (
 
@@ -47,6 +50,13 @@ function App() {
             <Route element={< CreateTalles />} path='/creartalles' />
             <Route element={< CreateColores />} path='/crearcolores' />
             <Route element={< EditStock />} path='/editStock' />
+            <Route element={< FacturacionPage />} path='/facturacionPage' />
+            <Route element={< CompradorAdd />} path='/compradorAdd' />
+            <Route element={< FacturacionManual />} path='/createFactura/:id' />
+
+
+
+
 
 
 

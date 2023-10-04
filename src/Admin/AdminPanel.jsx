@@ -79,6 +79,9 @@ export const AdminPanel = () => {
             <Link to="/editStock">
                 <button className="boton-agregar">Editar Stock</button>
             </Link>
+            <Link to="/facturacionPage">
+                <button className="boton-agregar">Facturacion Page</button>
+            </Link>
             <button className="boton-agregar" onClick={handleButtonTrue}>
                 {showOnlyWithStock ?
                     'todos los productos' :
