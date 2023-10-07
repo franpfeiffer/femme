@@ -13,6 +13,7 @@ export const ProductosProvider = ({ children }) => {
                 }
                 const data = await response.json();
                 setProductos(data);
+                console.log(data);
             } catch (error) {
                 console.error('Error fetching productos:', error);
             }

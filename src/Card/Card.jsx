@@ -25,15 +25,6 @@ export const Card = ({ imagen, nombre, precio, handleAgregar, handleQuitar, hand
             <div className="tarjeta-contenido">
                 <h3 className="tarjeta-titulo">{nombre}</h3>
                 <p className="tarjeta-precio">{precio}</p>
-                {added ? (
-                    <button type="button" className="boton-quitar" onClick={clickQuitar}>
-                        Quitar del Carrito
-                    </button>
-                ) : (
-                    <button type="button" className="boton-agregar" onClick={clickAgregar}>
-                        Agregar Carrito
-                    </button>
-                )}
                 {accesoPermitido ?
                     (
                         <DeleteButton id={botonEliminar}/>
