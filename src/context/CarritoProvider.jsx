@@ -32,12 +32,20 @@ export const CarritoProvider = ({ children }) => {
 
     const [listaCompras, dispatch] = useReducer(comprasReducer, initialState)
 
-    const agregarCompra = (compra) => {
-        compra.cantidad = 1
+    const agregarCompra = (producto, colorSeleccionado, talleSeleccionado) => {
+        const compra = {
+            id: `${producto.id}-${colorSeleccionado}-${talleSeleccionado}`,
+            idProducto: producto.id,
+            nombre: producto.nombre,
+            precio: producto.precio,
+            cantidad: 1,
+            color: colorSeleccionado,
+            talle: talleSeleccionado,
+        };
         const action = {
             type: '[CARRITO] Agregar Compra',
-            payload: compra
-        }
+            payload: compra,
+        };
         dispatch(action)
 
     }

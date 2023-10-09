@@ -5,7 +5,7 @@ export const Carritoscreen = () => {
     const { listaCompras, aumentarCantidad, disminuirCantidad, eliminarCompra, sesionesActivas } = useContext(CarritoContext);
 
     const calcularTotal = () => {
-        return listaCompras.reduce((total, item) => total + item.precio * item.cantidad, 0 ).toFixed(2)
+        return listaCompras.reduce((total, item) => total + item.precio * item.cantidad, 0).toFixed(2)
     };
 
     const handleImpresion = () => {
@@ -19,6 +19,8 @@ export const Carritoscreen = () => {
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Precio</th>
+                        <th scope="col">Color</th> {/* Añadir esta columna para mostrar el color */}
+                        <th scope="col">Talle</th> {/* Añadir esta columna para mostrar el talle */}
                         <th scope="col">Cantidad</th>
                         <th scope="col">Eliminar</th>
                     </tr>
@@ -28,13 +30,15 @@ export const Carritoscreen = () => {
                         <tr key={item.id}>
                             <td>{item.nombre}</td>
                             <td>${item.precio}</td>
+                            <td>{item.color}</td> {/* Mostrar el color */}
+                            <td>{item.talle}</td> {/* Mostrar el talle */}
                             <td>
-                                <button 
+                                <button
                                     className="btn btn-quantity"
                                     onClick={() => disminuirCantidad(item.id)}
                                 >-</button>
                                 <span className="quantity">{item.cantidad}</span>
-                                <button 
+                                <button
                                     className="btn btn-quantity"
                                     onClick={() => aumentarCantidad(item.id)}
                                 >+</button>
@@ -52,19 +56,19 @@ export const Carritoscreen = () => {
                     ))}
 
                     <tr>
-                        <th colSpan="3">TOTAL:</th>
+                        <th colSpan="4">TOTAL:</th>
                         <td className="total-amount">${calcularTotal()}</td>
                     </tr>
                 </tbody>
                 <div className="d-grid gap-2">
-                <button 
-                    className={`btn btn-buy ${listaCompras.length < 1 ? 'disabled' : ''}`}
-                    onClick={handleImpresion}
-                    disabled={listaCompras.length < 1}
-                >
-                    COMPRAR
-                </button>
-            </div>
+                    <button
+                        className={`btn btn-buy ${listaCompras.length < 1 ? 'disabled' : ''}`}
+                        onClick={handleImpresion}
+                        disabled={listaCompras.length < 1}
+                    >
+                        COMPRAR
+                    </button>
+                </div>
             </table>
         </>
     );

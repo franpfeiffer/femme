@@ -18,6 +18,8 @@ export const DetalleProducto = () => {
     const [imagenSeleccionada, setImagenSeleccionada] = useState(imagene.length > 0 ? imagene[0].url : null);
     const [mostrarAdvertencia, setMostrarAdvertencia] = useState(false);
 
+    const [mostrarAdvertenciaStock, setMostrarAdvertenciaStock] = useState(false);
+
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -50,9 +52,10 @@ export const DetalleProducto = () => {
         setImagenSeleccionada(url);
     };
     const handleColorSeleccionado = (colorId) => {
+        console.log('Color seleccionado:', colorId);
         setColorSeleccionado(colorId);
     };
-    
+
     // En el evento de selección de talle
     const handleTalleSeleccionado = (talleId) => {
         setTalleSeleccionado(talleId);
@@ -83,33 +86,46 @@ export const DetalleProducto = () => {
                         </div>
                     </div>
                     <div className="colors">
-                        {prod_colores_talle.map(color => (
-                            <button key={color.id} style={{ background: color.colore.nombre }}
-                            onClick={() => {
-                                handleColorSeleccionado(color.colore.id);
-                                if (talleSeleccionado) {
-                                    setMostrarAdvertencia(false);
-                                } else {
-                                    setMostrarAdvertencia(true);
-                                }
-                            }}></button>
+                        {prod_colores_talle.map(colorTalle => (
+                            <button
+                                key={colorTalle.id}
+                                style={{ background: colorTalle.colore.nombre }}
+                                onClick={() => {
+                                    handleColorSeleccionado(colorTalle.colore.id);
+                                    handleTalleSeleccionado(null); // Reiniciar el talle seleccionado cuando se cambia el color
+                                    setMostrarAdvertencia(false); // Reiniciar la advertencia al cambiar el color
+                                }}
+                            ></button>
                         ))}
                     </div>
                     <div className='talles'>
                         {prod_colores_talle.map(talle => (
-                            <button key={talle.id}
-                            onClick={() => {
-                                handleTalleSeleccionado(talle.talle.id);
-                                if (colorSeleccionado) {
-                                    setMostrarAdvertencia(false);
-                                } else {
-                                    setMostrarAdvertencia(true);
+                            <button
+                                key={talle.id}
+                                onClick={() => {
+                                    handleTalleSeleccionado(talle.talle.id);
+                                    const selectedColorTalle = prod_colores_talle.find(
+                                        ct => ct.coloreId == colorSeleccionado && ct.talleId == talle.talle.id
+                                    );
+
+                                    if (selectedColorTalle && selectedColorTalle.stock > 0) {
+                                        setMostrarAdvertenciaStock(false);
+                                    } else {
+                                        setMostrarAdvertenciaStock(true);
+                                    }
+                                }}
+                                aria-disabled={
+                                    (
+                                        colorSeleccionado &&
+                                        talle.talle.id == talleSeleccionado &&
+                                        talle.stock > 0
+                                    )
                                 }
-                            }}
-                            >{talle.talle.nombre}</button>
+                            >
+                                {talle.talle.nombre}
+                            </button>
                         ))}
                     </div>
-
 
 
                     <div className='thumb'>
@@ -123,34 +139,31 @@ export const DetalleProducto = () => {
                     </div>
                     <p>{producto.descripcion}</p>
                     {mostrarAdvertencia && <p>Por favor, seleccione un color y un talle antes de agregar al carrito.</p>}
+                    {mostrarAdvertenciaStock && <p>NO HAY STOCK DE ESTE TALLE O COLOR QUE SELECCIONASTE</p>}
                     {prod_colores_talle.length > 0 ? (
-                        added ? (
-                            <button
-                                type="button"
-                                className="boton-quitar cart"
-                                onClick={() => {
-                                    if (colorSeleccionado && talleSeleccionado) {
+                        <button
+                            type="button"
+                            className="boton-agregar cart"
+                            onClick={() => {
+                                if (colorSeleccionado && talleSeleccionado) {
+                                    const selectedColorTalle = prod_colores_talle.find(
+                                        ct => ct.colore.id == colorSeleccionado && ct.talle.id == talleSeleccionado
+                                    );
+
+                                    if (selectedColorTalle && selectedColorTalle.stock > 0) {
                                         setMostrarAdvertencia(false);
-                                        handleAgregar(producto);
+                                        agregarCompra(producto, colorSeleccionado, talleSeleccionado);
                                     } else {
                                         setMostrarAdvertencia(true);
                                     }
-                                }}
-                                disabled={mostrarAdvertencia}
-                            >
-                                Quitar del Carrito
-                            </button>
-                        ) : (
-                            <button
-                                type="button"
-                                className="boton-agregar cart"
-                                onClick={() => handleAgregar(producto)}
-                                disabled={colorSeleccionado === null || talleSeleccionado === null}
-                            >
-                                Agregar Carrito
-                            </button>
-                        )
-                    ) : (
+                                } else {
+                                    setMostrarAdvertencia(true);
+                                }
+                            }}
+                            disabled={mostrarAdvertencia || (added && !(colorSeleccionado && talleSeleccionado))}
+                        >
+                            {added ? 'Quitar del Carrito' : 'Agregar Carrito'}
+                        </button>) : (
                         <button type="button" className="boton-agregar cart" disabled>
                             Sin Stock
                         </button>
