@@ -29,7 +29,10 @@ export const DetalleProducto = () => {
                     throw new Error(`Fetch failed with status ${response.status}`);
                 }
                 const data = await response.json();
-                setProd_colores_talle(data.prod_colores_talle);
+                const filteredProdColoresTalle = data.prod_colores_talle.filter(
+                    (item) => item.adminUserId === 3
+                );
+                setProd_colores_talle(filteredProdColoresTalle);
                 setProductos(data);
                 setImagene(data.imagene);
             } catch (error) {
@@ -61,8 +64,12 @@ export const DetalleProducto = () => {
         setTalleSeleccionado(talleId);
     };
 
-
-
+    const coloresUnicos = prod_colores_talle.filter((colorTalle, index, self) =>
+        index === self.findIndex((t) => t.colore.id === colorTalle.colore.id)
+    );
+    const tallesUnicos = prod_colores_talle.filter((colorTalle, index, self) =>
+    index === self.findIndex((t) => t.talle.id === colorTalle.talle.id)
+);
     return (
         <div className="app">
             <div className="details">
@@ -86,20 +93,20 @@ export const DetalleProducto = () => {
                         </div>
                     </div>
                     <div className="colors">
-                        {prod_colores_talle.map(colorTalle => (
+                        {coloresUnicos.map((colorTalle) => (
                             <button
                                 key={colorTalle.id}
                                 style={{ background: colorTalle.colore.nombre }}
                                 onClick={() => {
                                     handleColorSeleccionado(colorTalle.colore.id);
-                                    handleTalleSeleccionado(null); // Reiniciar el talle seleccionado cuando se cambia el color
-                                    setMostrarAdvertencia(false); // Reiniciar la advertencia al cambiar el color
+                                    handleTalleSeleccionado(null);
+                                    setMostrarAdvertencia(false); 
                                 }}
                             ></button>
                         ))}
                     </div>
                     <div className='talles'>
-                        {prod_colores_talle.map(talle => (
+                        {tallesUnicos.map(talle => (
                             <button
                                 key={talle.id}
                                 onClick={() => {

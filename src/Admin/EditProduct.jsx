@@ -15,16 +15,7 @@ export const EditProduct = () => {
     const [categoria, setCategoria] = useState([]);
     const [marca, setMarca] = useState([]);
     const [oldProd, setOldProd] = useState([])
-    const [formData, setFormData] = useState({
-        nombre: "",
-        precio: "",
-        descripcion: "",
-        categoriaId: "",
-        marcaId: "",
-        descuento: "",
-        destacado: "false",
-        imagen1: null,
-    });
+   
     useEffect(() => {
         const productos = async () => {
             try {
@@ -42,6 +33,15 @@ export const EditProduct = () => {
 
         productos();
     }, [id]);
+    const [formData, setFormData] = useState({
+        nombre: oldProd.nombre,
+        precio: oldProd.precio,
+        descripcion: oldProd.descripcion,
+        categoriaId: oldProd.categoriaId,
+        marcaId: oldProd.marcaId,
+        descuento: oldProd.descuento,
+        destacado: "false"
+    });
     const handleInputChange = (e) => {
         const { name, value, type, files } = e.target;
 
@@ -195,12 +195,6 @@ export const EditProduct = () => {
                     <option value="false">false</option>
                     <option value="true">true</option>
                 </select>
-
-                <input
-                    type="file"
-                    name="imagen1"
-                    onChange={handleInputChange}
-                />
 
                 <button type="submit" className="boton-enviar-create">
                     Enviar
