@@ -9,7 +9,33 @@ export const Carritoscreen = () => {
     };
 
     const handleImpresion = () => {
-        print()
+        const total = calcularTotal()
+        const productos = listaCompras.map(item => {
+            return {
+                id: item.idProducto,
+                nombre: item.nombre,
+                precio: item.precio,
+                cantidad: item.cantidad,
+                color: item.color,
+                talle: item.talle
+            };
+        });
+        fetch(`http://localhost:3000/mercadoPago/payment`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ productos }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            window.location.href = data.response.body.init_point;
+            console.log(data);
+        })
+        .catch(error => {
+            // Manejar errores si ocurren durante la solicitud
+            console.error('Error al procesar el pago:', error);
+        });
     };
 
     return (
