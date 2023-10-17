@@ -15,7 +15,7 @@ export const EditProduct = () => {
     const [categoria, setCategoria] = useState([]);
     const [marca, setMarca] = useState([]);
     const [oldProd, setOldProd] = useState([])
-   
+
     useEffect(() => {
         const productos = async () => {
             try {
@@ -40,15 +40,25 @@ export const EditProduct = () => {
         categoriaId: oldProd.categoriaId,
         marcaId: oldProd.marcaId,
         descuento: oldProd.descuento,
-        destacado: "false"
+        destacado: "false",
+        imagen1: null,
     });
     const handleInputChange = (e) => {
         const { name, value, type, files } = e.target;
-
+        const fileNamesContainer = document.getElementById("file-names-container");
         if (type === "file") {
             setFormData({ ...formData, [name]: files[0] });
         } else {
             setFormData({ ...formData, [name]: value });
+        }
+        if (name === "imagenes" && files.length > 0) {
+            fileNamesContainer.innerHTML = "";
+            Array.from(files).forEach((file) => {
+                const fileNameElement = document.createElement("p");
+                fileNameElement.className = "file-name";
+                fileNameElement.textContent = file.name;
+                fileNamesContainer.appendChild(fileNameElement);
+            })
         }
     };
     const handleSubmit = async (e) => {
@@ -57,10 +67,9 @@ export const EditProduct = () => {
         try {
             const response = await fetch(`http://localhost:3000/productos/${id}/editar`, {
                 method: "PUT",
-                body: JSON.stringify(formData),
+                body: new FormData(e.target),
                 credentials: 'include',
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${usuarioCookie}`,
                 },
             });
@@ -70,7 +79,7 @@ export const EditProduct = () => {
             }
 
             const responseData = await response.json();
- 
+
 
         } catch (error) {
             console.error('Error al enviar el formulario:', error);
@@ -122,84 +131,118 @@ export const EditProduct = () => {
         return 'acceso denegado';
     }
     return (
-        <>
+        <div className="container mt-5">
             <h1>{oldProd.nombre}</h1>
-            <form
-                onSubmit={handleSubmit}
-                encType="multipart/form-data"
-            >
-                <input
-                    type="text"
-                    name="nombre"
-                    value={formData.nombre}
-                    onChange={handleInputChange}
-                    className="input-create-productos"
-                    placeholder="nombre"
-                />
-
-                <input
-                    type="text"
-                    name="precio"
-                    value={formData.precio}
-                    onChange={handleInputChange}
-                    className="input-create-productos"
-                    placeholder="precio"
-                />
-
-                <input
-                    type="text"
-                    name="descripcion"
-                    value={formData.descripcion}
-                    onChange={handleInputChange}
-                    className="input-create-productos"
-                    placeholder="descripcion"
-                />
-
-                <select
-                    name="categoriaId"
-                    value={formData.categoriaId}
-                    onChange={handleInputChange}
-                >
-                    {categoria.map((item) => (
-                        <option value={item.id} key={item.id}>
-                            {item.nombre}
-                        </option>
-                    ))}
-                </select>
-
-                <select
-                    name="marcaId"
-                    value={formData.marcaId}
-                    onChange={handleInputChange}
-                >
-                    {marca.map((item) => (
-                        <option value={item.id} key={item.id}>
-                            {item.nombre}
-                        </option>
-                    ))}
-                </select>
-
-                <input
-                    type="text"
-                    name="descuento"
-                    value={formData.descuento}
-                    onChange={handleInputChange}
-                    placeholder="descuento"
-                />
-
-                <select
-                    name="destacado"
-                    value={formData.destacado}
-                    onChange={handleInputChange}
-                >
-                    <option value="false">false</option>
-                    <option value="true">true</option>
-                </select>
-
-                <button type="submit" className="boton-enviar-create">
-                    Enviar
-                </button>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
+                <div className="mb-3">
+                    <label htmlFor="nombre" className="form-label">Nombre</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="nombre"
+                        name="nombre"
+                        value={formData.nombre}
+                        onChange={handleInputChange}
+                        placeholder="Nombre"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="precio" className="form-label">Precio</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="precio"
+                        name="precio"
+                        value={formData.precio}
+                        onChange={handleInputChange}
+                        placeholder="Precio"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="descripcion" className="form-label">Descripción</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="descripcion"
+                        name="descripcion"
+                        value={formData.descripcion}
+                        onChange={handleInputChange}
+                        placeholder="Descripción"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="categoria" className="form-label">Categoría</label>
+                    <select
+                        className="form-select"
+                        id="categoria"
+                        name="categoriaId"
+                        value={formData.categoriaId}
+                        onChange={handleInputChange}
+                    >
+                        {categoria.map((item) => (
+                            <option value={item.id} key={item.id}>
+                                {item.nombre}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="marca" className="form-label">Marca</label>
+                    <select
+                        className="form-select"
+                        id="marca"
+                        name="marcaId"
+                        value={formData.marcaId}
+                        onChange={handleInputChange}
+                    >
+                        {marca.map((item) => (
+                            <option value={item.id} key={item.id}>
+                                {item.nombre}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="descuento" className="form-label">Descuento</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="descuento"
+                        name="descuento"
+                        value={formData.descuento}
+                        onChange={handleInputChange}
+                        placeholder="Descuento"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="destacado" className="form-label">Destacado</label>
+                    <select
+                        className="form-select"
+                        id="destacado"
+                        name="destacado"
+                        value={formData.destacado}
+                        onChange={handleInputChange}
+                    >
+                        <option value="false">false</option>
+                        <option value="true">true</option>
+                    </select>
+                </div>
+                <div className="mb-3">
+                    <label className="custom-file-upload">
+                        <input
+                            type="file"
+                            name="imagenes"
+                            onChange={handleInputChange}
+                            multiple
+                            className="input-file-hidden"
+                        />
+                        <span>Seleccionar archivos</span>
+                        <div id="file-names-container" className="file-names-container"></div>
+                    </label>
+                </div>
+                <button type="submit" className="btn btn-primary">Enviar</button>
             </form>
-        </>
+
+        </div>
     )
 }

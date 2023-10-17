@@ -1,16 +1,15 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import Cookies from 'js-cookie';
+
 
 export const DeleteButton = ({ id }) => {
     const usuarioCookie = Cookies.get('usuario');
     const handleButton = async () => {
-        const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar este producto?");
+        const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar esta imagen?");
         if (confirmDelete) {
-
-
             try {
-
-                const response = await fetch(`http://localhost:3000/productos/${id}/delete`, {
+                const response = await fetch(`http://localhost:3000/productos/${id}/Deleteimagenes`, {
                     method: "DELETE",
                     credentials: 'include',
                     headers: {
@@ -30,6 +29,6 @@ export const DeleteButton = ({ id }) => {
         }
     }
     return (
-        <button onClick={handleButton} className='button-eliminar boton-agregar'>Eliminar</button>
+        <button onClick={handleButton} className='button-eliminar boton-agregar'>Eliminar Imagen</button>
     )
 }

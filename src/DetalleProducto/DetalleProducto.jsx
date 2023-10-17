@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { CarritoContext } from '../context/CarritoContext';
 import { Color } from 'three';
 import '../detalle-produ.css'
+import { DeleteButton } from './buttons/DeleteImage';
 export const DetalleProducto = () => {
     const [added, setAdded] = useState(false);
     const [producto, setProductos] = useState([]);
@@ -68,8 +69,8 @@ export const DetalleProducto = () => {
         index === self.findIndex((t) => t.colore.id === colorTalle.colore.id)
     );
     const tallesUnicos = prod_colores_talle.filter((colorTalle, index, self) =>
-    index === self.findIndex((t) => t.talle.id === colorTalle.talle.id)
-);
+        index === self.findIndex((t) => t.talle.id === colorTalle.talle.id)
+    );
     return (
         <div className="app">
             <div className="details">
@@ -100,7 +101,7 @@ export const DetalleProducto = () => {
                                 onClick={() => {
                                     handleColorSeleccionado(colorTalle.colore.id);
                                     handleTalleSeleccionado(null);
-                                    setMostrarAdvertencia(false); 
+                                    setMostrarAdvertencia(false);
                                 }}
                             ></button>
                         ))}
@@ -137,11 +138,14 @@ export const DetalleProducto = () => {
 
                     <div className='thumb'>
                         {imagene.map(img => (
-                            <img src={`http://localhost:3000/${img.url}`} alt="" key={img.id}
-                                className={img.url === imagenSeleccionada ? 'active' : ''}
-                                onClick={() => handleThumbnailClick(img.url)}
+                            <>
+                                <img src={`http://localhost:3000/${img.url}`} alt="" key={img.id}
+                                    className={img.url === imagenSeleccionada ? 'active' : ''}
+                                    onClick={() => handleThumbnailClick(img.url)}
 
-                            />
+                                />
+                                <DeleteButton id={img.id} />
+                            </>
                         ))}
                     </div>
                     <p>{producto.descripcion}</p>

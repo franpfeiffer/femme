@@ -32,6 +32,7 @@ export const Comprascreen = () => {
 
       <div className="productos-container">
         {(productosFiltrados.length > 0 ? productosFiltrados : productosOriginales).map((producto) => (
+         producto.activo ? (
           <Card
             key={producto.id}
             verMas={producto.id}
@@ -44,7 +45,8 @@ export const Comprascreen = () => {
             botonEliminar={producto.id}
             botonEditar={producto.id}
           />
-        ))}
+        ) : null
+      ))}
       </div>
     </div>
   );
