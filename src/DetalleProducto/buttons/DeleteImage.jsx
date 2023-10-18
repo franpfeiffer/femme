@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import Cookies from 'js-cookie';
-
+import useAuthorization from '../../Admin/HooksAdmin/useAuthorization';
 
 export const DeleteButton = ({ id }) => {
+    const accesoPermitido = useAuthorization();
     const usuarioCookie = Cookies.get('usuario');
     const handleButton = async () => {
         const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar esta imagen?");
@@ -28,6 +29,7 @@ export const DeleteButton = ({ id }) => {
             }
         }
     }
+    if(!accesoPermitido)return
     return (
         <button onClick={handleButton} className='button-eliminar boton-agregar'>Eliminar Imagen</button>
     )

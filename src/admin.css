@@ -116,3 +116,7 @@
   font-size: 24px;
   cursor: pointer;
 }
+.selected-sucursal {
+  text-decoration: underline; /* Subraya el texto */
+  font-weight: bold; /* Puedes agregar negrita para hacerlo más prominente */
+}

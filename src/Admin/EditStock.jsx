@@ -1,15 +1,17 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import useAuthorization from './HooksAdmin/useAuthorization';
 import Cookies from 'js-cookie';
 import { Link } from "react-router-dom";
-
+import { ModalStock } from "./ModalStock/ModalStock";
 export const EditStock = () => {
     const accesoPermitido = useAuthorization();
     const [stockData, setStockData] = useState([]);
-    const [productosData, setProductosData] = useState([]);
-    const usuarioCookie = Cookies.get('usuario');
+    const [sucursalSeleccionada, setSucursalSeleccionada] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [detallesProducto, setDetallesProducto] = useState(null);
+    const usuarioCookie = Cookies.get("usuario");
     const [datosCargados, setDatosCargados] = useState(false);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -23,77 +25,104 @@ export const EditStock = () => {
                 if (!responseStock.ok) {
                     throw new Error(`Fetch stock failed with status ${responseStock.status}`);
                 }
-                const stock = await responseStock.json();
-                setStockData(stock.stock);
-                setProductosData(stock.producto);
+                const stockResponse = await responseStock.json();
+                setStockData(stockResponse.stock);
+                setDatosCargados(true);
             } catch (error) {
                 console.error('Error fetching stock data:', error);
             }
         };
 
-        fetchData()
-            .then(() => {
-                // Todos los datos están cargados
-                setDatosCargados(true);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
+        fetchData();
     }, [usuarioCookie]);
 
     if (!accesoPermitido) {
         return 'No autorizado';
     }
 
-    // Crear un objeto para almacenar el stock por producto y sucursal
-    const stockPorProductoYSucursal = {};
-
-    // Inicializar las columnas de sucursal
     const columnasSucursal = [...new Set(stockData.map(item => item.admin_user.sucursal))];
 
-    // Inicializar el objeto con ceros
-    productosData.forEach(producto => {
-        stockPorProductoYSucursal[producto.id] = {};
-        columnasSucursal.forEach(sucursal => {
-            stockPorProductoYSucursal[producto.id][sucursal] = 0;
-        });
-    });
+    const stockPorProductoYSucursal = {};
 
-    // Llenar el objeto con el stock real
+
     stockData.forEach(item => {
         const { producto, admin_user, stock } = item;
         const sucursalNombre = admin_user.sucursal;
-        stockPorProductoYSucursal[producto.id][sucursalNombre] += stock;
+        if (!stockPorProductoYSucursal[producto.id]) {
+            stockPorProductoYSucursal[producto.id] = {
+                producto: producto,
+                sucursales: {},
+            };
+        }
+        stockPorProductoYSucursal[producto.id].sucursales[sucursalNombre] = stock;
     });
 
+    const stockPorSucursal = stockData.filter(item => item.admin_user.sucursal === sucursalSeleccionada);
+
+    const productosUnicos = new Set();
+
+    const mostrarDetalles = (productoId) => {
+        const stockDelProducto = stockData
+            .filter((item) => item.productoId === productoId && item.admin_user.sucursal === sucursalSeleccionada)
+            .map((item) => {
+                return {
+                    color: item.colore.nombre,
+                    talle: item.talle.nombre,
+                    cantidad: item.stock,
+                };
+            });
+    
+        const total = stockDelProducto.reduce((acc, curr) => acc + curr.cantidad, 0);
+    
+        setDetallesProducto({ total, detalles: stockDelProducto });
+        setShowModal(true);
+    };
+    
+
     return (
-        <div>
+        <div className="container mt-4">
             <h2>Stock de Productos por Sucursal</h2>
-            <table className="product-table">
+            <table className="table">
                 <thead>
                     <tr>
                         <th>Producto</th>
                         {columnasSucursal.map(sucursal => (
-                            <th key={sucursal}>{sucursal}</th>
+                            <th key={sucursal} onClick={() => setSucursalSeleccionada(sucursal)} className={sucursal === sucursalSeleccionada ? 'selected-sucursal' : ''}>
+                            {sucursal}
+                          </th>
                         ))}
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {productosData.map(producto => (
-                        <tr key={producto.id}>
-                            <td>{producto.nombre}</td>
-                            {columnasSucursal.map(sucursal => (
-                                <td key={sucursal}>
-                                    {stockPorProductoYSucursal[producto.id][sucursal]}
-                                </td>
-                            ))}
-                            <td>
-                                <Link to={`/create/${producto.id}/`}><p>+</p></Link>
-                            </td>
-                        </tr>
-                    ))}
+                    {stockPorSucursal.map(item => {
+                        const { producto } = item;
+                        if (!productosUnicos.has(producto.id)) {
+                            productosUnicos.add(producto.id);
+                            return (
+                                <tr key={producto.id}>
+                                    <td>{producto.nombre}</td>
+                                    {columnasSucursal.map(sucursal => (
+                                        <td key={sucursal}>
+                                            {sucursal === sucursalSeleccionada && (
+                                                <button className="btn btn-primary" onClick={() => mostrarDetalles(producto.id)}>Ver Detalles</button>
+                                            )}
+                                        </td>
+                                    ))}
+                                    <td>
+                                        <Link to={`/create/${producto.id}/`} className="btn btn-primary">Agregar</Link>
+                                    </td>
+                                </tr>
+                            );
+                        }
+                        return null; 
+                    })}
                 </tbody>
             </table>
+            {detallesProducto && (
+                <ModalStock show={showModal} onHide={() => setShowModal(false)} detallesProducto={detallesProducto} />
+            )}
+
         </div>
     );
 };

@@ -77,7 +77,7 @@ export const EditProduct = () => {
             if (!response.ok) {
                 throw new Error(`Error al enviar el formulario: ${response.status}`);
             }
-
+            
             const responseData = await response.json();
 
 

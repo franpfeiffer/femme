@@ -136,17 +136,21 @@ export const FacturacionManual = () => {
 
     }, [usuarioCookie])
     const handleProductChange = (productId) => {
-        console.log("Producto seleccionado:", productId);
         const selectedProduct = Producto.find(item => item.id == productId);
-        console.log("Producto encontrado:", selectedProduct);
         if (selectedProduct) {
             setFormData(prevData => ({
                 ...prevData,
                 productoId: productId,
-                precio_unitario: selectedProduct.precio, // Utiliza el nombre correcto de la propiedad
+                precio_unitario: selectedProduct.precio,
             }));
+            setSearchProduct(''); // Restablece el campo de búsqueda
         }
     };
+
+    const [searchProduct, setSearchProduct] = useState('');
+    const filteredProducts = Producto.filter(item =>
+        item.nombre.toLowerCase().includes(searchProduct.toLowerCase())
+    );
 
 
     const handleQuantityChange = (quantity) => {
@@ -177,81 +181,107 @@ export const FacturacionManual = () => {
     }
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <select
-                    name="coloreId"
-                    value={formData.coloreId}
-                    onChange={handleInputChange}
+            <form onSubmit={handleSubmit} className="container mt-5">
+                <div className="form-group">
+                    <select
+                        name="coloreId"
+                        value={formData.coloreId}
+                        onChange={handleInputChange}
+                        className="form-control mb-3"
+                    >
+                        <option value="" disabled>Selecciona un color</option>
+                        {Colores.map((item) => (
+                            <option value={item.id} key={item.id}>
+                                {item.nombre}
+                            </option>
+                        ))}
+                    </select>
 
-                >
-                    <option value="" disabled>Selecciona un color</option>
-                    {Colores.map((item) => (
-                        <option value={item.id} key={item.id}>
-                            {item.nombre}
-                        </option>
-                    ))}
-                </select>
-                <select
-                    name="talleId"
-                    value={formData.talleId}
-                    onChange={handleInputChange}
-                >
-                    <option value="" disabled>Selecciona un Talle</option>
-                    {Talle.map((item) => (
-                        <option value={item.id} key={item.id}>
-                            {item.nombre}
-                        </option>
-                    ))}
-                </select>
-                <select
-                    name="adminUserId"
-                    value={formData.adminUserId}
-                    onChange={handleInputChange}
-                >
-                    <option value="" disabled>Selecciona una sucursal</option>
-                    {admin.map((item) => (
-                        <option value={item.id} key={item.id}>
-                            {item.sucursal}
-                        </option>
-                    ))}
-                </select>
-                <select
-                    name="productoId"
-                    value={formData.productoId}
-                    onChange={handleInputChange}
-                >
-                    <option value="" disabled>Selecciona un Producto</option>
-                    {Producto.map((item) => (
-                        <option value={item.id} key={item.id}>
-                            {item.nombre}
-                        </option>
-                    ))}
-                </select>
-                <input
-                    type="text"
-                    name="cantidad"
-                    value={formData.cantidad}
-                    onChange={handleInputChange}
-                    className="input-create-stock"
-                    placeholder="cantidad"
-                />
-                <input
-                    type="text"
-                    name="precio_unitario"
-                    value={formData.precio_unitario}
-                    onChange={handleInputChange}
-                    className="input-create-stock"
-                    placeholder="precio_unitario"
-                />
-                <input
-                    type="text"
-                    name="total"
-                    value={formData.total}
-                    onChange={handleInputChange}
-                    className="input-create-stock"
-                    placeholder="total"
-                />
-                <button>Submit</button>
+                    <select
+                        name="talleId"
+                        value={formData.talleId}
+                        onChange={handleInputChange}
+                        className="form-control mb-3"
+                    >
+                        <option value="" disabled>Selecciona un Talle</option>
+                        {Talle.map((item) => (
+                            <option value={item.id} key={item.id}>
+                                {item.nombre}
+                            </option>
+                        ))}
+                    </select>
+
+                    <select
+                        name="adminUserId"
+                        value={formData.adminUserId}
+                        onChange={handleInputChange}
+                        className="form-control mb-3"
+                    >
+                        <option value="" disabled>Selecciona una sucursal</option>
+                        {admin.map((item) => (
+                            <option value={item.id} key={item.id}>
+                                {item.sucursal}
+                            </option>
+                        ))}
+                    </select>
+
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <span className="input-group-text">Buscar producto</span>
+                        </div>
+                        <input
+                            type="text"
+                            name="searchProduct"
+                            value={searchProduct}
+                            onChange={(e) => setSearchProduct(e.target.value)}
+                            className="form-control"
+                            placeholder="Buscar producto..."
+                        />
+                    </div>
+
+                    <select
+                        name="productoId"
+                        value={formData.productoId}
+                        onChange={handleInputChange}
+                        className="form-control mb-3"
+                    >
+                        <option value="" disabled>Selecciona un Producto</option>
+                        {filteredProducts.map((item) => (
+                            <option value={item.id} key={item.id}>
+                                {item.nombre}
+                            </option>
+                        ))}
+                    </select>
+
+                    <input
+                        type="text"
+                        name="cantidad"
+                        value={formData.cantidad}
+                        onChange={handleInputChange}
+                        className="form-control mb-3"
+                        placeholder="Cantidad"
+                    />
+
+                    <input
+                        type="text"
+                        name="precio_unitario"
+                        value={formData.precio_unitario}
+                        onChange={handleInputChange}
+                        className="form-control mb-3"
+                        placeholder="Precio unitario"
+                    />
+
+                    <input
+                        type="text"
+                        name="total"
+                        value={formData.total}
+                        onChange={handleInputChange}
+                        className="form-control mb-3"
+                        placeholder="Total"
+                    />
+
+                    <button type="submit" className="btn btn-primary">Submit</button>
+                </div>
             </form>
 
 

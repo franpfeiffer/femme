@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css'; // Importa los estilos de Bootstrap de manera local
+
 import '../admin.css'
+
 import { ListProd } from "./listadoProd/ListProd";
 import useAuthorization from './HooksAdmin/useAuthorization';
+import { Offcanvas, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+
 export const AdminPanel = () => {
     const accesoPermitido = useAuthorization();
     const [productos, setProductos] = useState([]);
@@ -53,7 +58,10 @@ export const AdminPanel = () => {
         ? productos.filter(producto => stock[producto.id] > 0)
         : productos;
 
+    const [showOffcanvas, setShowOffcanvas] = useState(false);
 
+    const handleClose = () => setShowOffcanvas(false);
+    const handleShow = () => setShowOffcanvas(true);
     if (!accesoPermitido) {
         return 'No autorizado';
     }
@@ -61,27 +69,40 @@ export const AdminPanel = () => {
     return (
         <div>
             <h2>Admin Panel</h2>
-            <Link to="/create">
-                <button className="boton-agregar">CREAR PRODUCTO  </button>
-            </Link>
-            <Link to="/crearcategoria">
-                <button className="boton-agregar">CREAR CATEGORIA</button>
-            </Link>
-            <Link to="/crearcolores">
-                <button className="boton-agregar">CREAR COLORES</button>
-            </Link>
-            <Link to="/crearmarca">
-                <button className="boton-agregar">CREAR MARCAS</button>
-            </Link>
-            <Link to="/creartalles">
-                <button className="boton-agregar">CREAR TALLES</button>
-            </Link>
-            <Link to="/editStock">
-                <button className="boton-agregar">Editar Stock</button>
-            </Link>
-            <Link to="/facturacionPage">
-                <button className="boton-agregar">Facturacion Page</button>
-            </Link>
+            <Button variant="dark" className="text-white" onClick={handleShow}>
+                Mostrar Menú
+            </Button>
+            <Offcanvas show={showOffcanvas} onHide={handleClose}>
+                <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>Menú</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    <ul>
+                        <li><Link to="/create">
+                            <Button variant="dark" className="text-white boton-agregar">CREAR PRODUCTO  </Button>
+                        </Link></li>
+                        <li><Link to="/crearcategoria">
+                            <Button variant="dark" className="text-white boton-agregar">CREAR CATEGORIA</Button>
+                        </Link></li>
+                        <li><Link to="/crearcolores">
+                            <Button variant="dark" className="text-white boton-agregar">CREAR COLORES</Button>
+                        </Link></li>
+                        <li> <Link to="/crearmarca">
+                            <Button variant="dark" className="text-white boton-agregar">CREAR MARCAS</Button>
+                        </Link></li>
+                        <li> <Link to="/creartalles">
+                            <Button variant="dark" className="text-white boton-agregar">CREAR TALLES</Button>
+                        </Link></li>
+                        <li>  <Link to="/editStock">
+                            <Button variant="dark" className="text-white boton-agregar">Editar Stock</Button>
+                        </Link></li>
+                        <li><Link to="/facturacionPage">
+                            <Button variant="dark" className="text-white boton-agregar">Envios</Button>
+                        </Link></li>
+                    </ul>
+                </Offcanvas.Body>
+            </Offcanvas>
+
             <button className="boton-agregar" onClick={handleButtonTrue}>
                 {showOnlyWithStock ?
                     'todos los productos' :
