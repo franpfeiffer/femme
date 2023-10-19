@@ -3,7 +3,7 @@
 import React, { useContext, useState } from 'react';
 import { CarritoContext } from "../context/CarritoContext";
 import { data } from 'autoprefixer';
-
+import { ListGroup, Button, Form, Col, Row, FormGroup, FormControl,Container } from 'react-bootstrap';
 export const Carritoscreen = () => {
     const { listaCompras, aumentarCantidad, disminuirCantidad, eliminarCompra, sesionesActivas } = useContext(CarritoContext);
     const [formData, setFormData] = useState({
@@ -40,120 +40,130 @@ export const Carritoscreen = () => {
             };
         });
 
-        fetch(`http://localhost:3000/facturacion/comradorAddPayment`,{
+        fetch(`http://localhost:3000/facturacion/comradorAddPayment`, {
             method: "POST",
-                body: JSON.stringify(formData),
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+            body: JSON.stringify(formData),
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
         })
-        .then(response => response.json())
-        .then(dataComprador => {
-            setidDelComprador(dataComprador)
-            fetch(`http://localhost:3000/mercadoPago/payment`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ productos, idComprador: dataComprador }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    window.location.href = data.response.body.init_point;
-                    console.log(data);
+            .then(response => response.json())
+            .then(dataComprador => {
+                setidDelComprador(dataComprador)
+                fetch(`http://localhost:3000/mercadoPago/payment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ productos, idComprador: dataComprador }),
                 })
-                .catch(error => {
-                    // Manejar errores si ocurren durante la solicitud
-                    console.error('Error al procesar el pago:', error);
-                });
-        })
+                    .then(response => response.json())
+                    .then(data => {
+                        window.location.href = data.response.body.init_point;
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        // Manejar errores si ocurren durante la solicitud
+                        console.error('Error al procesar el pago:', error);
+                    });
+            })
 
 
-       
-        
+
+
     };
 
     return (
         <>
-            <ul className="custom-list">
-                {listaCompras.map(item => (
-                    <li key={item.id}>
-                        <div className="item-info">
-                            <span className="item-name">{item.nombre}</span>
-                            <span className="item-price">${item.precio}</span>
-                            <span className="item-color">Color: {item.color}</span>
-                            <span className="item-size">Talle: {item.talle}</span>
-                        </div>
-                        <div className="item-quantity">
-                            <button className="btn btn-quantity" onClick={() => disminuirCantidad(item.id)}>-</button>
-                            <span className="quantity">{item.cantidad}</span>
-                            <button className="btn btn-quantity" onClick={() => aumentarCantidad(item.id)}>+</button>
-                        </div>
-                        <button className="btn btn-delete" onClick={() => eliminarCompra(item.id)}>Eliminar</button>
-                    </li>
-                ))}
-            </ul>
-            <div className="total-amount">TOTAL: ${calcularTotal()}</div>
-            <div className="d-grid gap-2">
-
-            </div>
-            <div className="buyer-form">
-                <h2>Detalles del Comprador</h2>
-                <form
-                    onSubmit={handleImpresion}
-                >
-                    <input
-                        type="text"
-                        name="nombre"
-                        value={formData.nombre}
-                        onChange={handleInputChange}
-
-                        placeholder="nombre"
-                    />
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-
-                        placeholder="email"
-                    />
-                    <input
-                        type="text"
-                        name="direccion"
-                        value={formData.direccion}
-                        onChange={handleInputChange}
-
-                        placeholder="direccion"
-                    />
-                    <input
-                        type="number"
-                        name="telefono"
-                        value={formData.telefono}
-                        onChange={handleInputChange}
-
-                        placeholder="telefono"
-                    />
-                    <input
-                        type="number"
-                        name="dni"
-                        value={formData.dni}
-                        onChange={handleInputChange}
-
-                        placeholder="dni"
-                    />
-                    <button
-                        className={`btn btn-buy ${listaCompras.length < 1 ? 'disabled' : ''}`}
-                        onClick={handleImpresion}
-                        disabled={listaCompras.length < 1}
-                    >
-                        COMPRAR
-                    </button>
-                </form>
-
-
-            </div>
+        <Container fluid className="overflow-x-hidden">
+            <Row>
+                <Col lg={6}>
+                    <ListGroup className="custom-list">
+                        {listaCompras.map(item => (
+                            <ListGroup.Item key={item.id} className="d-flex justify-content-between align-items-center">
+                                <div className="item-info">
+                                    <span className="item-name">{item.nombre}</span>
+                                    <span className="item-price">${item.precio}</span>
+                                    <span className="item-color">Color: {item.color}</span>
+                                    <span className="item-size">Talle: {item.talle}</span>
+                                </div>
+                                <div className="item-quantity">
+                                    <Button variant="outline-primary" className="btn-quantity" onClick={() => disminuirCantidad(item.id)}>-</Button>
+                                    <span className="quantity">{item.cantidad}</span>
+                                    <Button variant="outline-primary" className="btn-quantity" onClick={() => aumentarCantidad(item.id)}>+</Button>
+                                </div>
+                                <Button variant="danger" className="btn-delete" onClick={() => eliminarCompra(item.id)}>Eliminar</Button>
+                            </ListGroup.Item>
+                        ))}
+                    </ListGroup>
+                    <div className="total-amount mt-3">TOTAL: ${calcularTotal()}</div>
+                </Col>
+                <Col lg={6} className="d-flex flex-column justify-content-center align-items-center bg-light rounded p-4">
+                    <h2 className="mb-4">Detalles del Comprador</h2>
+                    <Form onSubmit={handleImpresion}>
+                        <FormGroup className="mb-3">
+                            <FormControl
+                                type="text"
+                                name="nombre"
+                                value={formData.nombre}
+                                onChange={handleInputChange}
+                                placeholder="Nombre"
+                                className="w-100"
+                            />
+                        </FormGroup>
+                        <FormGroup className="mb-3">
+                            <FormControl
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                placeholder="Email"
+                                className="w-100"
+                            />
+                        </FormGroup>
+                        <FormGroup className="mb-3">
+                            <FormControl
+                                type="text"
+                                name="direccion"
+                                value={formData.direccion}
+                                onChange={handleInputChange}
+                                placeholder="Dirección"
+                                className="w-100"
+                            />
+                        </FormGroup>
+                        <FormGroup className="mb-3">
+                            <FormControl
+                                type="number"
+                                name="telefono"
+                                value={formData.telefono}
+                                onChange={handleInputChange}
+                                placeholder="Teléfono"
+                                className="w-100"
+                            />
+                        </FormGroup>
+                        <FormGroup className="mb-3">
+                            <FormControl
+                                type="number"
+                                name="dni"
+                                value={formData.dni}
+                                onChange={handleInputChange}
+                                placeholder="DNI"
+                                className="w-100"
+                            />
+                        </FormGroup>
+                        <Button
+                            type="submit"
+                            variant="primary"
+                            className={`btn-buy ${listaCompras.length < 1 ? 'disabled' : ''}`}
+                            disabled={listaCompras.length < 1}
+                        >
+                            COMPRAR
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
+            </Container>
         </>
     );
 };

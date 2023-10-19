@@ -4,7 +4,7 @@ import { useState } from 'react';
 import CategoriaComponent from "../Fetchs/Categoria";
 import TalleComponent from "../Fetchs/Talles";
 import ColoresComponent from "../Fetchs/Colores";
-
+import { Form, Button, Row, Col } from 'react-bootstrap';
 const FiltrosComponent = ({ onFilterChange }) => {
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(1000000);
@@ -53,9 +53,8 @@ const FiltrosComponent = ({ onFilterChange }) => {
 
     return (
         <div className="filters">
-            <form onSubmit={handleForm}>
-
-                <h2>Filtros</h2>
+            <h2>Filtros</h2>
+            <Form onSubmit={handleForm}>
                 <h2>Categorias</h2>
                 <CategoriaComponent onCategoriaChange={handleCategoriaChange} />
                 <h3>Talles</h3>
@@ -63,23 +62,18 @@ const FiltrosComponent = ({ onFilterChange }) => {
                 <h3>Colores</h3>
                 <ColoresComponent onColorChange={handleColorChange} />
                 <h3>Precios</h3>
-                <div className="price-filter">
-                    <input
-                        type="number"
-                        placeholder="Min"
-                        value={minPrice}
-                        onChange={handleMinPriceChange}
-                    />
-                    <input
-                        type="number"
-                        placeholder="Max"
-                        value={maxPrice}
-                        onChange={handleMaxPriceChange}
-                    />
-                    <br />
-                    <button className='apply-button' onClick={handlePriceFilter}>Aplicar</button>
-                </div>
-            </form>
+                <Row className="align-items-center">
+                    <Col xs="auto">
+                        <Form.Control type="number" placeholder="Min" value={minPrice} onChange={handleMinPriceChange} />
+                    </Col>
+                    <Col xs="auto">
+                        <Form.Control type="number" placeholder="Max" value={maxPrice} onChange={handleMaxPriceChange} />
+                    </Col>
+                    <Col xs="auto">
+                        <Button type="submit" variant="primary" className="apply-button">Aplicar</Button>
+                    </Col>
+                </Row>
+            </Form>
         </div>
 
     );

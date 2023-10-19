@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css'; 
 
-import '../admin.css'
 
 import { ListProd } from "./listadoProd/ListProd";
 import useAuthorization from './HooksAdmin/useAuthorization';

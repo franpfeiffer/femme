@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import '../index.css';
+import { Button, FormControl, InputGroup } from 'react-bootstrap';
 
 export const SearchComponent = ({ contenidoSearch }) => {
     const [search, setSearch] = useState([]);
@@ -39,10 +40,22 @@ export const SearchComponent = ({ contenidoSearch }) => {
 
     return (
         <div className="nav__search">
-            <form onSubmit={handleSubmit} className='form-busqueda'>
-                <input type="text" value={formData.search} onChange={handleInputChange} name='search' />
-                <button className="search-button">Buscar</button>
-            </form>
-        </div>
+      <form onSubmit={handleSubmit} className="form-busqueda">
+        <InputGroup className="mb-3">
+          <FormControl
+            placeholder="Buscar..."
+            aria-label="Buscar"
+            aria-describedby="basic-addon2"
+            type="text"
+            name="search"
+            value={formData.search}
+            onChange={handleInputChange}
+          />
+          <Button variant="primary" id="button-addon2" type="submit">
+            Buscar
+          </Button>
+        </InputGroup>
+      </form>
+    </div>
     )
 }

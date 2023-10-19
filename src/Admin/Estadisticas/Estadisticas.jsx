@@ -32,11 +32,9 @@ export const Estadisticas = () => {
         fetchMarca();
     }, [usuarioCookie]);
 
-    // Calcular ingresos mensuales
     const calcularDatos = () => {
         const ingresosPorMes = {};
 
-        // Itera a través de las facturas y suma los ingresos por mes
         datos.forEach(factura => {
             const fecha = new Date(factura.fecha_emision);
             const mesAnio = format(fecha, 'MM/yyyy');
@@ -44,8 +42,7 @@ export const Estadisticas = () => {
             ingresosPorMes[mesAnio] += factura.total;
         });
 
-        // Extrae las fechas y los ingresos para los gráficos
-        const fechasMensuales = Object.keys(ingresosPorMes).sort(); // Ordena las fechas
+        const fechasMensuales = Object.keys(ingresosPorMes).sort();
         const ingresosMensuales = fechasMensuales.map(fecha => ingresosPorMes[fecha]);
 
         return { fechasMensuales, ingresosMensuales };

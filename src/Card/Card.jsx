@@ -6,16 +6,7 @@ import { DeleteButton } from "./Buttons/DeleteButton";
 import { EditButton } from "./Buttons/EditButton";
 export const Card = ({ imagen, nombre, precio, handleAgregar, handleQuitar, handleAumentar, handleDisminuir, verMas, botonEliminar, botonEditar}) => {
     const accesoPermitido = useAuthorization();
-    const [added, setAdded] = useState(false)
 
-    const clickAgregar = () => {
-        handleAgregar()
-        setAdded(true)
-    }
-    const clickQuitar = () => {
-        handleQuitar()
-        setAdded(false)
-    }
 
     return (
         <div className="tarjeta">

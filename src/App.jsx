@@ -1,8 +1,7 @@
-import './index.css';
 import './normalize.css';
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { Navbar } from './NavBar/Navbar'
+import { Navbar1 } from './NavBar/Navbar'
 import { Index } from './Index'
 import { Footer } from './Footer/Footer'
 import { Comprascreen } from './CompraScreen/Comprascreen';
@@ -25,6 +24,8 @@ import { FacturacionPage } from './Admin/Facturacion/FacturacionPage';
 import { CompradorAdd } from './Admin/Facturacion/CompradorAdd';
 import { FacturacionManual } from './Admin/Facturacion/FacturacionManual';
 import { Estadisticas } from './Admin/Estadisticas/Estadisticas';
+import './index.css';
+
 
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
 
       <ProductosProvider >
         <CarritoProvider>
-          <Navbar />
+          <Navbar1 />
           <Routes>
             <Route element={< Index />} path='/' />
             <Route element={< Comprascreen />} path='/productos' />
