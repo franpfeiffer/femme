@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css'; // Importa los estilos de Bootstrap de manera local
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 import '../admin.css'
 
@@ -98,6 +98,9 @@ export const AdminPanel = () => {
                         </Link></li>
                         <li><Link to="/facturacionPage">
                             <Button variant="dark" className="text-white boton-agregar">Envios</Button>
+                        </Link></li>
+                        <li><Link to="/estadisticas">
+                            <Button variant="dark" className="text-white boton-agregar">Estadisticas</Button>
                         </Link></li>
                     </ul>
                 </Offcanvas.Body>

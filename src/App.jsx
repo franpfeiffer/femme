@@ -24,6 +24,9 @@ import { EditStock } from './Admin/EditStock';
 import { FacturacionPage } from './Admin/Facturacion/FacturacionPage';
 import { CompradorAdd } from './Admin/Facturacion/CompradorAdd';
 import { FacturacionManual } from './Admin/Facturacion/FacturacionManual';
+import { Estadisticas } from './Admin/Estadisticas/Estadisticas';
+
+
 function App() {
   return (
 
@@ -53,6 +56,8 @@ function App() {
             <Route element={< FacturacionPage />} path='/facturacionPage' />
             <Route element={< CompradorAdd />} path='/compradorAdd' />
             <Route element={< FacturacionManual />} path='/createFactura/:id' />
+            <Route element={< Estadisticas />} path='/estadisticas' />
+
 
 
 
