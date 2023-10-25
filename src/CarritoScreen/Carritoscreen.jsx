@@ -4,6 +4,7 @@ import React, { useContext, useState } from 'react';
 import { CarritoContext } from "../context/CarritoContext";
 import { data } from 'autoprefixer';
 import { ListGroup, Button, Form, Col, Row, FormGroup, FormControl,Container } from 'react-bootstrap';
+import { EnviosCalculador } from '../EnviosCalculador/EnviosCalculador';
 export const Carritoscreen = () => {
     const { listaCompras, aumentarCantidad, disminuirCantidad, eliminarCompra, sesionesActivas } = useContext(CarritoContext);
     const [formData, setFormData] = useState({
@@ -163,6 +164,7 @@ export const Carritoscreen = () => {
                     </Form>
                 </Col>
             </Row>
+            <EnviosCalculador></EnviosCalculador>
             </Container>
         </>
     );

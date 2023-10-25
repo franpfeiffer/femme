@@ -17,13 +17,11 @@ export const Navbar1 = () => {
     setSearch(contenidoSearch)
     console.log(contenidoSearch);
   }
-  const navbarStyles = {
-    backgroundColor: "pink", 
-  };
+
 
   return (
     <div className="navContainer">
-      <Navbar style={navbarStyles}  expand="lg">
+      <Navbar className="navbar-color"  expand="lg">
         <Container>
           <Navbar.Brand as={Link} to="/">
             <img src="logoFemmeFake.png" alt="Logo" className="logoFemme" />

@@ -100,6 +100,9 @@ export const AdminPanel = () => {
                         <li><Link to="/estadisticas">
                             <Button variant="dark" className="text-white boton-agregar">Estadisticas</Button>
                         </Link></li>
+                        <li><Link to="/registerAdmin">
+                            <Button variant="dark" className="text-white boton-agregar">Registrar Nueva Sucursal</Button>
+                        </Link></li>
                     </ul>
                 </Offcanvas.Body>
             </Offcanvas>

@@ -24,6 +24,7 @@ import { FacturacionPage } from './Admin/Facturacion/FacturacionPage';
 import { CompradorAdd } from './Admin/Facturacion/CompradorAdd';
 import { FacturacionManual } from './Admin/Facturacion/FacturacionManual';
 import { Estadisticas } from './Admin/Estadisticas/Estadisticas';
+import { RegisterAdmin } from './Admin/RegisterAdmin/RegisterAdmin';
 import './index.css';
 
 
@@ -58,6 +59,8 @@ function App() {
             <Route element={< CompradorAdd />} path='/compradorAdd' />
             <Route element={< FacturacionManual />} path='/createFactura/:id' />
             <Route element={< Estadisticas />} path='/estadisticas' />
+            <Route element={< RegisterAdmin />} path='/registerAdmin' />
+
 
 
 
