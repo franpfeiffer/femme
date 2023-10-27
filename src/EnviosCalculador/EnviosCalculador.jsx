@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Log } from 'victory';
+import { ListGroup, Button, Form, Col, Row, FormGroup, FormControl, Container } from 'react-bootstrap';
 
-export const EnviosCalculador = () => {
+export const EnviosCalculador = ({ onPrecioEnvioChange, onCodigoPostalChange }) => {
     const provincias = [
         { iso: "AR-A", provincia: "Salta" },
         { iso: "AR-B", provincia: "Provincia de Buenos Aires" },
@@ -32,6 +32,8 @@ export const EnviosCalculador = () => {
     const [iso, setIso] = useState('');
     const [precios, setPecios] = useState([])
     const [codigoPostal, setCodigoPostal] = useState('')
+    const [hayprecio, sethayprecio] = useState(false)
+
     const handleCodigoPostalChange = (event) => {
         setCodigoPostal(event.target.value);
     };
@@ -53,42 +55,40 @@ export const EnviosCalculador = () => {
                     }
                 )
                 const data = await response.json();
-                if(data.error){
+                if (data.error) {
                     console.log(data);
-                }else{
+                } else {
+                    console.log(data);
+                    sethayprecio(true)
                     setPecios(data)
+                    onPrecioEnvioChange(data.paqarClasico.aDomicilio);
+                    onCodigoPostalChange(codigoPostal);
                 }
             } catch (error) {
                 console.error('Error fetching provincias:', error);
             }
         }
         fetchProvincias()
-    }, [codigoPostal, iso])
+    }, [codigoPostal, iso, onPrecioEnvioChange, onCodigoPostalChange])
     return (
         <>
-            <form>
-                <label>
-                    Código Postal:
-                    <input type="number" value={codigoPostal} onChange={handleCodigoPostalChange} />
-                </label>
-                <label>
-                    Provincia:
-                    <select value={iso} onChange={handleProvinciaChange}>
-                        <option value="">Selecciona una provincia</option>
-                        {provincias.map(provincia => (
-                            <option key={provincia.iso} value={provincia.iso}>
-                                {provincia.provincia}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-                {precios ? (
+            <FormGroup className="mb-3">
+                <FormControl type="number" value={codigoPostal} onChange={handleCodigoPostalChange} name='codigo_postal' placeholder='Codigo Postal' />
+                <Form.Control as="select" value={iso} onChange={handleProvinciaChange}>
+                    <option value="">Selecciona una provincia</option>
+                    {provincias.map(provincia => (
+                        <option key={provincia.iso} value={provincia.iso}>
+                            {provincia.provincia}
+                        </option>
+                    ))}
+                </Form.Control>
+                {precios && hayprecio ? (
                     <div>
                         <p>${precios.paqarClasico.aDomicilio}</p>
                     </div>
                 ) : null
                 }
-            </form>
+            </FormGroup>
         </>
     )
 }
