@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { CarritoContext } from '../context/CarritoContext';
 import { Color } from 'three';
 import '../detalle-produ.css'
+import { Container, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
+
 import { DeleteButton } from './buttons/DeleteImage';
 export const DetalleProducto = () => {
     const [added, setAdded] = useState(false);
@@ -72,115 +74,121 @@ export const DetalleProducto = () => {
         index === self.findIndex((t) => t.talle.id === colorTalle.talle.id)
     );
     return (
-        <div className="app">
-            <div className="details">
-                <div className="big-img">
-                    {imagenSeleccionada ? (
-                        <img src={`http://localhost:3000/${imagenSeleccionada}`} alt={producto.nombre} />
-                    ) : (
-                        imagene.length > 0 ? (
+        <Container className="mt-5">
+            <Row className="details">
+                <Col lg={5} md={6}>
+                    <div className="big-img">
+                        {imagenSeleccionada ? (
+                            <img src={`http://localhost:3000/${imagenSeleccionada}`} alt={producto.nombre} />
+                        ) : imagene.length > 0 ? (
                             <img src={`http://localhost:3000/${imagene[0].url}`} alt={producto.nombre} />
                         ) : (
-                            <p>No image available</p>
-                        )
-                    )}
-                </div>
-
-                <div className="info">
-                    <div className='box'>
-                        <div className='row'>
-                            <h2>{producto.nombre}</h2>
-                            <span>${producto.precio}</span>
-                        </div>
+                            <p>No hay imagen disponible</p>
+                        )}
                     </div>
-                    <div className="colors">
-                        {coloresUnicos.map((colorTalle) => (
-                            <button
-                                key={colorTalle.id}
-                                style={{ background: colorTalle.colore.nombre }}
-                                onClick={() => {
-                                    handleColorSeleccionado(colorTalle.colore.id);
-                                    handleTalleSeleccionado(null);
-                                    setMostrarAdvertencia(false);
-                                }}
-                            ></button>
-                        ))}
-                    </div>
-                    <div className='talles'>
-                        {tallesUnicos.map(talle => (
-                            <button
-                                key={talle.id}
-                                onClick={() => {
-                                    handleTalleSeleccionado(talle.talle.id);
-                                    const selectedColorTalle = prod_colores_talle.find(
-                                        ct => ct.coloreId == colorSeleccionado && ct.talleId == talle.talle.id
-                                    );
-
-                                    if (selectedColorTalle && selectedColorTalle.stock > 0) {
-                                        setMostrarAdvertenciaStock(false);
-                                    } else {
-                                        setMostrarAdvertenciaStock(true);
-                                    }
-                                }}
-                                aria-disabled={
-                                    (
-                                        colorSeleccionado &&
-                                        talle.talle.id == talleSeleccionado &&
-                                        talle.stock > 0
-                                    )
-                                }
-                            >
-                                {talle.talle.nombre}
-                            </button>
-                        ))}
-                    </div>
-
-
-                    <div className='thumb'>
-                        {imagene.map(img => (
-                            <>
-                                <img src={`http://localhost:3000/${img.url}`} alt="" key={img.id}
+                    <div className="thumb d-flex">
+                        {imagene.map((img) => (
+                            <React.Fragment key={img.id}>
+                                <img
+                                    src={`http://localhost:3000/${img.url}`}
+                                    alt=""
                                     className={img.url === imagenSeleccionada ? 'active' : ''}
                                     onClick={() => handleThumbnailClick(img.url)}
-
                                 />
                                 <DeleteButton id={img.id} />
-                            </>
+                            </React.Fragment>
                         ))}
                     </div>
-                    <p>{producto.descripcion}</p>
-                    {mostrarAdvertencia && <p>Por favor, seleccione un color y un talle antes de agregar al carrito.</p>}
-                    {mostrarAdvertenciaStock && <p>NO HAY STOCK DE ESTE TALLE O COLOR QUE SELECCIONASTE</p>}
-                    {prod_colores_talle.length > 0 ? (
-                        <button
-                            type="button"
-                            className="boton-agregar cart"
-                            onClick={() => {
-                                if (colorSeleccionado && talleSeleccionado) {
-                                    const selectedColorTalle = prod_colores_talle.find(
-                                        ct => ct.colore.id == colorSeleccionado && ct.talle.id == talleSeleccionado
-                                    );
+                </Col>
+                <Col lg={7} md={6}>
+                    <div className="box">
+                        <Row>
+                            <h2 className="text-uppercase">{producto.nombre}</h2>
+                            <span className="text-danger">${producto.precio}</span>
+                        </Row>
+                        <div className="colors">
+                            <ButtonGroup>
 
-                                    if (selectedColorTalle && selectedColorTalle.stock > 0) {
-                                        setMostrarAdvertencia(false);
-                                        agregarCompra(producto, colorSeleccionado, talleSeleccionado);
+                                {coloresUnicos.map((colorTalle) => (
+                                    <Button
+                                        key={colorTalle.id}
+                                        style={{ background: colorTalle.colore.nombre }}
+                                        onClick={() => {
+                                            handleColorSeleccionado(colorTalle.colore.id);
+                                            handleTalleSeleccionado(null);
+                                            setMostrarAdvertencia(false);
+                                        }}
+                                    ></Button >
+                                ))}
+                            </ButtonGroup>
+                        </div>
+                        <div className='talles'>
+                        <ButtonGroup>
+                            {tallesUnicos.map(talle => (
+                                <Button
+                                    key={talle.id}
+                                    onClick={() => {
+                                        handleTalleSeleccionado(talle.talle.id);
+                                        const selectedColorTalle = prod_colores_talle.find(
+                                            ct => ct.coloreId == colorSeleccionado && ct.talleId == talle.talle.id
+                                        );
+
+                                        if (selectedColorTalle && selectedColorTalle.stock > 0) {
+                                            setMostrarAdvertenciaStock(false);
+                                        } else {
+                                            setMostrarAdvertenciaStock(true);
+                                        }
+                                    }}
+                                    aria-disabled={
+                                        (
+                                            colorSeleccionado &&
+                                            talle.talle.id == talleSeleccionado &&
+                                            talle.stock > 0
+                                        )
+                                    }
+                                >
+                                    {talle.talle.nombre}
+                                </Button>
+                            ))}
+                            </ButtonGroup>
+                        </div>
+
+
+
+                        <p>{producto.descripcion}</p>
+                        {mostrarAdvertencia && <p>Por favor, seleccione un color y un talle antes de agregar al carrito.</p>}
+                        {mostrarAdvertenciaStock && <p>NO HAY STOCK DE ESTE TALLE O COLOR QUE SELECCIONASTE</p>}
+                        {prod_colores_talle.length > 0 ? (
+                            <button
+                                type="button"
+                                className="boton-agregar cart"
+                                onClick={() => {
+                                    if (colorSeleccionado && talleSeleccionado) {
+                                        const selectedColorTalle = prod_colores_talle.find(
+                                            ct => ct.colore.id == colorSeleccionado && ct.talle.id == talleSeleccionado
+                                        );
+
+                                        if (selectedColorTalle && selectedColorTalle.stock > 0) {
+                                            setMostrarAdvertencia(false);
+                                            agregarCompra(producto, colorSeleccionado, talleSeleccionado);
+                                        } else {
+                                            setMostrarAdvertencia(true);
+                                        }
                                     } else {
                                         setMostrarAdvertencia(true);
                                     }
-                                } else {
-                                    setMostrarAdvertencia(true);
-                                }
-                            }}
-                            disabled={mostrarAdvertencia || (added && !(colorSeleccionado && talleSeleccionado))}
-                        >
-                            {added ? 'Quitar del Carrito' : 'Agregar Carrito'}
-                        </button>) : (
-                        <button type="button" className="boton-agregar cart" disabled>
-                            Sin Stock
-                        </button>
-                    )}
-                </div>
-            </div>
-        </div>
+                                }}
+                                disabled={mostrarAdvertencia || (added && !(colorSeleccionado && talleSeleccionado))}
+                            >
+                                {added ? 'Quitar del Carrito' : 'Agregar Carrito'}
+                            </button>) : (
+                            <button type="button" className="boton-agregar cart" disabled>
+                                Sin Stock
+                            </button>
+                        )}
+                    </div>
+                </Col>
+            </Row>
+        </Container>
     );
 };
