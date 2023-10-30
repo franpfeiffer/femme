@@ -66,6 +66,7 @@ export const EditStock = () => {
             .filter((item) => item.productoId === productoId && item.admin_user.sucursal === sucursalSeleccionada)
             .map((item) => {
                 return {
+                    id: item.id,
                     color: item.colore.nombre,
                     talle: item.talle.nombre,
                     cantidad: item.stock,
