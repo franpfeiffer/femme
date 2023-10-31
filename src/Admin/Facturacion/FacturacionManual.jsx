@@ -21,13 +21,42 @@ export const FacturacionManual = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (name === "productoId") {
+            // Cuando cambias el producto, resetea el campo total
+            setFormData(prevData => ({
+                ...prevData,
+                [name]: value,
+                total: 0
+            }));
             handleProductChange(value);
         } else if (name === "cantidad") {
-            handleQuantityChange(value);
+            // Asegúrate de que la cantidad sea un número válido
+            const parsedQuantity = parseInt(value, 10);
+            if (!isNaN(parsedQuantity)) {
+                // Calcular el nuevo precio unitario basado en la cantidad
+                const newPrecioUnitario = formData.precio_unitario * parsedQuantity;
+                // Actualizar el estado con la nueva cantidad y el nuevo precio unitario
+                setFormData(prevData => ({
+                    ...prevData,
+                    [name]: parsedQuantity,
+                    precio_unitario: newPrecioUnitario,
+                    total: newPrecioUnitario
+                }));
+            } else {
+                // Si la cantidad no es válida, puedes manejarlo como desees, por ejemplo, establecer el total a 0.
+                setFormData(prevData => ({
+                    ...prevData,
+                    [name]: 0,
+                    total: 0
+                }));
+            }
         } else {
-            setFormData({ ...formData, [name]: value });
+            // Para otros campos, simplemente actualiza el estado con el nuevo valor
+            setFormData(prevData => ({
+                ...prevData,
+                [name]: value
+            }));
         }
-    };
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
 

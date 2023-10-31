@@ -36,13 +36,15 @@ function App() {
 
       <ProductosProvider >
         <CarritoProvider>
+       
           <Navbar1 />
           <Routes>
+           
             <Route element={< Index />} path='/' />
             <Route element={< Comprascreen />} path='/productos' />
             <Route element={< Carritoscreen />} path='/carrito' />
             <Route element={< SearchPage />} path='/busqueda' />
-            <Route element={< DetalleProducto />} path='/:id/detalles-del-producto' />
+            <Route element={< DetalleProducto />} path='/:id/detalles-del-producto' className="main-content" />
 
 
             <Route element={< AdminLog />} path='/Admin' />
@@ -75,7 +77,8 @@ function App() {
             <Route path='/*' element={<Navigate to='/' />} />
           </Routes>
 
-          {/* <Footer /> */}
+          <Footer />
+          
         </CarritoProvider>
       </ProductosProvider>
 

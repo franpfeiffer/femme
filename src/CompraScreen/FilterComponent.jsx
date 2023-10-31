@@ -8,9 +8,9 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 const FiltrosComponent = ({ onFilterChange }) => {
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(1000000);
-    const [colorSeleccionado, setColorSeleccionado] = useState(null);
-    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
-    const [talleSeleccionado, setTalleSeleccionado] = useState(null);
+    const [colorSeleccionado, setColorSeleccionado] = useState('');
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
+    const [talleSeleccionado, setTalleSeleccionado] = useState('');
 
     const handleTalleChange = (selectedTalle) => {
         setTalleSeleccionado(selectedTalle);

@@ -13,7 +13,6 @@ export const SearchPage = () => {
   const handleQuitar = (id) => {
     eliminarCompra(id)
   }
-
   return (
     <div>
       <h2 className="search-title">Resultados de la búsqueda: </h2>
@@ -22,6 +21,7 @@ export const SearchPage = () => {
         {resultados.map((resultado) => (
           <Card
             key={resultado.id}
+            verMas={resultado.id}
             imagen={resultado.imagene[0]?.url}
             nombre={resultado.nombre}
             descripcion={resultado.descripcion}
