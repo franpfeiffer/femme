@@ -33,14 +33,16 @@ export const EnviosCalculador = ({ onPrecioEnvioChange, onCodigoPostalChange }) 
     const [iso, setIso] = useState('');
     const [precios, setPecios] = useState([])
     const [codigoPostal, setCodigoPostal] = useState('')
-    const [hayprecio, sethayprecio] = useState(false)
-
+    const [hayprecio, setHayPrecio] = useState(false)
+    const [fetchRealizado, setFetchRealizado] = useState(false);
     const handleCodigoPostalChange = (event) => {
         setCodigoPostal(event.target.value);
+        setFetchRealizado(false);
     };
 
     const handleProvinciaChange = (event) => {
         setIso(event.target.value);
+        setFetchRealizado(false);
     };
 
     useEffect(() => {
@@ -50,7 +52,7 @@ export const EnviosCalculador = ({ onPrecioEnvioChange, onCodigoPostalChange }) 
                     {
                         method: 'GET',
                         headers: {
-                            'X-RapidAPI-Key': '44d756538bmsh90ecb2cbff6716ap1553a0jsnf988510cdd30',
+                            'X-RapidAPI-Key': '13d730dbc8msh7877d5800430a46p123887jsn20219d453ed2',
                             'X-RapidAPI-Host': 'correo-argentino1.p.rapidapi.com'
                         }
                     }
@@ -60,22 +62,37 @@ export const EnviosCalculador = ({ onPrecioEnvioChange, onCodigoPostalChange }) 
                     console.log(data);
                 } else {
                     console.log(data);
-                    sethayprecio(true)
+                    setHayPrecio(true)
                     setPecios(data)
                     onPrecioEnvioChange(data.paqarClasico.aDomicilio);
                     onCodigoPostalChange(codigoPostal);
+                    setFetchRealizado(true);
                 }
             } catch (error) {
                 console.error('Error fetching provincias:', error);
             }
         }
-        fetchProvincias()
-    }, [codigoPostal, iso, onPrecioEnvioChange, onCodigoPostalChange])
+        if (codigoPostal && iso && !fetchRealizado) {
+            fetchProvincias();
+        }
+    }, [codigoPostal, iso, onPrecioEnvioChange, onCodigoPostalChange,fetchRealizado])
     return (
         <>
             <FormGroup className="mb-3">
-                <FormControl type="number" value={codigoPostal} onChange={handleCodigoPostalChange} name='codigo_postal' placeholder='Codigo Postal' />
-                <Form.Control as="select" value={iso} onChange={handleProvinciaChange}>
+                <FormControl
+                    type="number"
+                    value={codigoPostal}
+                    onChange={handleCodigoPostalChange}
+                    name='codigo_postal'
+                    placeholder='Codigo Postal'
+                    onFocus={() => setHayPrecio(false)} // Establece hayprecio a false cuando se enfoca en el campo de input
+                />
+                <Form.Control
+                    as="select"
+                    value={iso}
+                    onChange={handleProvinciaChange}
+                    onFocus={() => setHayPrecio(false)} // Establece hayprecio a false cuando se enfoca en el campo de input
+                >
                     <option value="">Selecciona una provincia</option>
                     {provincias.map(provincia => (
                         <option key={provincia.iso} value={provincia.iso}>
@@ -87,8 +104,7 @@ export const EnviosCalculador = ({ onPrecioEnvioChange, onCodigoPostalChange }) 
                     <div>
                         <p>${precios.paqarClasico.aDomicilio}</p>
                     </div>
-                ) : null
-                }
+                ) : null}
             </FormGroup>
         </>
     )

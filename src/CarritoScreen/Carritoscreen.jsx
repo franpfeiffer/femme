@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { CarritoContext } from "../context/CarritoContext";
 import { data } from 'autoprefixer';
 import { ListGroup, Button, Form, Col, Row, FormGroup, FormControl, Container } from 'react-bootstrap';
@@ -32,12 +32,13 @@ export const Carritoscreen = () => {
         const totalSinEnvio = listaCompras.reduce((total, item) => total + item.precio * item.cantidad, 0);
         return (totalSinEnvio + precioEnvio).toFixed(2);
     };
-
+  
     const handleImpresion = (e) => {
         e.preventDefault();
-
+        console.log(precioEnvio);
         const total = calcularTotal()
-
+        const totalConEnvio = parseFloat(total) + parseFloat(precioEnvio);
+        console.log(totalConEnvio);
         const productos = listaCompras.map(item => {
             const nombreProducto = `${item.nombre}-Color:${item.color}-Talle:${item.talle}`
             return {
@@ -47,11 +48,11 @@ export const Carritoscreen = () => {
                 cantidad: item.cantidad,
                 color: item.color,
                 talle: item.talle,
-                total: total,
+                total: totalConEnvio,
                 idComprador: idDelComprador
             };
         });
-
+        
         fetch(`http://localhost:3000/facturacion/comradorAddPayment`, {
             method: "POST",
             body: JSON.stringify(formData),
@@ -68,7 +69,7 @@ export const Carritoscreen = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ productos, idComprador: dataComprador }),
+                    body: JSON.stringify({ productos, idComprador: dataComprador,precioEnvio  }),
                 })
                     .then(response => response.json())
                     .then(data => {
