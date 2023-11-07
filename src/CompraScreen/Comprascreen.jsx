@@ -6,7 +6,7 @@ import { ProductosProvider } from "../context/ProductosProvider";
 import { CarritoContext } from "../context/CarritoContext";
 import FiltrosComponent from "./FilterComponent";
 import { Container, Row, Col } from "react-bootstrap";
-
+import { WhatsAppButton } from "../WhatsAppLogo/WhatsAppLogo";
 export const Comprascreen = () => {
 
   const { productos: productosOriginales } = useContext(ProductosContext);
@@ -55,6 +55,8 @@ export const Comprascreen = () => {
         </div>
       </Col>
     </Row>
+    <WhatsAppButton/>
+
   </Container>
 
   );

@@ -5,7 +5,7 @@ import { CarritoContext } from '../context/CarritoContext';
 import { Color } from 'three';
 import '../detalle-produ.css'
 import { Container, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
-
+import { WhatsAppButton } from '../WhatsAppLogo/WhatsAppLogo';
 import { DeleteButton } from './buttons/DeleteImage';
 export const DetalleProducto = () => {
     const [added, setAdded] = useState(false);
@@ -189,6 +189,9 @@ export const DetalleProducto = () => {
                     </div>
                 </Col>
             </Row>
+            <WhatsAppButton/>
+
         </Container>
+        
     );
 };

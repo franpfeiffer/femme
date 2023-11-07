@@ -4,6 +4,7 @@ import { Card } from '../Card/Card';
 import { ProductosContext } from "../context/ProductoContext";
 import { CarritoContext } from "../context/CarritoContext";
 import Features from './feature/Feature';
+import { WhatsAppButton } from '../WhatsAppLogo/WhatsAppLogo';
 export const Index = () => {
   const { productos: productosOriginales } = useContext(ProductosContext);
   const { agregarCompra, eliminarCompra } = useContext(CarritoContext)
@@ -52,6 +53,7 @@ export const Index = () => {
         handleAgregar={handleAgregar}
         handleQuitar={handleQuitar}
       />
+      <WhatsAppButton/>
     </div>
   );
 }

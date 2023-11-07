@@ -941,3 +941,27 @@
 	.boton-navbarSearch {
 		background-color: #fa92a3;
 	}
+	.whatsapp-button {
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: #25D366;
+		color: #fff;
+		font-size: 16px;
+		padding: 10px 15px;
+		text-decoration: none;
+		border-radius: 50px;
+		transition: background-color 0.3s ease;
+	  }
+	  
+	  .whatsapp-button i {
+		margin-right: 5px;
+	  }
+	  
+	  .whatsapp-button:hover {
+		background-color: #128C7E;
+		text-decoration: none;
+	  }
