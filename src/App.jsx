@@ -77,7 +77,7 @@ function App() {
             <Route path='/*' element={<Navigate to='/' />} />
           </Routes>
 
-          <Footer />
+          {/* <Footer /> */}
           
         </CarritoProvider>
       </ProductosProvider>

@@ -24,6 +24,7 @@ const Features = ({ productosDestacados, productosOferta, productosUltimos, hand
                             handleQuitar={() => handleQuitar(producto.id)}
                             botonEliminar={producto.id}
                             botonEditar={producto.id}
+                            descuento={producto.descuento}
                         />
                     </Col>
                 ))}
@@ -44,6 +45,7 @@ const Features = ({ productosDestacados, productosOferta, productosUltimos, hand
                             handleQuitar={() => handleQuitar(producto.id)}
                             botonEliminar={producto.id}
                             botonEditar={producto.id}
+                            descuento={producto.descuento}
                         />
                     </Col>
                 ))}
@@ -64,6 +66,7 @@ const Features = ({ productosDestacados, productosOferta, productosUltimos, hand
                             handleQuitar={() => handleQuitar(producto.id)}
                             botonEliminar={producto.id}
                             botonEditar={producto.id}
+                            descuento={producto.descuento}
                         />
                     </Col>
                 ))}

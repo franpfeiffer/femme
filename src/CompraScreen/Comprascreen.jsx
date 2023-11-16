@@ -49,6 +49,7 @@ export const Comprascreen = () => {
                 handleQuitar={() => handleQuitar(producto.id)}
                 botonEliminar={producto.id}
                 botonEditar={producto.id}
+                descuento={producto.descuento}
               />
             ) : null
           )}

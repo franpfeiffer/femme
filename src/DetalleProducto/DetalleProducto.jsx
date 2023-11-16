@@ -20,9 +20,24 @@ export const DetalleProducto = () => {
     const [talleSeleccionado, setTalleSeleccionado] = useState(null);
     const [imagenSeleccionada, setImagenSeleccionada] = useState(imagene.length > 0 ? imagene[0].url : null);
     const [mostrarAdvertencia, setMostrarAdvertencia] = useState(false);
-
+    const [precioDecimal, setPrecioDecimal] = useState(parseFloat(producto.precio));
+    const [descuentoDecimal, setDescuentoDecimal] = useState(parseFloat(producto.descuento));
+    const [precioConDescuento, setPrecioConDescuento] = useState(precioDecimal);
     const [mostrarAdvertenciaStock, setMostrarAdvertenciaStock] = useState(false);
 
+    useEffect(() => {
+        setPrecioDecimal(parseFloat(producto.precio));
+        setDescuentoDecimal(parseFloat(producto.descuento ?? 0));
+    }, [producto]);
+
+    useEffect(() => {
+        if (descuentoDecimal > 0) {
+            const descuentoAplicado = (descuentoDecimal / 100) * precioDecimal;
+            setPrecioConDescuento(precioDecimal - descuentoAplicado);
+        } else {
+            setPrecioConDescuento(precioDecimal);
+        }
+    }, [precioDecimal, descuentoDecimal]);
 
     useEffect(() => {
         const fetchProductos = async () => {
@@ -104,7 +119,19 @@ export const DetalleProducto = () => {
                     <div className="box">
                         <Row>
                             <h2 className="text-uppercase">{producto.nombre}</h2>
-                            <span className="text-danger">${producto.precio}</span>
+                            {descuentoDecimal > 0 ? (<span className="text-success">${precioConDescuento.toFixed(2)}</span>) :
+                                (<span className="text-success">${producto.precio}</span>)}
+
+                            {descuentoDecimal > 0 && (
+                                <span className="text-success ml-2">
+                                    {descuentoDecimal}% OFF
+                                </span>
+                            )}
+                            {descuentoDecimal > 0 && (
+                                <span className="text-danger mr-2">
+                                    Precio Original: ${producto.precio}
+                                </span>
+                            )}
                         </Row>
                         <div className="colors">
                             <ButtonGroup>
@@ -123,33 +150,33 @@ export const DetalleProducto = () => {
                             </ButtonGroup>
                         </div>
                         <div className='talles'>
-                        <ButtonGroup>
-                            {tallesUnicos.map(talle => (
-                                <Button
-                                    key={talle.id}
-                                    onClick={() => {
-                                        handleTalleSeleccionado(talle.talle.id);
-                                        const selectedColorTalle = prod_colores_talle.find(
-                                            ct => ct.coloreId == colorSeleccionado && ct.talleId == talle.talle.id
-                                        );
+                            <ButtonGroup>
+                                {tallesUnicos.map(talle => (
+                                    <Button
+                                        key={talle.id}
+                                        onClick={() => {
+                                            handleTalleSeleccionado(talle.talle.id);
+                                            const selectedColorTalle = prod_colores_talle.find(
+                                                ct => ct.coloreId == colorSeleccionado && ct.talleId == talle.talle.id
+                                            );
 
-                                        if (selectedColorTalle && selectedColorTalle.stock > 0) {
-                                            setMostrarAdvertenciaStock(false);
-                                        } else {
-                                            setMostrarAdvertenciaStock(true);
+                                            if (selectedColorTalle && selectedColorTalle.stock > 0) {
+                                                setMostrarAdvertenciaStock(false);
+                                            } else {
+                                                setMostrarAdvertenciaStock(true);
+                                            }
+                                        }}
+                                        aria-disabled={
+                                            (
+                                                colorSeleccionado &&
+                                                talle.talle.id == talleSeleccionado &&
+                                                talle.stock > 0
+                                            )
                                         }
-                                    }}
-                                    aria-disabled={
-                                        (
-                                            colorSeleccionado &&
-                                            talle.talle.id == talleSeleccionado &&
-                                            talle.stock > 0
-                                        )
-                                    }
-                                >
-                                    {talle.talle.nombre}
-                                </Button>
-                            ))}
+                                    >
+                                        {talle.talle.nombre}
+                                    </Button>
+                                ))}
                             </ButtonGroup>
                         </div>
 
@@ -189,9 +216,9 @@ export const DetalleProducto = () => {
                     </div>
                 </Col>
             </Row>
-            <WhatsAppButton/>
+            <WhatsAppButton />
 
         </Container>
-        
+
     );
 };
