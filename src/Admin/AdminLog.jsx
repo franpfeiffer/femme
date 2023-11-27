@@ -31,7 +31,7 @@ export const AdminLog = () => {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.token);
+         localStorage.setItem('token', data.token);
         navigate('/adminpanel');
       } else {
         setError('Credenciales Incorrectas');

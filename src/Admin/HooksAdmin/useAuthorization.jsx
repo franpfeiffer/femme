@@ -20,7 +20,6 @@ const useAuthorization = () => {
             });
 
             if (response.status === 200) {
-                const data = await response.json();
                 setAccesoPermitido(true);
             } else {
                 setAccesoPermitido(false);
