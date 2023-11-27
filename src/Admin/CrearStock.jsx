@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import useAuthorization from "./HooksAdmin/useAuthorization";
 
 export const CrearStock = () => {
-    const usuarioCookie = Cookies.get('usuario');
+    const token = localStorage.getItem('token');
     const location = useLocation();
     const [stockEntries, setStockEntries] = useState([]);
     const id = location.pathname.split('/')[2];
@@ -32,7 +32,7 @@ export const CrearStock = () => {
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${usuarioCookie}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
@@ -69,7 +69,7 @@ export const CrearStock = () => {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
-                        Authorization: `Bearer ${usuarioCookie}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 });
                 if (!response.ok) {

@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import useAuthorization from "./HooksAdmin/useAuthorization";
 import { FormCreate } from "./Form/FormCreate";
 export const CreateTalles = () => {
-    const usuarioCookie = Cookies.get('usuario');
+    const token = localStorage.getItem('token');
     const accesoPermitido = useAuthorization();
     const [formData, setFormData] = useState({
         nombre: "",
@@ -17,7 +17,7 @@ const handleSubmit = async (formData) => {
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${usuarioCookie}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
 

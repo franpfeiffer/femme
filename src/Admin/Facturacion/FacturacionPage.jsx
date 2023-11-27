@@ -7,7 +7,7 @@ import TablaProductosNoEntregados from "./TablaFacturacion/TablaProductosNoEntre
 export const FacturacionPage = () => {
     const accesoPermitido = useAuthorization();
     const [facturas, setFacturas] = useState([]);
-    const usuarioCookie = Cookies.get('usuario');
+    const token = localStorage.getItem('token');
 
     const handleDataFetched = data => {
         setFacturas(data);
@@ -19,7 +19,7 @@ export const FacturacionPage = () => {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
-                        Authorization: `Bearer ${usuarioCookie}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 });
                 const responseData = await response.json();
@@ -31,7 +31,7 @@ export const FacturacionPage = () => {
             }
         };
         fetchEntregas();
-    }, [usuarioCookie]);
+    }, [token]);
     const onEntregaClick = async (idFactura) => {
         const confirmacion = window.confirm("¿Estás seguro de marcar como entregado?");
     
@@ -41,7 +41,7 @@ export const FacturacionPage = () => {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
-                        Authorization: `Bearer ${usuarioCookie}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 });
     

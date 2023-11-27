@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export const CompradorAdd = () => {
     const accesoPermitido = useAuthorization();
     const navigate = useNavigate();
-    const usuarioCookie = Cookies.get('usuario');
+    const token = localStorage.getItem('token');
 
     const [formData, setFormData] = useState({
         nombre: "",
@@ -45,7 +45,7 @@ export const CompradorAdd = () => {
                     credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json',
-                        Authorization: `Bearer ${usuarioCookie}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 });
                 const responseFacturacion = await facturacionAuto.json();

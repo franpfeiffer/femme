@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import useAuthorization from "./HooksAdmin/useAuthorization";
 
 export const CreateProduct = () => {
-    const usuarioCookie = Cookies.get('usuario');
+    const token = localStorage.getItem('token');
     const [categoria, setCategoria] = useState([]);
     const [marca, setMarca] = useState([]);
     const accesoPermitido = useAuthorization();
@@ -47,7 +47,7 @@ export const CreateProduct = () => {
                     body: new FormData(e.target),
                     credentials: 'include',
                     headers: {
-                        Authorization: `Bearer ${usuarioCookie}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 });
 

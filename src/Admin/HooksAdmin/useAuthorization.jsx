@@ -1,30 +1,32 @@
 import { useEffect, useState } from "react";
-import Cookies from 'js-cookie';
+
 
 const useAuthorization = () => {
     const [accesoPermitido, setAccesoPermitido] = useState(false);
-    const usuarioCookie = Cookies.get('usuario');
-
+    const token = localStorage.getItem('token');
     useEffect(() => {
-        if (usuarioCookie) {
+        if (token) {
             fetchUser();
         }
-    }, [usuarioCookie]);
+    }, [token]);
 
     const fetchUser = async () => {
-        const response = await fetch('http://localhost:3000/admin/listAdmin', {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                Authorization: `Bearer ${usuarioCookie}`,
-            },
-        });
+        try {
+            const response = await fetch('http://localhost:3000/admin/listAdmin', {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
-        if (response.status === 200) {
-            const data = await response.json();
-            const tieneAcceso = data.some(usuario => usuario.usuario === usuarioCookie);
-            setAccesoPermitido(tieneAcceso);
-        } else {
+            if (response.status === 200) {
+                const data = await response.json();
+                setAccesoPermitido(true);
+            } else {
+                setAccesoPermitido(false);
+            }
+        } catch (error) {
+            console.error('Error al obtener la autorización:', error);
             setAccesoPermitido(false);
         }
     };

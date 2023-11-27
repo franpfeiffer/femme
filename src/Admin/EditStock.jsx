@@ -10,7 +10,7 @@ export const EditStock = () => {
     const [sucursalSeleccionada, setSucursalSeleccionada] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [detallesProducto, setDetallesProducto] = useState(null);
-    const usuarioCookie = Cookies.get("usuario");
+    const token = localStorage.getItem('token');
     const [datosCargados, setDatosCargados] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
@@ -19,7 +19,7 @@ export const EditStock = () => {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
-                        Authorization: `Bearer ${usuarioCookie}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 });
                 if (!responseStock.ok) {
@@ -34,7 +34,7 @@ export const EditStock = () => {
         };
 
         fetchData();
-    }, [usuarioCookie]);
+    }, [token]);
 
     if (!accesoPermitido) {
         return 'No autorizado';

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
 import useAuthorization from '../HooksAdmin/useAuthorization';
 import { format, startOfMonth, endOfMonth } from 'date-fns';
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTooltip } from 'victory';
 
 export const Estadisticas = () => {
-    const usuarioCookie = Cookies.get('usuario');
+    const token = localStorage.getItem('token');
     const accesoPermitido = useAuthorization();
     const [datos, setDatos] = useState([]);
 
@@ -16,7 +15,7 @@ export const Estadisticas = () => {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
-                        Authorization: `Bearer ${usuarioCookie}`,
+                        Authorization: `Bearer ${token}`,
                     }
                 });
                 if (!response.ok) {
@@ -30,7 +29,7 @@ export const Estadisticas = () => {
         };
 
         fetchMarca();
-    }, [usuarioCookie]);
+    }, [token]);
 
     const calcularDatos = () => {
         const ingresosPorMes = {};

@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 export const FacturacionManual = () => {
     const accesoPermitido = useAuthorization();
-    const usuarioCookie = Cookies.get('usuario');
+    const token = localStorage.getItem('token');
     const location = useLocation();
     const id = location.pathname.split('/')[2];
     const [formData, setFormData] = useState({
@@ -67,7 +67,7 @@ export const FacturacionManual = () => {
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${usuarioCookie}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
@@ -103,7 +103,7 @@ export const FacturacionManual = () => {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
-                        Authorization: `Bearer ${usuarioCookie}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 });
                 if (!response.ok) {
@@ -163,7 +163,7 @@ export const FacturacionManual = () => {
             })
 
 
-    }, [usuarioCookie])
+    }, [token])
     const handleProductChange = (productId) => {
         const selectedProduct = Producto.find(item => item.id == productId);
         if (selectedProduct) {

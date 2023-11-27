@@ -8,7 +8,7 @@ import { Form, Button, Container } from 'react-bootstrap';
 
 export const RegisterAdmin = () => {
     const accesoPermitido = useAuthorization();
-    const usuarioCookie = Cookies.get('usuario');
+    const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -30,7 +30,7 @@ export const RegisterAdmin = () => {
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${usuarioCookie}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
             const responseData = await response.json();

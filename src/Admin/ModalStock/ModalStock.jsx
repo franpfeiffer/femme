@@ -3,7 +3,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
 import Cookies from 'js-cookie';
-const usuarioCookie = Cookies.get('usuario');
+const token = localStorage.getItem('token');
 
 export const ModalStock = ({ show, onHide, detallesProducto }) => {
   if (!detallesProducto) return null;
@@ -34,7 +34,7 @@ export const ModalStock = ({ show, onHide, detallesProducto }) => {
           method: 'DELETE',
           credentials: 'include',
           headers: {
-            Authorization: `Bearer ${usuarioCookie}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         console.log(e);

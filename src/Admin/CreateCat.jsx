@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import useAuthorization from "./HooksAdmin/useAuthorization";
 import { FormCreate } from "./Form/FormCreate";
 export const CreateCat = () => {
-    const usuarioCookie = Cookies.get('usuario');
+    const token = localStorage.getItem('token');
     const accesoPermitido = useAuthorization();
     const [formData, setFormData] = useState({
         nombre: "",
@@ -19,7 +19,7 @@ export const CreateCat = () => {
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${usuarioCookie}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
 

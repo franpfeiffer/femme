@@ -6,7 +6,7 @@ import useAuthorization from "./HooksAdmin/useAuthorization";
 import { useNavigate } from "react-router-dom";
 
 export const EditProduct = () => {
-    const usuarioCookie = Cookies.get('usuario');
+    const token = localStorage.getItem('token');
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -70,7 +70,7 @@ export const EditProduct = () => {
                 body: new FormData(e.target),
                 credentials: 'include',
                 headers: {
-                    Authorization: `Bearer ${usuarioCookie}`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
