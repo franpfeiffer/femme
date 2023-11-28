@@ -6,10 +6,11 @@ import { CarritoContext } from "../context/CarritoContext";
 import useAuthorization from "../Admin/HooksAdmin/useAuthorization";
 import { SearchComponent } from "../SearchFetch/SearchComponent";
 import { Navbar, Container, Nav } from "react-bootstrap";
-
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 
 export const Navbar1 = () => {
+  const [hover, setHover] = useState(false);
   const accesoPermitido = useAuthorization();
   const { listaCompras } = useContext(CarritoContext)
   const [search, setSearch] = useState([])
@@ -21,7 +22,7 @@ export const Navbar1 = () => {
 
   return (
     <div className="navContainer">
-      <Navbar className="navbar-color"  expand="lg">
+      <Navbar className="navbar-color" expand="lg">
         <Container>
           <Navbar.Brand as={Link} to="/">
             <img src="logoFemmeFake.png" alt="Logo" className="logoFemme" />
@@ -42,9 +43,12 @@ export const Navbar1 = () => {
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link as={Link} to="/productos">
-                  Productos
-                </Nav.Link>
+                <NavDropdown title="Productos" id="basic-nav-dropdown">
+                  <NavDropdown.Item as={Link} to="/productos">Principal</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/">Remeras</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/">Pantalon</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/">la mama de huevo</NavDropdown.Item>
+                </NavDropdown>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link as={Link} to="/carrito">

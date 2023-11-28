@@ -27,6 +27,21 @@
 		height: 63px;
 	}
 
+	.filter-section {
+		background-color: white;
+		border: 1px solid #ccc;
+		padding: 20px;
+		margin-top: 10px;
+		width: 300px;
+		
+	}
+
+	.filter-section:hover {
+		transition: 1s;
+		display: block;
+	}
+
+
 	.nav {
 		position: sticky;
 		display: flex;
@@ -229,28 +244,9 @@
 
 	.containerProductos {
 		display: flex;
+		margin: auto 1000px;
 	}
-
-	.filters {
-		flex: 0 0 200px;
-		background-color: #f0f0f0;
-		padding: 50px;
-	}
-
-	.filters h2 {
-		font-weight: bold;
-		margin-top: 0;
-	}
-
-	.filters ul {
-		list-style: none;
-		padding: 0;
-	}
-
-	.filters li {
-		margin-bottom: 10px;
-		font-size: 13px;
-	}
+	
 
 	.vermasBoton {
 		background-color: #b560b2;
@@ -330,6 +326,13 @@
 	.product-info p {
 		margin: 0;
 	}
+
+	.productos-container {
+		display: flex;
+		justify-content: center;
+		padding: auto 1000px;
+	}
+	  
 
 	/* --------------------------- DETALLES DE PRODUCTO --------------------------- */
 
