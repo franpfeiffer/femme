@@ -5,16 +5,16 @@ import useAuthorization from '../../Admin/HooksAdmin/useAuthorization';
 
 export const DeleteButton = ({ id }) => {
     const accesoPermitido = useAuthorization();
-    const usuarioCookie = Cookies.get('usuario');
+    const token = localStorage.getItem('token');
     const handleButton = async () => {
         const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar esta imagen?");
         if (confirmDelete) {
             try {
-                const response = await fetch(`http://localhost:3000/productos/${id}/Deleteimagenes`, {
+                const response = await fetch(`https://api-femme.onrender.com/productos/${id}/Deleteimagenes`, {
                     method: "DELETE",
                     credentials: 'include',
                     headers: {
-                        Authorization: `Bearer ${usuarioCookie}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 });
 

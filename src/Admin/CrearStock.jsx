@@ -26,7 +26,7 @@ export const CrearStock = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`http://localhost:3000/productos/${id}/createStock`, {
+            const response = await fetch(`https://api-femme.onrender.com/productos/${id}/createStock`, {
                 method: "POST",
                 body: JSON.stringify(formData),
                 credentials: 'include',
@@ -65,7 +65,7 @@ export const CrearStock = () => {
     useEffect(() => {
         const fetchAdmin = async () => {
             try {
-                const response = await fetch('http://localhost:3000/admin/listAdmin', {
+                const response = await fetch('https://api-femme.onrender.com/admin/listAdmin', {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
@@ -83,7 +83,7 @@ export const CrearStock = () => {
         };
         const fetchTalle = async () => {
             try {
-                const response = await fetch('http://localhost:3000/componentes/talle', { method: 'GET' });
+                const response = await fetch('https://api-femme.onrender.com/componentes/talle', { method: 'GET' });
                 if (!response.ok) {
                     throw new Error(`Fetch failed with status ${response.status}`);
                 }
@@ -96,7 +96,7 @@ export const CrearStock = () => {
         };
         const fetchColor = async () => {
             try {
-                const response = await fetch('http://localhost:3000/componentes/colores', { method: 'GET' });
+                const response = await fetch('https://api-femme.onrender.com/componentes/colores', { method: 'GET' });
                 if (!response.ok) {
                     throw new Error(`Fetch failed with status ${response.status}`);
                 }
@@ -119,7 +119,7 @@ export const CrearStock = () => {
     useEffect(() => {
         const fetchProducto = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/productos/${id}`, { method: 'GET' });
+                const response = await fetch(`https://api-femme.onrender.com/productos/${id}`, { method: 'GET' });
                 if (!response.ok) {
                     throw new Error(`Fetch failed with status ${response.status}`);
                 }

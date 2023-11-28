@@ -42,7 +42,7 @@ export const CreateProduct = () => {
             e.preventDefault();
 
             try {
-                const response = await fetch("http://localhost:3000/productos/create", {
+                const response = await fetch("https://api-femme.onrender.com/productos/create", {
                     method: "POST",
                     body: new FormData(e.target),
                     credentials: 'include',
@@ -67,7 +67,7 @@ export const CreateProduct = () => {
         useEffect(() => {
             const fetchMarca = async () => {
                 try {
-                    const response = await fetch('http://localhost:3000/componentes/marca', { method: 'GET' });
+                    const response = await fetch('https://api-femme.onrender.com/componentes/marca', { method: 'GET' });
                     if (!response.ok) {
                         throw new Error(`Fetch failed with status ${response.status}`);
                     }
@@ -85,7 +85,7 @@ export const CreateProduct = () => {
         useEffect(() => {
             const fetchCategoria = async () => {
                 try {
-                    const response = await fetch('http://localhost:3000/componentes/categoria', { method: 'GET' });
+                    const response = await fetch('https://api-femme.onrender.com/componentes/categoria', { method: 'GET' });
                     if (!response.ok) {
                         throw new Error(`Fetch failed with status ${response.status}`);
                     }

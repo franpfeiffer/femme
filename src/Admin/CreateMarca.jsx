@@ -11,7 +11,7 @@ export const CreateMarca = () => {
     });
 const handleSubmit = async (formData) => {
         try {
-            const response = await fetch(`http://localhost:3000/componentes/marcaAdd`, {
+            const response = await fetch(`https://api-femme.onrender.com/componentes/marcaAdd`, {
                 method: "POST",
                 body: JSON.stringify(formData),
                 credentials: 'include',

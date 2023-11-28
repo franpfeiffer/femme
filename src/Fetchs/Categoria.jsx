@@ -6,7 +6,7 @@ const CategoriaComponent = ({ onCategoriaChange }) => {
     useEffect(() => {
         const fetchCategoria = async () => {
             try {
-                const response = await fetch('http://localhost:3000/componentes/categoria', { method: 'GET' });
+                const response = await fetch('https://api-femme.onrender.com/componentes/categoria', { method: 'GET' });
                 if (!response.ok) {
                     throw new Error(`Fetch failed with status ${response.status}`);
                 }

@@ -14,14 +14,14 @@ export const AdminPanel = () => {
     useEffect(() => {
         const fetchProds = async () => {
             try {
-                const responseProductos = await fetch('http://localhost:3000/productos/', { method: 'GET' });
+                const responseProductos = await fetch('https://api-femme.onrender.com/productos/', { method: 'GET' });
                 if (!responseProductos.ok) {
                     throw new Error(`Fetch productos failed with status ${responseProductos.status}`);
                 }
                 const dataProductos = await responseProductos.json();
                 setProductos(dataProductos);
 
-                const responseStock = await fetch('http://localhost:3000/productos/stock', { method: 'GET' });
+                const responseStock = await fetch('https://api-femme.onrender.com/productos/stock', { method: 'GET' });
                 if (!responseStock.ok) {
                     throw new Error(`Fetch stock failed with status ${responseStock.status}`);
                 }

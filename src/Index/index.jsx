@@ -15,26 +15,30 @@ export const Index = () => {
   useEffect(() => {
     const ultimosProductos = async () => {
       try {
-        const response = await fetch('http://localhost:3000/productos', { method: 'GET' });
+        const response = await fetch('https://api-femme.onrender.com/productos', { method: 'GET' });
         if (!response.ok) {
           throw new Error(`Fetch failed with status ${response.status}`);
         }
         const data = await response.json();
-        const ultimos3Productos = data
+  
+        const productosActivos = data.filter(producto => producto.activo);
+  
+        const ultimos3Productos = productosActivos
           .sort((a, b) => b.id - a.id)
           .slice(0, 3);
-        const productosConDescuento = data.filter((producto) => producto.descuento > 0);
-        const productosDestacados = data.filter((producto) => producto.destacado);
-
-        setProductosOferta(productosConDescuento)
+        const productosConDescuento = productosActivos.filter(producto => producto.descuento > 0);
+        const productosDestacados = productosActivos.filter(producto => producto.destacado);
+  
+        setProductosOferta(productosConDescuento);
         setProductosUltimos(ultimos3Productos);
-        setProductosDestacados(productosDestacados)
+        setProductosDestacados(productosDestacados);
       } catch (error) {
         console.error('Error fetching componentes, categoria:', error);
       }
-    }
-    ultimosProductos()
-  }, [])
+    };
+    ultimosProductos();
+  }, []);
+  
 
   const handleAgregar = (compra) => {
     agregarCompra(compra)

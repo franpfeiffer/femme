@@ -12,7 +12,7 @@ const useAuthorization = () => {
 
     const fetchUser = async () => {
         try {
-            const response = await fetch('http://localhost:3000/admin/listAdmin', {
+            const response = await fetch('https://api-femme.onrender.com/admin/listAdmin', {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,

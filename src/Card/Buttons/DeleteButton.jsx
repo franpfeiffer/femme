@@ -2,7 +2,7 @@
 import Cookies from 'js-cookie';
 
 export const DeleteButton = ({ id }) => {
-    const usuarioCookie = Cookies.get('usuario');
+    const token = localStorage.getItem('token');
     const handleButton = async () => {
         const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar este producto?");
         if (confirmDelete) {
@@ -10,11 +10,11 @@ export const DeleteButton = ({ id }) => {
 
             try {
 
-                const response = await fetch(`http://localhost:3000/productos/${id}/delete`, {
+                const response = await fetch(`https://api-femme.onrender.com/productos/${id}/delete`, {
                     method: "DELETE",
                     credentials: 'include',
                     headers: {
-                        Authorization: `Bearer ${usuarioCookie}`,
+                        Authorization: `Bearer ${token}`,
                     },
                 });
 

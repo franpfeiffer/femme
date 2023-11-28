@@ -24,7 +24,7 @@ export const RegisterAdmin = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`http://localhost:3000/admin/create`, {
+            const response = await fetch(`https://api-femme.onrender.com/admin/create`, {
                 method: "POST",
                 body: JSON.stringify(formData),
                 credentials: 'include',

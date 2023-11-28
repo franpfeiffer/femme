@@ -20,7 +20,7 @@ export const AdminLog = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/admin/login`, {
+      const response = await fetch(`https://api-femme.onrender.com/admin/login`, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {  

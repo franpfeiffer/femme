@@ -24,7 +24,7 @@ export const CompradorAdd = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`http://localhost:3000/facturacion/compradorAdd`, {
+            const response = await fetch(`https://api-femme.onrender.com/facturacion/compradorAdd`, {
                 method: "POST",
                 body: JSON.stringify(formData),
                 credentials: 'include',
@@ -39,7 +39,7 @@ export const CompradorAdd = () => {
 
             const responseData = await response.json();
             if (responseData) {
-                const facturacionAuto = await fetch(`http://localhost:3000/facturacion/createFactura/${responseData}`, {
+                const facturacionAuto = await fetch(`https://api-femme.onrender.com/facturacion/createFactura/${responseData}`, {
                     method: "POST",
                     body: JSON.stringify(formData),
                     credentials: 'include',

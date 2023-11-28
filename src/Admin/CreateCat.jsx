@@ -13,7 +13,7 @@ export const CreateCat = () => {
 
     const handleSubmit = async (formData) => {
         try {
-            const response = await fetch(`http://localhost:3000/componentes/categoriaAdd`, {
+            const response = await fetch(`https://api-femme.onrender.com/componentes/categoriaAdd`, {
                 method: "POST",
                 body: JSON.stringify(formData),
                 credentials: 'include',

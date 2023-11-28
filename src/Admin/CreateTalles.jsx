@@ -11,7 +11,7 @@ export const CreateTalles = () => {
     });
 const handleSubmit = async (formData) => {
         try {
-            const response = await fetch(`http://localhost:3000/componentes/talleAdd`, {
+            const response = await fetch(`https://api-femme.onrender.com/componentes/talleAdd`, {
                 method: "POST",
                 body: JSON.stringify(formData),
                 credentials: 'include',

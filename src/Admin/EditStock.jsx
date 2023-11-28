@@ -15,7 +15,7 @@ export const EditStock = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const responseStock = await fetch('http://localhost:3000/filtrado/stocks', {
+                const responseStock = await fetch('https://api-femme.onrender.com/filtrado/stocks', {
                     method: 'GET',
                     credentials: 'include',
                     headers: {

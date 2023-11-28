@@ -7,7 +7,7 @@ export const ProductosProvider = ({ children }) => {
     useEffect(() => {
         const fetchProductos = async () => {
             try {
-                const response = await fetch('http://localhost:3000/productos', { method: 'GET' });
+                const response = await fetch('https://api-femme.onrender.com/productos', { method: 'GET' });
                 if (!response.ok) {
                     throw new Error(`Fetch failed with status ${response.status}`);
                 }

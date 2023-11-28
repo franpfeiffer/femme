@@ -30,7 +30,7 @@ export const ModalStock = ({ show, onHide, detallesProducto }) => {
     const confirmacion = window.confirm("¿Estás seguro de eliminar stock?");
     if (confirmacion) {
       try {
-        const response = await fetch(`http://localhost:3000/productos/${e}/borrarStock`, {
+        const response = await fetch(`https://api-femme.onrender.com/productos/${e}/borrarStock`, {
           method: 'DELETE',
           credentials: 'include',
           headers: {

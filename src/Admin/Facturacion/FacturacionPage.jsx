@@ -15,7 +15,7 @@ export const FacturacionPage = () => {
     useEffect(() => {
         const fetchEntregas = async () => {
             try {
-                const response = await fetch('http://localhost:3000/facturacion/list', {
+                const response = await fetch('https://api-femme.onrender.com/facturacion/list', {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
@@ -37,7 +37,7 @@ export const FacturacionPage = () => {
     
         if (confirmacion) {
             try {
-                const response = await fetch(`http://localhost:3000/facturacion/entregado/${idFactura}`, {
+                const response = await fetch(`https://api-femme.onrender.com/facturacion/entregado/${idFactura}`, {
                     method: 'POST',
                     credentials: 'include',
                     headers: {

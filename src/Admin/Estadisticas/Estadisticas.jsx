@@ -11,7 +11,7 @@ export const Estadisticas = () => {
     useEffect(() => {
         const fetchMarca = async () => {
             try {
-                const response = await fetch('http://localhost:3000/facturacion/list', {
+                const response = await fetch('https://api-femme.onrender.com/facturacion/list', {
                     method: 'GET',
                     credentials: 'include',
                     headers: {

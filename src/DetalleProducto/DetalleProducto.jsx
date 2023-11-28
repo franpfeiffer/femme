@@ -42,7 +42,7 @@ export const DetalleProducto = () => {
     useEffect(() => {
         const fetchProductos = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/productos/${id}`, { method: 'GET' });
+                const response = await fetch(`https://api-femme.onrender.com/productos/${id}`, { method: 'GET' });
                 if (!response.ok) {
                     throw new Error(`Fetch failed with status ${response.status}`);
                 }
@@ -94,9 +94,9 @@ export const DetalleProducto = () => {
                 <Col lg={5} md={6}>
                     <div className="big-img">
                         {imagenSeleccionada ? (
-                            <img src={`http://localhost:3000/${imagenSeleccionada}`} alt={producto.nombre} />
+                            <img src={`https://api-femme.onrender.com/${imagenSeleccionada}`} alt={producto.nombre} />
                         ) : imagene.length > 0 ? (
-                            <img src={`http://localhost:3000/${imagene[0].url}`} alt={producto.nombre} />
+                            <img src={`https://api-femme.onrender.com/${imagene[0].url}`} alt={producto.nombre} />
                         ) : (
                             <p>No hay imagen disponible</p>
                         )}
@@ -105,7 +105,7 @@ export const DetalleProducto = () => {
                         {imagene.map((img) => (
                             <React.Fragment key={img.id}>
                                 <img
-                                    src={`http://localhost:3000/${img.url}`}
+                                    src={`https://api-femme.onrender.com/${img.url}`}
                                     alt=""
                                     className={img.url === imagenSeleccionada ? 'active' : ''}
                                     onClick={() => handleThumbnailClick(img.url)}

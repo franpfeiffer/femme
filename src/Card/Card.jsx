@@ -28,7 +28,7 @@ export const Card = ({ nombre, precio, descuento, imagen, verMas, botonEliminar,
     return (
         <div className="tarjeta">
         <div className="tarjeta-imagen-container">
-            <img src={`http://localhost:3000/${imagen}`} alt={nombre} className="tarjeta-imagen" />
+            <img src={`https://api-femme.onrender.com/${imagen}`} alt={nombre} className="tarjeta-imagen" />
         </div>
         <div className="tarjeta-contenido">
             <h3 className="tarjeta-titulo">{nombre}</h3>

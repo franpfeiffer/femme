@@ -6,7 +6,7 @@ const ColoresComponent = ({ onColorChange }) => {
     useEffect(() => {
         const fetchCategoria = async () => {
             try {
-                const response = await fetch('http://localhost:3000/componentes/colores', { method: 'GET' });
+                const response = await fetch('https://api-femme.onrender.com/componentes/colores', { method: 'GET' });
                 if (!response.ok) {
                     throw new Error(`Fetch failed with status ${response.status}`);
                 }
