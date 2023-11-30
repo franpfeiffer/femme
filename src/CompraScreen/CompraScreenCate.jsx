@@ -10,8 +10,33 @@ import { useLocation } from 'react-router-dom';
 
 export const CompraScreenCate = () => {
   const location = useLocation();
-  const categoria = location.pathname.split('/')[2];
+  const categoriaEncoded = location.pathname.split('/')[2];
+  const categoria = decodeURIComponent(categoriaEncoded);
+  const { productos: productosOriginales } = useContext(ProductosContext);
+  console.log(productosOriginales[0].categoria);
   return (
-    <div>{categoria}</div>
+    <div><Container fluid>
+    <Row className="justify-content-center">
+      <div className="productos-container">
+        {productosOriginales.map((producto) =>
+          producto.activo && producto.categoria.nombre == categoria ? (
+            <Col key={producto.id} md={3} className="px-5 mb-3">
+              <Card
+                verMas={producto.id}
+                imagen={producto.imagene[0]?.url}
+                nombre={producto.nombre}
+                descripcion={producto.descripcion}
+                precio={producto.precio}
+                botonEliminar={producto.id}
+                botonEditar={producto.id}
+                descuento={producto.descuento}
+              />
+            </Col>
+          ) : null
+        )}
+      </div>
+    </Row>
+    <WhatsAppButton />
+  </Container></div>
   )
 }

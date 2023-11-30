@@ -19,31 +19,6 @@ export const Comprascreen = () => {
     eliminarCompra(id);
   };
 
-  const handleFilterChange = (filteredData) => {
-    setProductosFiltrados(filteredData);
-  };
-
-  const renderCards = (productos) => {
-    return productos.map((producto) =>
-      producto.activo ? (
-        <Col key={producto.id} md={3} className="px-5 mb-3">
-          {/* Added "px-2" class to reduce left and right padding */}
-          <Card
-            verMas={producto.id}
-            imagen={producto.imagene[0]?.url}
-            nombre={producto.nombre}
-            descripcion={producto.descripcion}
-            precio={producto.precio}
-            handleAgregar={() => handleAgregar(producto)}
-            handleQuitar={() => handleQuitar(producto.id)}
-            botonEliminar={producto.id}
-            botonEditar={producto.id}
-            descuento={producto.descuento}
-          />
-        </Col>
-      ) : null
-    );
-  };
 
   return (
     <Container fluid>
