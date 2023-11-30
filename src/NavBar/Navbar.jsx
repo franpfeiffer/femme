@@ -60,17 +60,18 @@ export const Navbar1 = () => {
                   Home
                 </Nav.Link>
               </Nav.Item>
-              <Nav.Item>
+              <Nav.Item className="dropdown-container">
+                
                 <NavDropdown title="Productos" id="basic-nav-dropdown">
                   <NavDropdown.Item as={Link} to="/productos">Todos los Productos</NavDropdown.Item>
                   {
                     <>
                       {categoria.length > 0 && categoria.map((item) => (
                         <NavDropdown.Item as={Link} key={item.id} to={`/productos/${item.nombre}`}>{item.nombre}</NavDropdown.Item>
+                       
+                        
                       ))}
                     </>
-
-
                   }
                 </NavDropdown>
               </Nav.Item>

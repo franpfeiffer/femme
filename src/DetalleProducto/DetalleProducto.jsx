@@ -7,7 +7,11 @@ import '../detalle-produ.css'
 import { Container, Row, Col, Button, ButtonGroup } from 'react-bootstrap';
 import { WhatsAppButton } from '../WhatsAppLogo/WhatsAppLogo';
 import { DeleteButton } from './buttons/DeleteImage';
+import useAuthorization from '../Admin/HooksAdmin/useAuthorization';
+import { DeleteProdButton } from '../Card/Buttons/DeleteButton';
+import { EditButton } from '../Card/Buttons/EditButton';
 export const DetalleProducto = () => {
+    const accesoPermitido = useAuthorization();
     const [added, setAdded] = useState(false);
     const [producto, setProductos] = useState([]);
     const [imagene, setImagene] = useState([]);
@@ -213,6 +217,9 @@ export const DetalleProducto = () => {
                                 Sin Stock
                             </button>
                         )}
+                        <br />
+                        {accesoPermitido && <DeleteProdButton id={producto.id} />} <br />
+                        {accesoPermitido && <EditButton id={producto.id} />}
                     </div>
                 </Col>
             </Row>

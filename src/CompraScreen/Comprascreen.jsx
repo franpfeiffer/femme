@@ -21,13 +21,13 @@ export const Comprascreen = () => {
 
 
   return (
-    <Container fluid>
-      <Row className="justify-content-center">
+    <>
+     <section className="shop container"> 
         {/* Added "justify-content-center" to center the columns */}
-        <div className="productos-container">
+        <div className="shop-content">
           {(productosFiltrados.length > 0 ? productosFiltrados : productosOriginales).map((producto) =>
             producto.activo ? (
-              <Col key={producto.id} md={3} className="px-5 mb-3">
+              <>
                 {/* Added "px-2" class to reduce left and right padding */}
                 <Card
                   verMas={producto.id}
@@ -41,13 +41,14 @@ export const Comprascreen = () => {
                   botonEditar={producto.id}
                   descuento={producto.descuento}
                 />
-              </Col>
+              </>
             ) : null
           )}
         </div>
-      </Row>
+      
       <WhatsAppButton />
-    </Container>
+      </section>
+    </>
   );
 };
 

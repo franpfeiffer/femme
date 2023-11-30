@@ -1,17 +1,18 @@
-/* eslint-disable no-unused-vars */
-import Cookies from 'js-cookie';
+/* eslint-disable react/prop-types */
+import React from 'react'
+import { Button } from 'react-bootstrap';
 
-export const DeleteProdButton = ({ id }) => {
+export const ActivarProductoButton = ({id}) => {
     const token = localStorage.getItem('token');
     const handleButton = async () => {
-        const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar este producto?");
+        const confirmDelete = window.confirm("¿Estás seguro de que quieres activar este producto?");
         if (confirmDelete) {
 
 
             try {
 
-                const response = await fetch(`https://api-femme.onrender.com/productos/${id}/delete`, {
-                    method: "DELETE",
+                const response = await fetch(`https://api-femme.onrender.com/productos/${id}/activar`, {
+                    method: "POST",
                     credentials: 'include',
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -30,6 +31,6 @@ export const DeleteProdButton = ({ id }) => {
         }
     }
     return (
-        <button onClick={handleButton} className='button-eliminar boton-agregar'>Eliminar</button>
+        <Button onClick={handleButton}>Activar</Button>
     )
 }

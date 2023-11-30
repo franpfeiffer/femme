@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
 import "../card.css";
 import { Link } from "react-router-dom";
-import useAuthorization from "../Admin/HooksAdmin/useAuthorization";
-import { DeleteButton } from "./Buttons/DeleteButton";
-import { EditButton } from "./Buttons/EditButton";
-
 export const Card = ({ nombre, precio, descuento, imagen, verMas, botonEliminar, botonEditar }) => {
-    const accesoPermitido = useAuthorization();
     const [precioDecimal, setPrecioDecimal] = useState(parseFloat(precio));
     const [descuentoDecimal, setDescuentoDecimal] = useState(parseFloat(descuento));
     const [precioConDescuento, setPrecioConDescuento] = useState(precioDecimal);
+    const [nombreAcortado, setNombreAcortado] = useState(nombre);
 
     useEffect(() => {
         setPrecioDecimal(parseFloat(precio));
@@ -24,35 +20,31 @@ export const Card = ({ nombre, precio, descuento, imagen, verMas, botonEliminar,
             setPrecioConDescuento(precioDecimal);
         }
     }, [precioDecimal, descuentoDecimal]);
+    useEffect(() => {
+        const maxLength = 14; // Define la longitud máxima del nombre
+        if (nombre.length > maxLength) {
+            setNombreAcortado(`${nombre.substring(0, maxLength)}...`);
+        }
+    }, [nombre]);
 
     return (
-        <div className="tarjeta">
-        <div className="tarjeta-imagen-container">
-            <img src={`https://api-femme.onrender.com/${imagen}`} alt={nombre} className="tarjeta-imagen" />
-        </div>
-        <div className="tarjeta-contenido">
-            <h3 className="tarjeta-titulo">{nombre}</h3>
-            {descuentoDecimal > 0 && (
-                <p className="tarjeta-precio-descuento">{descuentoDecimal}% de descuento</p>
-            )}
-            {descuentoDecimal > 0 && (
-                <p className="tarjeta-precio-original">${precio}</p>
-            )}
-            <p className="tarjeta-precio">
+
+        <div className="product-box">
+            <Link to={`/${verMas}/detalles-del-producto`} className="link-product-box">
+                <img src={`https://api-femme.onrender.com/${imagen}`} alt={nombre} className="product-img" />
+                <h2 className="product-title">{nombreAcortado}</h2>
                 {descuentoDecimal > 0 ? (
-                    <span>
-                        <del>${precio}</del> ${precioConDescuento.toFixed(2)}
-                    </span>
+                    <>
+                        <span className="tarjeta-precio-original price">${precio}</span>
+                        <span className="price price-con-descuento">${precioConDescuento.toFixed(2)}</span>
+                    </>
                 ) : (
-                    `$${precioConDescuento.toFixed(2)}`
+                    <span className="price">${precioConDescuento.toFixed(2)}</span>
                 )}
-            </p>
-            {accesoPermitido && <DeleteButton id={botonEliminar} />}
-            {accesoPermitido && <EditButton id={botonEditar} />}
-            <Link to={`/${verMas}/detalles-del-producto`}>
-                <button type='button' className="boton-agregar boton-verMas">Ver Mas</button>
+                <br />
+
             </Link>
-        </div>
-    </div>
+        </div >
+
     );
 };

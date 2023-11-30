@@ -1,5 +1,5 @@
 	* {
-		font-family: 'Roboto', sans-serif;
+		font-family: 'Poppins', sans-serif;
 		box-sizing: border-box;
 		list-style: none;
 		text-decoration: none;
@@ -15,7 +15,7 @@
 	body {
 		background-color: #d9d7d7;
 		color: #000;
-		
+
 	}
 
 	/* --------------------------- INDEX --------------------------- */
@@ -33,7 +33,7 @@
 		padding: 20px;
 		margin-top: 10px;
 		width: 300px;
-		
+
 	}
 
 	.filter-section:hover {
@@ -169,6 +169,29 @@
 		width: 50%;
 	}
 
+	/* CSS */
+	.dropdown-container {
+		position: relative;
+	}
+
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		background-color: #fff;
+		/* Cambia esto al color que desees */
+		border: 1px solid #ccc;
+		/* Agrega bordes u otros estilos según tu diseño */
+		padding: 10px;
+		/* Otros estilos que desees */
+	}
+
+	.dropdown-container:hover .dropdown-content {
+		display: block;
+	}
+
+
 	/* Data  */
 
 	.dataContainer {
@@ -246,7 +269,7 @@
 		display: flex;
 		margin: auto 1000px;
 	}
-	
+
 
 	.vermasBoton {
 		background-color: #b560b2;
@@ -332,7 +355,7 @@
 		justify-content: center;
 		padding: auto 1000px;
 	}
-	  
+
 
 	/* --------------------------- DETALLES DE PRODUCTO --------------------------- */
 
@@ -944,6 +967,7 @@
 	.boton-navbarSearch {
 		background-color: #fa92a3;
 	}
+
 	.whatsapp-button {
 		position: fixed;
 		bottom: 20px;
@@ -958,13 +982,13 @@
 		text-decoration: none;
 		border-radius: 50px;
 		transition: background-color 0.3s ease;
-	  }
-	  
-	  .whatsapp-button i {
+	}
+
+	.whatsapp-button i {
 		margin-right: 5px;
-	  }
-	  
-	  .whatsapp-button:hover {
+	}
+
+	.whatsapp-button:hover {
 		background-color: #128C7E;
 		text-decoration: none;
-	  }
+	}

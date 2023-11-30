@@ -15,12 +15,11 @@ export const CompraScreenCate = () => {
   const { productos: productosOriginales } = useContext(ProductosContext);
   console.log(productosOriginales[0].categoria);
   return (
-    <div><Container fluid>
-    <Row className="justify-content-center">
-      <div className="productos-container">
+    <section className="shop container">
+      <div className="shop-content">
         {productosOriginales.map((producto) =>
           producto.activo && producto.categoria.nombre == categoria ? (
-            <Col key={producto.id} md={3} className="px-5 mb-3">
+            <>
               <Card
                 verMas={producto.id}
                 imagen={producto.imagene[0]?.url}
@@ -31,12 +30,12 @@ export const CompraScreenCate = () => {
                 botonEditar={producto.id}
                 descuento={producto.descuento}
               />
-            </Col>
+            </>
           ) : null
         )}
       </div>
-    </Row>
-    <WhatsAppButton />
-  </Container></div>
+      <WhatsAppButton />
+    </section >
+
   )
 }

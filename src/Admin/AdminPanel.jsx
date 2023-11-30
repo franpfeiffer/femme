@@ -5,12 +5,14 @@ import { ListProd } from "./listadoProd/ListProd";
 import useAuthorization from './HooksAdmin/useAuthorization';
 import { Offcanvas, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import { data } from "autoprefixer";
 
 export const AdminPanel = () => {
     const accesoPermitido = useAuthorization();
     const [productos, setProductos] = useState([]);
     const [stock, setStockTotals] = useState([]);
     const [showOnlyWithStock, setShowOnlyWithStock] = useState(false);
+    const [activo, setActivo] = useState([])
     useEffect(() => {
         const fetchProds = async () => {
             try {
@@ -34,6 +36,8 @@ export const AdminPanel = () => {
                     const totalStock = productoStock.reduce((total, item) => total + item.stock, 0);
                     stockTotals[productoId] = totalStock;
                 });
+                const nuevosActivos = dataProductos.map(producto => producto.activo);
+                setActivo(nuevosActivos);
 
                 setStockTotals(stockTotals);
             } catch (error) {
@@ -63,7 +67,6 @@ export const AdminPanel = () => {
     if (!accesoPermitido) {
         return 'No autorizado';
     }
-
     return (
         <div>
             <h2>Admin Panel</h2>
@@ -116,6 +119,7 @@ export const AdminPanel = () => {
             <ListProd
                 productos={filteredProductos}
                 stockTotals={stock}
+                activo={activo}
             />
         </div>
     );

@@ -1,89 +1,61 @@
-/* Estilos para la tarjeta */
-/* Estilo para la tarjeta de productos */
-.tarjeta {
-  width: 300px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 16px;
-  margin: 16px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-height: 500px;
-}
-
-/* Estilo para la imagen */
-.tarjeta-imagen-container {
-  margin-bottom: 16px;
-}
-
-.tarjeta-imagen {
+/* SHOP CONTENT */
+img {
   width: 100%;
-  max-height: 200px;
-  object-fit: cover;
-  border: 1px solid #ddd;
+}
+.container{
+  max-width: 1068px;
+  margin: auto;
+  width: 100%;
+}
+.shop{
+  margin-top: 2rem;
 }
 
-/* Estilo para el título */
-.tarjeta-titulo {
-  font-size: 1.25rem;
-  margin-bottom: 8px;
+.shop-content{
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,auto));
+  gap: 1.5rem;
 }
 
-/* Estilo para el precio */
-.tarjeta-precio {
-  font-size: 1rem;
-  color: #333;
-  margin-bottom: 16px;
+.product-box{
+  position: relative;
+  margin: 1.5rem;
+}
+.product-box a {
+  text-decoration: none;
+  color: inherit; 
 }
 
-/* Estilo para los botones */
-.boton-quitar,
-.boton-agregar,
-.boton-verMas {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-  margin: 8px;
-  font-size: 1rem;
+.product-box:hover {
+  opacity: 0.8; /* Cambio de opacidad al hacer hover */
+  transition: opacity 0.3s ease; 
 }
 
-.boton-quitar:hover,
-.boton-agregar:hover,
-.boton-verMas:hover {
-  background-color: #0056b3;
+.product-img {
+  width: 250px; /* ajusta el tamaño según tus necesidades */
+  height: 250px; /* ajusta el tamaño según tus necesidades */
+  object-fit: cover; /* asegura que la imagen se ajuste al tamaño especificado sin deformarse */
 }
 
-/* Estilo para el botón "Ver Más" */
-.boton-verMas {
-  background-color: #28a745;
+.product-title{
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+.price {
+  font-weight: 500;
+  margin: 0 2px;
+}
+.tarjeta-precio-original {
+  text-decoration: line-through; /* Tacha el precio original */
+  color: #888; /* Color del precio original tachado */
 }
 
-.boton-verMas:hover {
-  background-color: #1e7e34;
+.price-con-descuento {
+  color: green; /* Color del precio con descuento */
 }
-
-  
-  /* Estilos para el carrito */
-  .carrito {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-.productos-container{
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-around;
-  flex-shrink: 1;
-}
-
 .button-eliminar{
 	background-color: #d00;
 }
