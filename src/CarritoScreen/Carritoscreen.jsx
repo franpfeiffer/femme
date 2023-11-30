@@ -53,7 +53,7 @@ export const Carritoscreen = () => {
             };
         });
         
-        fetch(`http://localhost:3000/facturacion/comradorAddPayment`, {
+        fetch(`https://api-femme.onrender.com/facturacion/comradorAddPayment`, {
             method: "POST",
             body: JSON.stringify(formData),
             credentials: 'include',
@@ -64,7 +64,7 @@ export const Carritoscreen = () => {
             .then(response => response.json())
             .then(dataComprador => {
                 setidDelComprador(dataComprador)
-                fetch(`http://localhost:3000/mercadoPago/payment`, {
+                fetch(`https://api-femme.onrender.com/mercadoPago/payment`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

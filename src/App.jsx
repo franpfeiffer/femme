@@ -25,6 +25,7 @@ import { CompradorAdd } from './Admin/Facturacion/CompradorAdd';
 import { FacturacionManual } from './Admin/Facturacion/FacturacionManual';
 import { Estadisticas } from './Admin/Estadisticas/Estadisticas';
 import { RegisterAdmin } from './Admin/RegisterAdmin/RegisterAdmin';
+import { CompraScreenCate } from './CompraScreen/CompraScreenCate';
 import './index.css';
 
 
@@ -42,6 +43,8 @@ function App() {
            
             <Route element={< Index />} path='/' />
             <Route element={< Comprascreen />} path='/productos' />
+            <Route element={< CompraScreenCate />} path='/productos/:categoria' />
+
             <Route element={< Carritoscreen />} path='/carrito' />
             <Route element={< SearchPage />} path='/busqueda' />
             <Route element={< DetalleProducto />} path='/:id/detalles-del-producto' className="main-content" />
