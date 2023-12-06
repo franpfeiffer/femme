@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Card } from '../../Card/Card';
@@ -10,9 +11,9 @@ const Features = ({ productosDestacados, productosOferta, productosUltimos, hand
 
         <Container className="my-4">
             <h3 className="tituloProductos">Productos Destacados</h3>
-            <div className="productos">
+            <div className='productos'>
                 {productosDestacados.slice(0, 3).map((producto) => (
-                    <Col md={4} key={producto.id}>
+                    <Col md={4} key={producto.id} >
                         <Card
                             key={producto.id}
                             verMas={producto.id}
@@ -20,10 +21,6 @@ const Features = ({ productosDestacados, productosOferta, productosUltimos, hand
                             nombre={producto.nombre}
                             descripcion={producto.descripcion}
                             precio={producto.precio}
-                            handleAgregar={() => handleAgregar(producto)}
-                            handleQuitar={() => handleQuitar(producto.id)}
-                            botonEliminar={producto.id}
-                            botonEditar={producto.id}
                             descuento={producto.descuento}
                         />
                     </Col>
@@ -41,10 +38,6 @@ const Features = ({ productosDestacados, productosOferta, productosUltimos, hand
                             nombre={producto.nombre}
                             descripcion={producto.descripcion}
                             precio={producto.precio}
-                            handleAgregar={() => handleAgregar(producto)}
-                            handleQuitar={() => handleQuitar(producto.id)}
-                            botonEliminar={producto.id}
-                            botonEditar={producto.id}
                             descuento={producto.descuento}
                         />
                     </Col>
@@ -62,10 +55,6 @@ const Features = ({ productosDestacados, productosOferta, productosUltimos, hand
                             nombre={producto.nombre}
                             descripcion={producto.descripcion}
                             precio={producto.precio}
-                            handleAgregar={() => handleAgregar(producto)}
-                            handleQuitar={() => handleQuitar(producto.id)}
-                            botonEliminar={producto.id}
-                            botonEditar={producto.id}
                             descuento={producto.descuento}
                         />
                     </Col>

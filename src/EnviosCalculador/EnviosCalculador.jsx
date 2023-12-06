@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { ListGroup, Button, Form, Col, Row, FormGroup, FormControl, Container } from 'react-bootstrap';
 
-export const EnviosCalculador = ({ onPrecioEnvioChange, onCodigoPostalChange }) => {
+export const EnviosCalculador = ({ onPrecioEnvioChange, onCodigoPostalChange,fetchComplete}) => {
     const provincias = [
         { iso: "AR-A", provincia: "Salta" },
         { iso: "AR-B", provincia: "Provincia de Buenos Aires" },
@@ -43,6 +43,7 @@ export const EnviosCalculador = ({ onPrecioEnvioChange, onCodigoPostalChange }) 
     const handleProvinciaChange = (event) => {
         setIso(event.target.value);
         setFetchRealizado(false);
+        fetchComplete(false)
     };
 
     useEffect(() => {
@@ -67,6 +68,7 @@ export const EnviosCalculador = ({ onPrecioEnvioChange, onCodigoPostalChange }) 
                     onPrecioEnvioChange(data.paqarClasico.aDomicilio);
                     onCodigoPostalChange(codigoPostal);
                     setFetchRealizado(true);
+                    fetchComplete(true)
                 }
             } catch (error) {
                 console.error('Error fetching provincias:', error);
@@ -75,7 +77,7 @@ export const EnviosCalculador = ({ onPrecioEnvioChange, onCodigoPostalChange }) 
         if (codigoPostal && iso && !fetchRealizado) {
             fetchProvincias();
         }
-    }, [codigoPostal, iso, onPrecioEnvioChange, onCodigoPostalChange,fetchRealizado])
+    }, [codigoPostal, iso, onPrecioEnvioChange, onCodigoPostalChange,fetchRealizado,fetchComplete])
     return (
         <>
             <FormGroup className="mb-3">

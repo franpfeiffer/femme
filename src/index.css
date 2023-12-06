@@ -13,7 +13,7 @@
 	}
 
 	body {
-		background-color: #d9d7d7;
+		background-color: #EFEBE0;
 		color: #000;
 
 	}
@@ -698,6 +698,7 @@
 		font-size: 16px;
 		cursor: pointer;
 		transition: background-color 0.3s;
+		margin: 5px 0;
 	}
 
 	.boton-quitar:hover,
@@ -765,13 +766,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		/* Centra horizontalmente */
 		justify-content: center;
-		/* Centra verticalmente */
-		height: 100vh;
-		/* Ajusta la altura de la página completa */
 		text-align: center;
-		/* Centra el texto horizontalmente */
 	}
 
 	.search-title {
@@ -992,3 +988,94 @@
 		background-color: #128C7E;
 		text-decoration: none;
 	}
+	.error-message{
+		font-size: 12px;
+		display: flex;
+		justify-content: center; 
+		align-items: center; 
+		height: 100%;
+		color: #444444;
+		background-color: #eeeeee;
+		margin-top: 5px;
+	}
+
+	/* Estilos para el input range */
+input[type="range"] {
+	-webkit-appearance: none;
+	width: 100%;
+	height: 8px;
+	border-radius: 5px;
+	background: #d3d3d3;
+	outline: none;
+	margin-bottom: 10px;
+  }
+  
+  /* Estilo para el rango deslizante */
+  input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: #FB6B90;
+	cursor: pointer;
+  }
+  
+  /* Estilo para el rango deslizante en Firefox */
+  input[type="range"]::-moz-range-thumb {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: #FB6B90;
+	cursor: pointer;
+  }
+  /* Estilos para el botón de filtro */
+  button.filter-button {
+	background-color: #fb6b8f62;
+	border: none;
+	color: white;
+	padding: 10px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	color: #222;
+  }
+  
+  
+  button.filter-button:hover {
+	background-color: #FF8BA7; 
+  }
+.productos {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+    .productos {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas iguales */
+        gap: 20px; /* Espacio entre las tarjetas */
+    }
+}
+.dataContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.data {
+    flex: 0 1 300px; 
+    text-align: center;
+    margin: 10px;
+}
+
+
+/* Estilos para centrar las tarjetas cuando hay uno o dos productos */
+.centrarTarjeta-1 {
+    display: flex;
+    justify-content: center;
+}
+
+.centrarTarjeta-2 {
+    display: flex;
+    justify-content: space-between; /* Ajusta el espacio entre las tarjetas */
+}

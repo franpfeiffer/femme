@@ -8,7 +8,8 @@ import { EnviosCalculador } from '../EnviosCalculador/EnviosCalculador';
 export const Carritoscreen = () => {
     const { listaCompras, aumentarCantidad, disminuirCantidad, eliminarCompra, sesionesActivas } = useContext(CarritoContext);
     const [precioEnvio, setPrecioEnvio] = useState(0);
-
+    const [formCompleted, setFormCompleted] = useState(false);
+    const [enviosFetchCompleted, setEnviosFetchCompleted] = useState(false);
     const [formData, setFormData] = useState({
         nombre: "",
         email: "",
@@ -18,9 +19,51 @@ export const Carritoscreen = () => {
         codigo_postal: "",
     });
     const [idDelComprador, setidDelComprador] = useState('')
+    const [errors, setErrors] = useState({
+        nombre: '',
+        email: '',
+        direccion: '',
+        telefono: '',
+        dni: '',
+        codigo_postal: ''
+    });
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        if (name === 'dni') {
+            const trimmedValue = value.slice(0, 8);
+
+            if (!/^\d{1,8}$/.test(trimmedValue)) {
+                setErrors({ ...errors, dni: 'DNI inválido (máximo 8 dígitos numéricos)' });
+            } else {
+                setErrors({ ...errors, dni: '' });
+                setFormData({ ...formData, [name]: trimmedValue });
+            }
+        }
+
+        else if (name === 'telefono' && !isNaN(value) && value.length <= 14) {
+            setFormData({ ...formData, [name]: value });
+        }
+
+        if (name === 'nombre') {
+            if (!/^[a-zA-Z\s]*$/.test(value)) {
+                setErrors({ ...errors, nombre: 'Nombre inválido (solo letras y espacios)' });
+            } else {
+                setErrors({ ...errors, nombre: '' });
+                setFormData({ ...formData, [name]: value });
+            }
+        }
+        else if (name === 'email') {
+            if (!value.includes('@')) {
+                setErrors({ ...errors, email: 'Email inválido (debe contener @)' });
+            } else {
+                setErrors({ ...errors, email: '' });
+            }
+            setFormData({ ...formData, [name]: value });
+        }
+
+        else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
     const handleCodigoPostalChange = (codigoPostal) => {
         setFormData(prevData => ({
@@ -32,7 +75,7 @@ export const Carritoscreen = () => {
         const totalSinEnvio = listaCompras.reduce((total, item) => total + item.precio * item.cantidad, 0);
         return (totalSinEnvio + precioEnvio).toFixed(2);
     };
-  
+
     const handleImpresion = (e) => {
         e.preventDefault();
         console.log(precioEnvio);
@@ -52,7 +95,7 @@ export const Carritoscreen = () => {
                 idComprador: idDelComprador
             };
         });
-        
+
         fetch(`https://api-femme.onrender.com/facturacion/comradorAddPayment`, {
             method: "POST",
             body: JSON.stringify(formData),
@@ -69,7 +112,7 @@ export const Carritoscreen = () => {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ productos, idComprador: dataComprador,precioEnvio  }),
+                    body: JSON.stringify({ productos, idComprador: dataComprador, precioEnvio }),
                 })
                     .then(response => response.json())
                     .then(data => {
@@ -86,6 +129,20 @@ export const Carritoscreen = () => {
 
 
     };
+
+    const isFormValid = () => {
+        return (
+            formData.nombre !== '' &&
+            formData.email !== '' &&
+            formData.direccion !== '' &&
+            formData.telefono !== '' &&
+            formData.dni !== ''
+        );
+    };
+    useEffect(() => {
+        setFormCompleted(isFormValid());
+    }, [formData]);
+
 
     return (
         <>
@@ -124,6 +181,8 @@ export const Carritoscreen = () => {
                                     placeholder="Nombre"
                                     className="w-100"
                                 />
+                                {errors.nombre && <span className="error-message">{errors.nombre}</span>}
+
                             </FormGroup>
                             <FormGroup className="mb-3">
                                 <FormControl
@@ -134,6 +193,8 @@ export const Carritoscreen = () => {
                                     placeholder="Email"
                                     className="w-100"
                                 />
+                                {errors.email && <span className="error-message">{errors.email}</span>}
+
                             </FormGroup>
                             <FormGroup className="mb-3">
                                 <FormControl
@@ -144,6 +205,8 @@ export const Carritoscreen = () => {
                                     placeholder="Dirección"
                                     className="w-100"
                                 />
+                                {errors.direccion && <span className="error-message">{errors.direccion}</span>}
+
                             </FormGroup>
                             <FormGroup className="mb-3">
                                 <FormControl
@@ -154,6 +217,7 @@ export const Carritoscreen = () => {
                                     placeholder="Teléfono"
                                     className="w-100"
                                 />
+                                {errors.telefono && <span className="error-message">{errors.telefono}</span>}
                             </FormGroup>
                             <FormGroup className="mb-3">
                                 <FormControl
@@ -164,13 +228,19 @@ export const Carritoscreen = () => {
                                     placeholder="DNI"
                                     className="w-100"
                                 />
+                                {errors.dni && <span className="error-message">{errors.dni}</span>}
                             </FormGroup>
-                            <EnviosCalculador onPrecioEnvioChange={setPrecioEnvio} onCodigoPostalChange={handleCodigoPostalChange}></EnviosCalculador>
+                            <EnviosCalculador
+                                onPrecioEnvioChange={setPrecioEnvio}
+                                onCodigoPostalChange={handleCodigoPostalChange}
+                                fetchComplete={setEnviosFetchCompleted}
+                            />
+                            
                             <Button
                                 type="submit"
                                 variant="primary"
-                                className={`btn-buy ${listaCompras.length < 1 ? 'disabled' : ''}`}
-                                disabled={listaCompras.length < 1}
+                                className={`btn-buy ${listaCompras.length < 1 || !formCompleted || !enviosFetchCompleted ? 'disabled' : ''} button-talle`}
+                                disabled={listaCompras.length < 1 || !formCompleted || !enviosFetchCompleted}
                             >
                                 COMPRAR
                             </Button>

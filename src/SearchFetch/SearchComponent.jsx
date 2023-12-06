@@ -23,7 +23,7 @@ export const SearchComponent = ({ contenidoSearch }) => {
     try {
       const queryParams = new URLSearchParams(formData).toString();
 
-      const response = await fetch(`http://localhost:3000/filtrado/search?${queryParams}`, {
+      const response = await fetch(`https://api-femme.onrender.com/filtrado/search?${queryParams}`, {
         method: "GET",
       });
 

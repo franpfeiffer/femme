@@ -142,6 +142,7 @@ export const DetalleProducto = () => {
 
                                 {coloresUnicos.map((colorTalle) => (
                                     <Button
+                                        className={colorTalle.colore.id === colorSeleccionado ? 'selected-color' : ''}
                                         key={colorTalle.id}
                                         style={{ background: colorTalle.colore.nombre }}
                                         onClick={() => {
@@ -149,7 +150,7 @@ export const DetalleProducto = () => {
                                             handleTalleSeleccionado(null);
                                             setMostrarAdvertencia(false);
                                         }}
-                                    ></Button >
+                                    >{colorTalle.colore.id === colorSeleccionado ? (<i className="fa-solid fa-check"></i>) : ''}</Button >
                                 ))}
                             </ButtonGroup>
                         </div>
@@ -157,6 +158,9 @@ export const DetalleProducto = () => {
                             <ButtonGroup>
                                 {tallesUnicos.map(talle => (
                                     <Button
+                                        className={
+                                            talle.talle.id === talleSeleccionado && talle.stock > 0 ? 'button-talle selected' : 'button-talle'
+                                        }
                                         key={talle.id}
                                         onClick={() => {
                                             handleTalleSeleccionado(talle.talle.id);
@@ -187,8 +191,8 @@ export const DetalleProducto = () => {
 
 
                         <p>{producto.descripcion}</p>
-                        {mostrarAdvertencia && <p>Por favor, seleccione un color y un talle antes de agregar al carrito.</p>}
-                        {mostrarAdvertenciaStock && <p>NO HAY STOCK DE ESTE TALLE O COLOR QUE SELECCIONASTE</p>}
+                        {mostrarAdvertencia && <p className='seleccione-color'>Por favor, seleccione un color y un talle antes de agregar al carrito.</p>}
+                        {mostrarAdvertenciaStock && <p className='nostock'><i className="fa-solid fa-triangle-exclamation"></i>NO HAY STOCK DE ESTE TALLE O COLOR QUE SELECCIONASTE<i className="fa-solid fa-triangle-exclamation"></i></p>}
                         {prod_colores_talle.length > 0 ? (
                             <button
                                 type="button"
@@ -224,7 +228,6 @@ export const DetalleProducto = () => {
                 </Col>
             </Row>
             <WhatsAppButton />
-
         </Container>
 
     );

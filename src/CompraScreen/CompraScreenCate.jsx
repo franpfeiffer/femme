@@ -7,16 +7,19 @@ import { CarritoContext } from "../context/CarritoContext";
 import { Container, Row, Col } from "react-bootstrap";
 import { WhatsAppButton } from "../WhatsAppLogo/WhatsAppLogo";
 import { useLocation } from 'react-router-dom';
+import FilterCanvas from "./CanvasFilter/FilterCanvas";
 
 export const CompraScreenCate = () => {
   const location = useLocation();
   const categoriaEncoded = location.pathname.split('/')[2];
   const categoria = decodeURIComponent(categoriaEncoded);
   const { productos: productosOriginales } = useContext(ProductosContext);
-  console.log(productosOriginales[0].categoria);
+  const [productosFiltrados, setProductosFiltrados] = useState([]);
+
   return (
     <section className="shop container">
-      <div className="shop-content">
+      
+      <div className="shop-content search-page">
         {productosOriginales.map((producto) =>
           producto.activo && producto.categoria.nombre == categoria ? (
             <>
