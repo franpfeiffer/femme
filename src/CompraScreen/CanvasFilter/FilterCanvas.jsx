@@ -31,6 +31,11 @@ const FilterCanvas = ({ productosOriginales, setProductosFiltrados }) => {
 
     const handleClose = () => setShowCanvas(false);
     const handleShow = () => setShowCanvas(true);
+    const handleReset = () => {
+        // Restablecer los valores de filtro a sus valores iniciales
+        setFiltroPrecio(0);
+        setFiltroColor(null);
+    };
 
     return (
         <>
@@ -77,6 +82,9 @@ const FilterCanvas = ({ productosOriginales, setProductosFiltrados }) => {
                                 onChange={() => setFiltroColor(null)}
                             />
                         </Form.Group>
+                        <Button variant="secondary" onClick={handleReset}>
+                            <i className="fa-solid fa-rotate-right"></i>
+                        </Button>
                     </Form>
                 </Offcanvas.Body>
             </Offcanvas>

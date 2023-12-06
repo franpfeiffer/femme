@@ -21,30 +21,30 @@ export const Card = ({ nombre, precio, descuento, imagen, verMas, botonEliminar,
         }
     }, [precioDecimal, descuentoDecimal]);
     useEffect(() => {
-        const maxLength = 14; // Define la longitud máxima del nombre
+        const maxLength = 12; // Define la longitud máxima del nombre
         if (nombre.length > maxLength) {
             setNombreAcortado(`${nombre.substring(0, maxLength)}...`);
         }
     }, [nombre]);
 
     return (
+        <>
+            <div className="product-box">
+                <Link to={`/${verMas}/detalles-del-producto`} className="link-product-box">
+                    <img src={`https://api-femme.onrender.com/${imagen}`} alt={nombre} className="product-img" />
+                    <h2 className="product-title">{nombreAcortado}</h2>
+                    {descuentoDecimal > 0 ? (
+                        <>
+                            <span className="tarjeta-precio-original price">${precio}</span>
+                            <span className="price price-con-descuento">${precioConDescuento.toFixed(2)}</span>
+                        </>
+                    ) : (
+                        <span className="price">${precioConDescuento.toFixed(2)}</span>
+                    )}
+                    <br />
+                </Link>
+            </div >
 
-        <div className="product-box">
-            <Link to={`/${verMas}/detalles-del-producto`} className="link-product-box">
-                <img src={`https://api-femme.onrender.com/${imagen}`} alt={nombre} className="product-img" />
-                <h2 className="product-title">{nombreAcortado}</h2>
-                {descuentoDecimal > 0 ? (
-                    <>
-                        <span className="tarjeta-precio-original price">${precio}</span>
-                        <span className="price price-con-descuento">${precioConDescuento.toFixed(2)}</span>
-                    </>
-                ) : (
-                    <span className="price">${precioConDescuento.toFixed(2)}</span>
-                )}
-                <br />
-
-            </Link>
-        </div >
-
+        </>
     );
 };

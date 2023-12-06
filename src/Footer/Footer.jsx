@@ -3,7 +3,7 @@ import { Container } from 'react-bootstrap';
 
 export const Footer = () => {
   return (
-    <footer className="footer mt-auto py-3 ">
+    <footer className="footer mt-auto py-3 " style={{ position: 'absolute', bottom: '0', width: '100%' }}>
       <Container className="text-center">
         <div className="social-links">
           <a href="https://www.instagram.com/femmelenceria/" target="_blank" rel="noopener noreferrer">
