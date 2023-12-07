@@ -32,7 +32,6 @@ const FilterCanvas = ({ productosOriginales, setProductosFiltrados }) => {
     const handleClose = () => setShowCanvas(false);
     const handleShow = () => setShowCanvas(true);
     const handleReset = () => {
-        // Restablecer los valores de filtro a sus valores iniciales
         setFiltroPrecio(0);
         setFiltroColor(null);
     };
@@ -49,7 +48,6 @@ const FilterCanvas = ({ productosOriginales, setProductosFiltrados }) => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <Form>
-                        {/* Controles para filtrar por precio */}
                         <Form.Group controlId="formPrecio">
                             <Form.Label>Precio minimo: ${filtroPrecio}</Form.Label>
                             <Form.Control
@@ -60,8 +58,6 @@ const FilterCanvas = ({ productosOriginales, setProductosFiltrados }) => {
                                 onChange={(e) => setFiltroPrecio(Number(e.target.value))}
                             />
                         </Form.Group>
-
-                        {/* Botones para filtrar por color */}
                         <Form.Group controlId="formColor">
                             <Form.Label>Color</Form.Label>
                             {coloresDisponibles.map((color, index) => (

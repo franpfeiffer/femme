@@ -98,9 +98,9 @@ export const DetalleProducto = () => {
                 <Col lg={5} md={6}>
                     <div className="big-img">
                         {imagenSeleccionada ? (
-                            <img src={`https://api-femme.onrender.com/${imagenSeleccionada}`} alt={producto.nombre} />
+                            <img src={`${imagenSeleccionada}`} alt={producto.nombre} />
                         ) : imagene.length > 0 ? (
-                            <img src={`https://api-femme.onrender.com/${imagene[0].url}`} alt={producto.nombre} />
+                            <img src={`${imagene[0].url}`} alt={producto.nombre} />
                         ) : (
                             <p>No hay imagen disponible</p>
                         )}
@@ -109,7 +109,7 @@ export const DetalleProducto = () => {
                         {imagene.map((img) => (
                             <React.Fragment key={img.id}>
                                 <img
-                                    src={`https://api-femme.onrender.com/${img.url}`}
+                                    src={`${img.url}`}
                                     alt=""
                                     className={img.url === imagenSeleccionada ? 'active' : ''}
                                     onClick={() => handleThumbnailClick(img.url)}

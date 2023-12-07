@@ -31,7 +31,7 @@ export const Card = ({ nombre, precio, descuento, imagen, verMas, botonEliminar,
         <>
             <div className="product-box">
                 <Link to={`/${verMas}/detalles-del-producto`} className="link-product-box">
-                    <img src={`https://api-femme.onrender.com/${imagen}`} alt={nombre} className="product-img" />
+                    <img src={`${imagen}`} alt={nombre} className="product-img" />
                     <h2 className="product-title">{nombreAcortado}</h2>
                     {descuentoDecimal > 0 ? (
                         <>
